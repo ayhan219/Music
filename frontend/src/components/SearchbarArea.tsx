@@ -6,10 +6,10 @@ const SearchbarArea = () => {
   return (
     <div className='w-full h-28 flex justify-between px-24 pt-4'>
         <div className="flex gap-2">
-          <div className='w-10 h-10 rounded-full bg-[#1f1f22] flex items-center justify-center cursor-pointer'>
+          <div className='w-10 h-10 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer'>
           <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
             </div>  
-            <div className='w-10 h-10 rounded-full bg-[#1f1f22] flex items-center justify-center cursor-pointer'>
+            <div className='w-10 h-10 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer'>
             <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
             </div> 
         </div>
