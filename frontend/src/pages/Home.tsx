@@ -1,8 +1,9 @@
-import React from 'react'
+import SearchbarArea from "../components/SearchbarArea"
 
 const Home = () => {
   return (
-    <div className='w-full h-full bg-black'>
+    <div className='w-full h-screen bg-primary'>
+      <SearchbarArea />
     </div>
   )
 }

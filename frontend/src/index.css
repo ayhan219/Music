@@ -6,3 +6,6 @@
 .text-hover{
     @apply text-[#00FFFF]
 }
+.bg-primary{
+    @apply bg-[#171719]
+}
