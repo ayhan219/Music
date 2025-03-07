@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.text-primary{
+    @apply text-[#FCFCFC]
+}
+.text-hover{
+    @apply text-[#00FFFF]
+}
