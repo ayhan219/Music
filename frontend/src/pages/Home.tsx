@@ -56,7 +56,7 @@ const Home = () => {
   return (
     <div className="w-full min-h-screen overflow-y-auto bg-primary">
       <SearchbarArea />
-      <div className="px-24 flex flex-col  gap-8">
+      <div className="px-24 w-full flex flex-col  gap-8">
         <div>
           <div className="w-full flex justify-between">
             <div className="text-primary text-xl">
@@ -86,31 +86,17 @@ const Home = () => {
 
         <div className="pt-3">
           <div className="text-primary text-xl">
-            <h3>Album 2</h3>
+            <h3>My List</h3>
           </div>
-          <div className="flex justify-between pt-3">
+          <div className="flex gap-5 pt-3">
             <Album2 />
             <Album2 />
-            <Album2 />
-            <Album2 />
-            <Album2 />
-            <Album2 />
+
+
+  
           </div>
         </div>
 
-        <div className="pt-3">
-          <div className="text-primary text-xl">
-            <h3>Album 3</h3>
-          </div>
-          <div className="flex justify-between pt-3">
-            <Album2 />
-            <Album2 />
-            <Album2 />
-            <Album2 />
-            <Album2 />
-            <Album2 />
-          </div>
-        </div>
       </div>
     </div>
   );
