@@ -24,8 +24,10 @@ interface AlbumData {
 const Home = () => {
   const [albums, setAlbums] = useState<AlbumData[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getPopularAlbums = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         "https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart/0/albums"
@@ -34,6 +36,8 @@ const Home = () => {
       setAlbums(response.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,46 +61,50 @@ const Home = () => {
     <div className="w-full min-h-screen overflow-y-auto bg-primary">
       <SearchbarArea />
       <div className="px-24 w-full flex flex-col  gap-8">
-        <div>
-          <div className="w-full flex justify-between">
-            <div className="text-primary text-xl">
-              <h3>Album 1</h3>
-            </div>
-            <div className="flex gap-2">
-              <div
-                onClick={handlePrev}
-                className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
-              >
-                <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+        {!loading ? (
+          <>
+            <div>
+              <div className="w-full flex justify-between">
+                <div className="text-primary text-xl">
+                  <h3>Album 1</h3>
+                </div>
+                <div className="flex gap-2">
+                  <div
+                    onClick={handlePrev}
+                    className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+                  >
+                    <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+                  </div>
+                  <div
+                    onClick={handleNext}
+                    className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+                  >
+                    <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+                  </div>
+                </div>
               </div>
-              <div
-                onClick={handleNext}
-                className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
-              >
-                <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+              <div className="flex flex-row justify-between pt-3 overflow-x-auto">
+                {albums.slice(currentIndex, currentIndex + 5).map((item) => (
+                  <Album item={item} />
+                ))}
               </div>
             </div>
-          </div>
-          <div className="flex flex-row justify-between pt-3 overflow-x-auto">
-            {albums.slice(currentIndex, currentIndex + 5).map((item) => (
-              <Album item={item} />
-            ))}
-          </div>
-        </div>
 
-        <div className="pt-3">
-          <div className="text-primary text-xl">
-            <h3>My List</h3>
+            <div className="pt-3">
+              <div className="text-primary text-xl">
+                <h3>My List</h3>
+              </div>
+              <div className="flex gap-5 pt-3">
+                <Album2 />
+                <Album2 />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center space-x-2">
+            <div className="w-12 h-12 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
           </div>
-          <div className="flex gap-5 pt-3">
-            <Album2 />
-            <Album2 />
-
-
-  
-          </div>
-        </div>
-
+        )}
       </div>
     </div>
   );
