@@ -1,4 +1,7 @@
 import { FaPlay } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsPlaying, setMusicUrl, setOpenMusicBar } from "../features/PlayingMusicSlice";
+import { RootState } from "../app/store";
 
 interface MusicProps {
   item: {
@@ -18,8 +21,15 @@ interface MusicProps {
 }
 
 const Music = ({ item }: MusicProps) => {
+
+
+  const dispatch = useDispatch();
   return (
-    <div className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer">
+    <div onClick={()=>{
+      dispatch(setMusicUrl(item.preview))
+      dispatch(setOpenMusicBar(true))
+      dispatch(setIsPlaying(true))
+    }} className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer">
       {/* <FaPlay /> */}
       
       <div className="flex items-center gap-4 w-1/2">

@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import SearchbarArea from "../components/SearchbarArea";
 import { ImMusic } from "react-icons/im";
 import Music from "../components/Music";
+import MusicPlayBar from "../components/MusicPlayBar";
+import { useDispatch, useSelector } from "react-redux";
+import { setAlbumMusic } from "../features/MusicSlice";
+import { RootState } from "../app/store";
 
 
 interface AlbumMusic{
@@ -24,14 +28,10 @@ interface AlbumMusic{
 
 const AlbumPage = () => {
   const { id } = useParams();
-  const [albumMusic, setAlbumMusic] = useState<{
-    title?: string;
-    cover_xl?: string;
-    duration:number,
-    label:string,
-    release_date:string,
-    tracks?: { data: AlbumMusic[] };
-  } | null>(null);
+  const albumMusic = useSelector((state:RootState)=>state.albumMusic.albumMusic)
+  const dispatch = useDispatch();
+  
+
 
   const getDataFromId = async () => {
     try {
@@ -39,7 +39,7 @@ const AlbumPage = () => {
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}`
       );
       console.log(response.data);
-      setAlbumMusic(response.data)
+      dispatch(setAlbumMusic(response.data))
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +50,7 @@ const AlbumPage = () => {
   }, []);
 
   return (
+    <>
     <div className="w-full h-screen bg-primary">
       <SearchbarArea />
       <div className="w-full h-auto p-5 flex ">
@@ -82,6 +83,7 @@ const AlbumPage = () => {
         }
       </div>
     </div>
+    </>
   );
 };
 
