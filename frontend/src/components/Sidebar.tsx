@@ -22,7 +22,7 @@ const Sidebar = () => {
         <div className="w-full h-auto flex p-7">
             <div className="flex flex-col gap-8 text-base font-semibold ">
                 <Link onClick={()=>setActiveMenu("home")} className={`text-primary ${activeMenu ==="home" && "text-hover"}`} to="/">Home</Link>
-                <Link onClick={()=>setActiveMenu("explore")} className={`text-primary ${activeMenu ==="explore" && "text-hover"}`} to="/">Explore</Link>
+                <Link onClick={()=>setActiveMenu("explore")} className={`text-primary ${activeMenu ==="explore" && "text-hover"}`} to="/explore">Explore</Link>
                 <Link onClick={()=>setActiveMenu("videos")} className={`text-primary ${activeMenu ==="videos" && "text-hover"}`} to="/">Videos</Link>
             </div>
         </div>
