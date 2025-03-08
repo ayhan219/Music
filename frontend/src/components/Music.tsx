@@ -19,11 +19,11 @@ interface MusicProps {
 
 const Music = ({ item }: MusicProps) => {
   return (
-    <div className="w-full h-16 flex items-center py-4 px-4">
+    <div className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer">
       {/* <FaPlay /> */}
       
       <div className="flex items-center gap-4 w-1/2">
-        <div className="w-14 h-14 relative flex items-center justify-center group cursor-pointer">
+        <div className="w-14 h-14 relative flex items-center justify-center  cursor-pointer">
         <img
           className="w-14 h-14 object-cover rounded-lg"
           src={item.album.cover_medium}
