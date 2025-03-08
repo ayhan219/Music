@@ -59,7 +59,7 @@ const AlbumPage = () => {
             <h3>Open For Public</h3>
             <h1 className="text-3xl">{albumMusic?.title}</h1>
             <div>
-              <p>Ayhan - 24 songs duration: 137 hours</p>
+            <p>Ayhan - {albumMusic?.tracks?.data.length} songs duration: {albumMusic?.duration ? (albumMusic.duration / 60).toFixed(0) : 0} hours</p>
             </div>
           </div>
           <div className="text-primary text-7xl">
@@ -67,6 +67,11 @@ const AlbumPage = () => {
           </div>
         </div>
       </div>
+      <div className="px-16 pt-4">
+          <div className="w-full border-b border-gray-600">
+          <h1 className="text-primary font-bold font-mono text-xl">Musics</h1>
+          </div>
+        </div>
 
       <div className="w-full h-[500px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
 
