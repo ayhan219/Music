@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchbarArea from "../components/SearchbarArea";
 import { ImMusic } from "react-icons/im";
 import Music from "../components/Music";
-import MusicPlayBar from "../components/MusicPlayBar";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlbumMusic } from "../features/MusicSlice";
 import { RootState } from "../app/store";
