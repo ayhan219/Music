@@ -1,0 +1,51 @@
+import { FaPlay } from "react-icons/fa";
+
+interface MusicProps {
+  item: {
+    artist: {
+      name: string;
+    };
+    album:{
+        cover_medium:string
+    }
+    duration: number;
+    id: number;
+    md5_image: string;
+    preview: string;
+    rank: number;
+    title: string;
+  },
+}
+
+const Music = ({ item }: MusicProps) => {
+  return (
+    <div className="w-full h-16 flex items-center border-b-2 border-gray-700 py-4 px-4">
+      {/* <FaPlay /> */}
+      
+      <div className="flex items-center gap-4 w-1/2">
+        <div className="w-14 h-14 relative flex items-center justify-center group cursor-pointer">
+        <img
+          className="w-14 h-14 object-cover rounded-lg"
+          src={item.album.cover_medium}
+          alt="Album Cover"
+        />
+        <FaPlay className="absolute text-primary text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+
+        <div className="flex flex-col gap-1 w-full truncate">
+          <p className="text-primary font-semibold truncate">{item.title}</p>
+          <p className="text-[#595956] text-sm truncate">{item.artist.name}</p>
+        </div>
+      </div>
+
+      <div className="text-primary text-sm font-medium text-center w-32 truncate">
+        Macarena
+      </div>
+
+      
+    </div>
+  );
+};
+
+
+export default Music;
