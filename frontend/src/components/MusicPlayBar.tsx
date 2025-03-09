@@ -72,6 +72,16 @@ const MusicPlayBar = () => {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (audioRef.current) {
+      const rect = e.currentTarget.getBoundingClientRect(); 
+      const offsetX = e.clientX - rect.left; 
+      const newTime = (offsetX / rect.width) * duration; 
+      audioRef.current.currentTime = newTime; 
+      setCurrentTime(newTime);
+    }
+  };
+
   return (
     <div className="w-full h-24 bg-[#212124] absolute bottom-0 shadow-lg flex justify-between">
       <div className="w-[500px] h-full flex items-center px-10 ">
@@ -98,7 +108,7 @@ const MusicPlayBar = () => {
           <RxLoop className="cursor-pointer" />
         </div>
 
-        <div className="relative w-full h-1 bg-gray-400 rounded-2xl flex items-center">
+        <div onClick={handleSeek} className="relative w-full h-1 bg-gray-400 rounded-2xl flex items-center cursor-pointer">
           <span className="text-xs text-primary absolute left-0 -top-5">
             {formatTime(currentTime)}
           </span>
@@ -109,7 +119,7 @@ const MusicPlayBar = () => {
           ></div>
 
           <div
-            className="absolute top-[-4px] w-3 h-3 bg-white rounded-full shadow-lg"
+            className="absolute top-[-4px] w-3 h-3 bg-white rounded-full shadow-lg cursor-pointer"
             style={{
               left: `${progressPercentage}%`,
               transform: "translateX(-50%)",
