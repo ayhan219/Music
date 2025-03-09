@@ -36,7 +36,7 @@ const Music = ({ item }: MusicProps) => {
       dispatch(setMusicUrl(musicUrlData))
       dispatch(setOpenMusicBar(true))
       dispatch(setIsPlaying(true))
-    }} className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer">
+    }} className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer hover:bg-indigo-900 ease-in-out duration-150 hover:rounded-2xl group">
       
       <div className="flex items-center gap-4 w-1/2">
         <div className="w-14 h-14 relative flex items-center justify-center  cursor-pointer">
@@ -49,7 +49,7 @@ const Music = ({ item }: MusicProps) => {
         </div>
         <div className="flex flex-col gap-1 w-full truncate">
           <p className="text-primary font-semibold truncate">{item.title}</p>
-          <p className="text-[#595956] text-sm truncate">{item.artist.name}</p>
+          <p className="group-hover:text-white ease-in-out duration-100 text-[#595956] text-sm truncate">{item.artist.name}</p>
         </div>
       </div>
 

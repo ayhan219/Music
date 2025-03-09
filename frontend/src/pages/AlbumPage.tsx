@@ -56,7 +56,7 @@ const AlbumPage = () => {
         {!loading ? (
           <>
             <div className="w-full h-auto p-5 flex ">
-              <div className="w-full h-[250px] flex  bg-stone-800  items-center gap-4 px-10 rounded-lg  relative ">
+              <div className="w-full h-[250px] flex   items-center gap-4 px-10 rounded-lg  relative ">
                 <img
                   className="w-[200px] h-[200px]"
                   src={albumMusic?.cover_xl}
