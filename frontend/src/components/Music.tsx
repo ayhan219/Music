@@ -46,8 +46,8 @@ const Music = ({ item }: MusicProps) => {
         <FaPlay className="absolute text-primary text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         <div className="flex flex-col gap-1 w-full truncate">
-          <p className={`${item.id === musicId ? "text-green-500 font-extrabold" : "text-primary"}  font-semibold truncate`}>{item.title}</p>
-          <p className=" ease-in-out duration-100 text-[#595956] text-sm truncate">{item.artist.name}</p>
+          <p className={`${item.id === musicId ? "text-green-500 font-extrabold" : "text-primary font-semibold"}   truncate`}>{item.title}</p>
+          <p className={`ease-in-out ${item.id === musicId ? "text-white font-bold" :"text-[#595956]"} duration-100  text-sm truncate`}>{item.artist.name}</p>
         </div>
       </div>
 
