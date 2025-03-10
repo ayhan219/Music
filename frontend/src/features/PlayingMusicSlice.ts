@@ -1,20 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface MusicData {
-  musicUrlToListen:string,
-  artist:string,
-  musicName:string,
-  duration:number
-}
 
 interface MusicPlayerState {
-  musicUrl: MusicData | null;
+  musicId:number;
   isPlaying:boolean;
   openMusicBar:boolean;
+  
 }
 
 const initialState: MusicPlayerState = {
-  musicUrl: null, 
+  musicId:0, 
   isPlaying:false,
   openMusicBar:false
 };
@@ -23,10 +18,8 @@ const musicPlayerSlice = createSlice({
   name: "musicPlayer",
   initialState,
   reducers: {
-    setMusicUrl: (state, action: PayloadAction<MusicData>) => { 
-      console.log(action.payload);
-      
-      state.musicUrl = action.payload
+    setMusicId: (state, action: PayloadAction<number>) => { 
+      state.musicId = action.payload
     },
     setIsPlaying:(state,action:PayloadAction<boolean>)=>{
       state.isPlaying = action.payload
@@ -37,5 +30,5 @@ const musicPlayerSlice = createSlice({
   },
 });
 
-export const { setMusicUrl,setIsPlaying,setOpenMusicBar } = musicPlayerSlice.actions;
+export const { setMusicId,setIsPlaying,setOpenMusicBar } = musicPlayerSlice.actions;
 export default musicPlayerSlice.reducer;
