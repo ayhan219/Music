@@ -26,12 +26,12 @@ const Explore = () => {
     ])
   return (
     
-    <div className="w-full h-screen bg-primary">
+    <div className="w-full h-screen bg-primary overflow-y-auto scrollbar-custom">
         <div className="p-16">
         <div className="w-full text-primary font-bold font-mono text-2xl">
             <h1>Explore All</h1>
         </div>
-        <div className="grid grid-cols-4 space-y-8 pt-10">
+        <div className="grid  custom-grid justify-center  space-y-8 pt-10 ">
             {
                 colors.map((color,index)=>(
                     <ExploreItem color={color} name={names[index]} />
