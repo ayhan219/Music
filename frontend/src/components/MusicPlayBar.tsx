@@ -115,7 +115,7 @@ const MusicPlayBar = () => {
 
         <div
           onClick={handleSeek}
-          className="relative w-full h-1 bg-gray-400 rounded-2xl flex items-center cursor-pointer"
+          className="relative w-full h-2 bg-gray-400 rounded-2xl flex items-center cursor-pointer"
         >
           <span className="text-xs text-primary absolute left-0 -top-5">
             {formatTime(currentTime)}
@@ -127,7 +127,7 @@ const MusicPlayBar = () => {
           ></div>
 
           <div
-            className="absolute top-[-4px] w-3 h-3 bg-white rounded-full shadow-lg cursor-pointer"
+            className="absolute top-[-2px] w-3 h-3 bg-white rounded-full shadow-lg cursor-pointer"
             style={{
               left: `${progressPercentage}%`,
               transform: "translateX(-50%)",
