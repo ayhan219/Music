@@ -88,7 +88,7 @@ const AlbumPage = () => {
               </div>
             </div>
 
-            <div className="w-full h-[500px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+            <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
               {albumMusic?.tracks?.data.map((item: AlbumMusic) => (
                 <Music item={item} />
               ))}
