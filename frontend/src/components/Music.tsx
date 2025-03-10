@@ -1,6 +1,9 @@
 import { FaPlay } from "react-icons/fa";
-import { useDispatch} from "react-redux";
-import { setIsPlaying, setMusicUrl, setOpenMusicBar } from "../features/PlayingMusicSlice";
+import { useDispatch, useSelector} from "react-redux";
+import { setIsPlaying, setMusicId, setOpenMusicBar } from "../features/PlayingMusicSlice";
+import { RootState } from "../app/store";
+import { setCurrentAlbumMusic } from "../features/MusicSlice";
+
 
 interface MusicProps {
   item: {
@@ -21,19 +24,13 @@ interface MusicProps {
 
 const Music = ({ item }: MusicProps) => {
 
-  const musicUrlData ={
-    musicUrlToListen:item.preview,
-    artist:item.artist.name,
-    musicName:item.title,
-    duration:item.duration
-
-  }
-
+  const albumMusic = useSelector((state:RootState)=>state.albumMusic.albumMusic);
 
   const dispatch = useDispatch();
   return (
     <div onClick={()=>{
-      dispatch(setMusicUrl(musicUrlData))
+      dispatch(setMusicId(item.id))
+      dispatch(setCurrentAlbumMusic(albumMusic?.tracks?.data || []))
       dispatch(setOpenMusicBar(true))
       dispatch(setIsPlaying(true))
     }} className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer hover:bg-indigo-900 ease-in-out duration-150 hover:rounded-2xl group">
