@@ -1,6 +1,6 @@
 import { RootState } from "../app/store";
 import { useEffect, useRef, useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaVolumeMute } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdPause } from "react-icons/io";
 import { IoMusicalNote, IoVolumeHighSharp } from "react-icons/io5";
@@ -23,6 +23,7 @@ const MusicPlayBar = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState<number>(1);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   const handleMusicPlay = () => {
     if (audioRef.current) {
@@ -53,6 +54,10 @@ const MusicPlayBar = () => {
     setVolume(newVolume);
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
+      setIsMuted(false);
+    }
+    if(newVolume ===0){
+      setIsMuted(true);
     }
   };
 
@@ -74,10 +79,10 @@ const MusicPlayBar = () => {
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (audioRef.current) {
-      const rect = e.currentTarget.getBoundingClientRect(); 
-      const offsetX = e.clientX - rect.left; 
-      const newTime = (offsetX / rect.width) * duration; 
-      audioRef.current.currentTime = newTime; 
+      const rect = e.currentTarget.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const newTime = (offsetX / rect.width) * duration;
+      audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
     }
   };
@@ -108,7 +113,10 @@ const MusicPlayBar = () => {
           <RxLoop className="cursor-pointer" />
         </div>
 
-        <div onClick={handleSeek} className="relative w-full h-1 bg-gray-400 rounded-2xl flex items-center cursor-pointer">
+        <div
+          onClick={handleSeek}
+          className="relative w-full h-1 bg-gray-400 rounded-2xl flex items-center cursor-pointer"
+        >
           <span className="text-xs text-primary absolute left-0 -top-5">
             {formatTime(currentTime)}
           </span>
@@ -135,7 +143,25 @@ const MusicPlayBar = () => {
       <div className="w-[400px] h-full flex items-center justify-center ">
         <div className="text-primary text-2xl flex gap-8">
           <div className="flex gap-3 items-center">
-          <IoVolumeHighSharp className="" />
+            {!isMuted ? (
+              <IoVolumeHighSharp
+                onClick={() => {
+                  setIsMuted(!isMuted);
+                  setVolume(0);
+                  if (audioRef.current) audioRef.current.volume = 0;
+                }}
+                className="cursor-pointer"
+              />
+            ) : (
+              <FaVolumeMute
+                className="cursor-pointer text-red-500"
+                onClick={() => {
+                  setIsMuted(!isMuted);
+                  setVolume(0.1);
+                  if (audioRef.current) audioRef.current.volume = 1;
+                }}
+              />
+            )}
             <input
               type="range"
               min="0"
@@ -151,7 +177,6 @@ const MusicPlayBar = () => {
               [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 
               [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:rounded-full"
             />
-            
           </div>
           <GiHamburgerMenu />
         </div>
