@@ -41,6 +41,7 @@ const MusicPlayBar = () => {
   const [volume, setVolume] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [currentMusic, setCurrentMusic] = useState<AlbumMusic | null>(null);
+  const [isLooping,setIsLooping] = useState<boolean>(false);
 
   const handleMusicPlay = () => {
     if (audioRef.current) {
@@ -132,8 +133,6 @@ const MusicPlayBar = () => {
   };
 
   const handlePrevMusic = () => {
-    console.log("worked");
-    
     if (!currentMusicAlbum || currentMusicAlbum.length === 0) return;
 
     const currentMusicIndex = currentMusicAlbum.findIndex(
@@ -147,6 +146,7 @@ const MusicPlayBar = () => {
     }
     
   };
+
 
   return (
     <div className="w-full h-24 bg-[#212124] absolute bottom-0 shadow-lg flex justify-between">
@@ -173,7 +173,7 @@ const MusicPlayBar = () => {
             <IoMdPause onClick={handleMusicPlay} className="cursor-pointer" />
           )}
           <MdSkipNext onClick={handleNextMusic} className="cursor-pointer" />
-          <RxLoop className="cursor-pointer" />
+          <RxLoop onClick={()=>setIsLooping(!isLooping)} className={`cursor-pointer ${isLooping && "text-green-500"}`} />
         </div>
 
         <div
@@ -250,6 +250,8 @@ const MusicPlayBar = () => {
         src={currentMusic?.preview}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        loop={isLooping}
+        onEnded={handleNextMusic}
       />
     </div>
   );
