@@ -8,22 +8,39 @@ import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { RxLoop } from "react-icons/rx";
 import { VscArrowSwap } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsPlaying } from "../features/PlayingMusicSlice";
+import { setIsPlaying, setMusicId } from "../features/PlayingMusicSlice";
+
+interface AlbumMusic {
+  artist: {
+    name: string;
+  };
+  album: {
+    cover_medium: string;
+  };
+  duration: number;
+  id: number;
+  md5_image: string;
+  preview: string;
+  rank: number;
+  title: string;
+}
 
 const MusicPlayBar = () => {
   const isPlaying = useSelector(
     (state: RootState) => state.musicPlayer.isPlaying
   );
-  const dispatch = useDispatch();
-  const musicUrl = useSelector(
-    (state: RootState) => state.musicPlayer.musicUrl
+  const musicId = useSelector((state: RootState) => state.musicPlayer.musicId);
+  const currentMusicAlbum = useSelector(
+    (state: RootState) => state.albumMusic.currentMusicAlbum
   );
+  const dispatch = useDispatch();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [currentMusic, setCurrentMusic] = useState<AlbumMusic | null>(null);
 
   const handleMusicPlay = () => {
     if (audioRef.current) {
@@ -56,7 +73,7 @@ const MusicPlayBar = () => {
       audioRef.current.volume = newVolume;
       setIsMuted(false);
     }
-    if(newVolume ===0){
+    if (newVolume === 0) {
       setIsMuted(true);
     }
   };
@@ -64,10 +81,12 @@ const MusicPlayBar = () => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.load();
-      audioRef.current.play();
-      dispatch(setIsPlaying(true));
+      audioRef.current.oncanplay = () => {
+        audioRef.current?.play();
+        dispatch(setIsPlaying(true));
+      };
     }
-  }, [musicUrl]);
+  }, [musicId]);
 
   const progressPercentage = duration ? (currentTime / duration) * 100 : 0;
 
@@ -87,6 +106,48 @@ const MusicPlayBar = () => {
     }
   };
 
+  useEffect(() => {
+    setCurrentMusic(
+      currentMusicAlbum.find((item) => item.id === musicId) || null
+    );
+  }, [musicId, currentMusicAlbum]);
+
+  const handleNextMusic = () => {
+    if (!currentMusicAlbum || currentMusicAlbum.length === 0) return;
+
+    const currentMusicIndex = currentMusicAlbum.findIndex(
+      (item) => item.id === currentMusic?.id
+    );
+    if (
+      currentMusicIndex !== -1 &&
+      currentMusicIndex < currentMusicAlbum.length - 1
+    ) {
+      const nextMusic = currentMusicAlbum[currentMusicIndex + 1];
+      setCurrentMusic(nextMusic);
+      dispatch(setMusicId(nextMusic.id));
+    } else {
+      setCurrentMusic(currentMusicAlbum[0]);
+      dispatch(setMusicId(currentMusicAlbum[0].id));
+    }
+  };
+
+  const handlePrevMusic = () => {
+    console.log("worked");
+    
+    if (!currentMusicAlbum || currentMusicAlbum.length === 0) return;
+
+    const currentMusicIndex = currentMusicAlbum.findIndex(
+      (item) => item.id === currentMusic?.id
+    );
+    
+   if(currentMusicIndex>0) {
+      const prevMusic = currentMusicAlbum[currentMusicIndex-1];
+      setCurrentMusic(prevMusic)
+      dispatch(setMusicId(prevMusic.id));
+    }
+    
+  };
+
   return (
     <div className="w-full h-24 bg-[#212124] absolute bottom-0 shadow-lg flex justify-between">
       <div className="w-[500px] h-full flex items-center px-10 ">
@@ -95,21 +156,23 @@ const MusicPlayBar = () => {
         </div>
         <div>
           <p className="text-primary font-bold text-xs">
-            {musicUrl?.musicName}
+            {currentMusic?.title}
           </p>
-          <p className="text-xs text-gray-500 font-bold">{musicUrl?.artist}</p>
+          <p className="text-xs text-gray-500 font-bold">
+            {currentMusic?.artist.name}
+          </p>
         </div>
       </div>
       <div className="w-[500px] h-full flex flex-col justify-evenly ">
         <div className="w-full flex justify-evenly text-primary text-xl ">
           <VscArrowSwap className="cursor-pointer" />
-          <MdSkipPrevious className="cursor-pointer" />
+          <MdSkipPrevious onClick={handlePrevMusic} className="cursor-pointer" />
           {!isPlaying ? (
             <FaPlay onClick={handleMusicPlay} className="cursor-pointer" />
           ) : (
             <IoMdPause onClick={handleMusicPlay} className="cursor-pointer" />
           )}
-          <MdSkipNext className="cursor-pointer" />
+          <MdSkipNext onClick={handleNextMusic} className="cursor-pointer" />
           <RxLoop className="cursor-pointer" />
         </div>
 
@@ -184,7 +247,7 @@ const MusicPlayBar = () => {
 
       <audio
         ref={audioRef}
-        src={musicUrl?.musicUrlToListen}
+        src={currentMusic?.preview}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
       />
