@@ -25,6 +25,7 @@ interface MusicProps {
 const Music = ({ item }: MusicProps) => {
 
   const albumMusic = useSelector((state:RootState)=>state.albumMusic.albumMusic);
+  const musicId = useSelector((state:RootState)=>state.musicPlayer.musicId);
 
   const dispatch = useDispatch();
   return (
@@ -33,7 +34,7 @@ const Music = ({ item }: MusicProps) => {
       dispatch(setCurrentAlbumMusic(albumMusic?.tracks?.data || []))
       dispatch(setOpenMusicBar(true))
       dispatch(setIsPlaying(true))
-    }} className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer hover:bg-indigo-900 ease-in-out duration-150 hover:rounded-2xl group">
+    }} className={`w-full  h-16 flex items-center py-4 px-4 group cursor-pointer   group`}>
       
       <div className="flex items-center gap-4 w-1/2">
         <div className="w-14 h-14 relative flex items-center justify-center  cursor-pointer">
@@ -45,8 +46,8 @@ const Music = ({ item }: MusicProps) => {
         <FaPlay className="absolute text-primary text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         <div className="flex flex-col gap-1 w-full truncate">
-          <p className="text-primary font-semibold truncate">{item.title}</p>
-          <p className="group-hover:text-white ease-in-out duration-100 text-[#595956] text-sm truncate">{item.artist.name}</p>
+          <p className={`${item.id === musicId ? "text-green-500 font-extrabold" : "text-primary"}  font-semibold truncate`}>{item.title}</p>
+          <p className=" ease-in-out duration-100 text-[#595956] text-sm truncate">{item.artist.name}</p>
         </div>
       </div>
 
