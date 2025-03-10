@@ -49,4 +49,29 @@
     display: none;
   }
   
+
+  @media (min-width:1700px){
+    .custom-grid{
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width:1700px) and (min-width:1400px){
+    .custom-grid{
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width:1400px) and (min-width:1000px){
+    .custom-grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width:1000){
+    .custom-grid{
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+  
   
