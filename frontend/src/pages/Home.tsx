@@ -7,6 +7,7 @@ import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
+import { motion } from "framer-motion";
 
 interface AlbumData {
   cover: string;
@@ -83,11 +84,18 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row justify-between pt-3 overflow-x-auto">
+              <motion.div
+                className="flex flex-row justify-between pt-3 overflow-x-auto"
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
                 {albums.slice(currentIndex, currentIndex + 5).map((item) => (
-                  <Album item={item} />
+                  <Album key={item.id} item={item} />
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             <div className="pt-3">
