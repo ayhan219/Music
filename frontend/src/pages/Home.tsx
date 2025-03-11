@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Album from "../components/Album";
 import Album2 from "../components/Album2";
-import SearchbarArea from "../components/SearchbarArea";
 import axios from "axios";
 import {
   MdOutlineKeyboardArrowLeft,
@@ -59,8 +58,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full min-h-screen overflow-y-auto bg-primary">
-      <SearchbarArea />
+    <div className="w-full  min-h-screen overflow-y-auto bg-primary">
       <div className="px-24 w-full flex flex-col  gap-8">
         {!loading ? (
           <>
