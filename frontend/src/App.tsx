@@ -6,6 +6,8 @@ import Explore from "./pages/Explore"
 import { useSelector } from "react-redux"
 import { RootState } from "./app/store"
 import MusicPlayBar from "./components/MusicPlayBar"
+import SearchedDatas from "./pages/SearchedDatas"
+import SearchbarArea from "./components/SearchbarArea"
 
 function App() {
 
@@ -14,17 +16,21 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <div className="flex">
+    <div className="flex w-full ">
     <Sidebar />
+    <div className="flex-1">
+      <SearchbarArea />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/album/:id" element={<AlbumPage />} />
       <Route path="/explore" element={<Explore />} />
+      <Route path="/search" element={<SearchedDatas/>} />
     </Routes>
     {
       isMusicBarOpen && 
       <MusicPlayBar />
     }
+    </div>
     </div>
     </BrowserRouter>
     </>
