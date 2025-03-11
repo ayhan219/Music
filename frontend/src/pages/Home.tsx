@@ -67,7 +67,7 @@ const Home = () => {
             <div>
               <div className="w-full flex justify-between">
                 <div className="text-primary text-xl">
-                  <h3>Album 1</h3>
+                  <h3>Popular Albums</h3>
                 </div>
                 <div className="flex gap-2">
                   <div
