@@ -36,7 +36,7 @@ const Album = ({ item }: AlbumProps) => {
           </p>
           <p className="text-white text-sm font-medium mt-1">{item.title}</p>
           <p className="text-xs text-gray-400 mt-1 leading-tight">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            {item.artist.name}
           </p>
         </div>
       </Link>
