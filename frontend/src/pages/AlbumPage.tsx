@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import SearchbarArea from "../components/SearchbarArea";
 import { ImMusic } from "react-icons/im";
 import Music from "../components/Music";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,8 +50,7 @@ const AlbumPage = () => {
 
   return (
     <>
-      <div className="w-full h-screen bg-primary">
-        <SearchbarArea />
+      <div className="w-full h-[90%] bg-primary">
         {!loading ? (
           <>
             <div className="w-full h-auto p-5 flex ">
