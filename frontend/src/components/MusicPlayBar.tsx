@@ -149,7 +149,7 @@ const MusicPlayBar = () => {
 
 
   return (
-    <div className="w-full h-24 bg-[#212124] absolute bottom-0 shadow-lg flex justify-between">
+    <div className="w-full h-24 bg-[#212124] fixed bottom-0 shadow-lg flex justify-between">
       <div className="w-[500px] h-full flex items-center px-10 ">
         <div className="text-primary text-5xl">
           <IoMusicalNote />
