@@ -1,52 +1,32 @@
 import { useEffect, useState } from "react";
 import Album from "../components/Album";
 import Album2 from "../components/Album2";
-import axios from "axios";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { motion } from "framer-motion";
+import { getPopularAlbums } from "../features/MusicSlice";
+import { useAppDispatch } from "../app/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
-interface AlbumData {
-  cover: string;
-  cover_xl: string;
-  artist: {
-    name: string;
-  };
-  id: number;
-  link: string;
-  position: number;
-  type: string;
-  title: string;
-}
 
 const Home = () => {
-  const [albums, setAlbums] = useState<AlbumData[]>([]);
+  const albums = useSelector((state:RootState)=>state.albumMusic.popularAlbums)
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const loading = useSelector((state:RootState)=>state.albumMusic.loading)
 
-  const getPopularAlbums = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        "https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart/0/albums"
-      );
-      console.log(response.data.data);
-      setAlbums(response.data.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
-    getPopularAlbums();
-  }, []);
+    dispatch(getPopularAlbums())
+    
+  }, [dispatch]);
 
   const handleNext = () => {
-    if (currentIndex + 5 < albums.length) {
+    if (currentIndex + 5 < albums?.length) {
       setCurrentIndex(currentIndex + 5);
     }
   };
@@ -58,7 +38,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full  min-h-screen overflow-y-auto bg-primary">
+    <div className="w-full  h-[90%] overflow-y-auto bg-primary">
       <div className="px-24 w-full flex flex-col  gap-8">
         {!loading ? (
           <>
