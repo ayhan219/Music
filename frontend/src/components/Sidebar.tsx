@@ -23,7 +23,6 @@ const Sidebar = () => {
             <div className="flex flex-col gap-8 text-base font-semibold ">
                 <Link onClick={()=>setActiveMenu("home")} className={`text-primary ${activeMenu ==="home" && "text-hover"}`} to="/">Home</Link>
                 <Link onClick={()=>setActiveMenu("explore")} className={`text-primary ${activeMenu ==="explore" && "text-hover"}`} to="/explore">Explore</Link>
-                <Link onClick={()=>setActiveMenu("videos")} className={`text-primary ${activeMenu ==="videos" && "text-hover"}`} to="/">Videos</Link>
             </div>
         </div>
         <div className="w-full h-auto">
@@ -33,7 +32,7 @@ const Sidebar = () => {
             <div className="flex flex-col gap-8 text-base font-semibold px-7 ">
                 <div className="w-full flex gap-2 items-center ">
                 <IoRadioSharp  className="text-xl text-white" />
-                <Link onClick={()=>setActiveMenu("mixesandradio")} className={`text-primary ${activeMenu ==="mixesandradio" && "text-hover"}`} to="/">Mixes And Radio</Link>
+                <Link onClick={()=>setActiveMenu("mixesandradio")} className={`text-primary ${activeMenu ==="mixesandradio" && "text-hover"}`} to="/">Mixes</Link>
                 
                 </div>
                 <div className="w-full flex gap-2 items-center ">
@@ -42,7 +41,7 @@ const Sidebar = () => {
                 </div>
                 <div className="w-full flex gap-2 items-center ">
                 <RiDvdFill className="text-xl text-white" />
-                <Link onClick={()=>setActiveMenu("albums")} className={`text-primary ${activeMenu ==="albums" && "text-hover"}`} to="/">Albums</Link>
+                <Link onClick={()=>setActiveMenu("albums")} className={`text-primary ${activeMenu ==="albums" && "text-hover"}`} to="/albums">Albums And Artists</Link>
                 </div>
                 <div className="w-full flex gap-2 items-center ">
                 <FaMusic className="text-xl text-white"  />
