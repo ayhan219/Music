@@ -10,7 +10,7 @@ import { MdOutlineVideoStable } from "react-icons/md";
 const Sidebar = () => {
     const [activeMenu,setActiveMenu] = useState<string>("home");
   return (
-    <div className='w-[300px] h-screen bg-[#212124] sticky top-0'>
+    <div className='w-[300px] h-full bg-[#212124] sticky top-0'>
         <div className="w-full h-auto flex justify-between items-center p-7">
             <div className="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center">
                 <p className="text-xs text-white ">GI</p>
