@@ -25,11 +25,13 @@ interface AlbumMusic {
       tracks?: { data: AlbumMusic[] };
     } | null,
     currentMusicAlbum:AlbumMusic[]
+    searchedMusicData:AlbumMusic[]
   }
 
   const initialState: AlbumMusicState = {
     albumMusic: null,
     currentMusicAlbum:[],
+    searchedMusicData:[]
   };
 
   const albumMusicSlice = createSlice({
@@ -41,9 +43,12 @@ interface AlbumMusic {
           },
           setCurrentAlbumMusic:(state,action: PayloadAction<AlbumMusic[]>)=>{
             state.currentMusicAlbum= action.payload;
+          },
+          setSearchedMusicData:(state,action: PayloadAction<AlbumMusic[]>)=>{
+            state.searchedMusicData= action.payload;
           }
     }
   })
 
-  export const { setAlbumMusic,setCurrentAlbumMusic } = albumMusicSlice.actions;
+  export const { setAlbumMusic,setCurrentAlbumMusic,setSearchedMusicData } = albumMusicSlice.actions;
 export default albumMusicSlice.reducer;
