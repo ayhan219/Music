@@ -1,4 +1,4 @@
-import { FaPlay, FaSadTear } from "react-icons/fa";
+import { FaPlay} from "react-icons/fa";
 import SearchedMusicSingle from "../components/SearchedMusicSingle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
@@ -133,10 +133,6 @@ const SearchedDatas = () => {
       ) : (
         <div className="w-full h-full bg-primary flex justify-center p-8 px-24">
           <div className="text-center text-white">
-            <div className="text-6xl mb-4">
-              {/* Icon or image */}
-              <FaSadTear className="w-16 h-16 mx-auto mb-4 text-gray-500" />
-            </div>
             <h2 className="text-4xl font-bold mb-2">Search musics</h2>
             <p className="text-lg text-gray-300">
               Try a different search or explore other categories!

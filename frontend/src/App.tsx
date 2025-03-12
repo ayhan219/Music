@@ -1,13 +1,14 @@
 import { BrowserRouter ,Routes,Route} from "react-router-dom"
 import Home from "./pages/Home"
 import Sidebar from "./components/Sidebar"
-import AlbumPage from "./pages/AlbumPage"
 import Explore from "./pages/Explore"
 import { useSelector } from "react-redux"
 import { RootState } from "./app/store"
 import MusicPlayBar from "./components/MusicPlayBar"
 import SearchedDatas from "./pages/SearchedDatas"
 import SearchbarArea from "./components/SearchbarArea"
+import AlbumsAndArtists from "./pages/AlbumsAndArtists"
+import MusicPage from "./pages/MusicPage"
 
 function App() {
 
@@ -16,21 +17,23 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <div className="flex w-full ">
+    <div className="flex w-full h-screen ">
     <Sidebar />
-    <div className="flex-1">
+    <div className="w-full flex-1 h-full bg-black ">
       <SearchbarArea />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/album/:id" element={<AlbumPage />} />
+      <Route path="/album/:id" element={<MusicPage />} />
       <Route path="/explore" element={<Explore />} />
       <Route path="/search" element={<SearchedDatas/>} />
+      <Route path="/albums" element={<AlbumsAndArtists />} />
     </Routes>
+    
+    </div>
     {
       isMusicBarOpen && 
       <MusicPlayBar />
     }
-    </div>
     </div>
     </BrowserRouter>
     </>

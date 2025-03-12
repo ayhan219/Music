@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import albumMusicReducer from "../features/MusicSlice"
 import musicPlayerReducer from "../features/PlayingMusicSlice"
+import  generalSliceReducer  from "../features/generalSlice";
 
 export const store = configureStore({
     reducer:{
         albumMusic:albumMusicReducer,
         musicPlayer: musicPlayerReducer,
+        generalData:generalSliceReducer
     }
 })
 
