@@ -9,6 +9,7 @@ import SearchedDatas from "./pages/SearchedDatas"
 import SearchbarArea from "./components/SearchbarArea"
 import AlbumsAndArtists from "./pages/AlbumsAndArtists"
 import MusicPage from "./pages/MusicPage"
+import ArtistDetail from "./pages/ArtistDetail"
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Route path="/explore" element={<Explore />} />
       <Route path="/search" element={<SearchedDatas/>} />
       <Route path="/albums" element={<AlbumsAndArtists />} />
+      <Route path="/artist/:id" element={<ArtistDetail />} />
     </Routes>
     
     </div>

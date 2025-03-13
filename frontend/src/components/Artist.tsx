@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 
 interface ArtistProps {
   item:{
@@ -11,8 +12,12 @@ interface ArtistProps {
 }
 
 const Artist = ({item,index}:ArtistProps) => {
+
+  const navigate = useNavigate();
+
+
   return (
-    <div key={index} className="w-[250px] h-[350px] p-4 hover:bg-[#252528] rounded-lg group cursor-pointer flex flex-col ">
+    <div onClick={()=>navigate(`/artist/${item.artist.id}`)}  key={index} className="w-[250px] h-[350px] p-4 hover:bg-[#252528] rounded-lg group cursor-pointer flex flex-col ">
         <div className="w-full h-[60%] rounded-full ">
             <img className="w-full h-full object-contain rounded-full" src={item.artist.picture_big} alt="" />
         </div>

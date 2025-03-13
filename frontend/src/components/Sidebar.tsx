@@ -2,7 +2,7 @@ import { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
-import { PiMicrophoneStageFill, PiPlaylist } from "react-icons/pi";
+import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
 import { FaMusic } from "react-icons/fa";
 import { MdOutlineVideoStable } from "react-icons/md";
@@ -50,10 +50,6 @@ const Sidebar = () => {
                 <div className="w-full flex gap-2 items-center ">
                 <MdOutlineVideoStable className="text-xl text-white" />
                 <Link onClick={()=>setActiveMenu("videos")} className={`text-primary ${activeMenu ==="videos" && "text-hover"}`} to="/">Videos</Link>
-                </div>
-                <div className="w-full flex gap-2 items-center ">
-                <PiMicrophoneStageFill className="text-xl text-white" />
-                <Link onClick={()=>setActiveMenu("artists")} className={`text-primary ${activeMenu ==="artists" && "text-hover"}`} to="/">Artists</Link>
                 </div>
             </div>
         </div>
