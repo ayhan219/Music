@@ -10,16 +10,51 @@ interface Artist {
   nb_fan: number;
   type: string;
 }
+interface ArtistMusic {
+  id:number,
+  title:string,
+  duration:number,
+  rank:number,
+  preview:string,
+  contributers:[
+    {
+      name:string,
+    }
+  ],
+  md5_image:string,
+  artist:{
+    name:string
+  },
+  album: {
+    cover_medium: string;
+  };
+}
 
 interface ArtistState {
   artist: Artist | null;
   status: "idle" | "loading" | "failed";
+  artistPopularMusic:ArtistMusic[] | null;
 }
 
 const initialState: ArtistState = {
   artist: null,
   status: "idle",
+  artistPopularMusic:[]
 };
+
+export const getArtistMusicData = createAsyncThunk(
+  "artist/getArtistMusicData",
+  async(id:number)=>{
+    try {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${id}/top?limit=10`);
+      console.log("getting artist music data",response.data.data);
+      return response.data.data; 
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+)
 
 export const getArtistData = createAsyncThunk(
   "artist/getArtistData",
@@ -51,7 +86,17 @@ export const artistSlice = createSlice({
       })
       .addCase(getArtistData.rejected, (state) => {
         state.status = "failed";
-      });
+      })
+      .addCase(getArtistMusicData.pending,(state)=>{
+        state.status = "loading";
+      })
+      .addCase(getArtistMusicData.fulfilled, (state, action: PayloadAction<ArtistMusic[]>) => {
+        state.artistPopularMusic = action.payload;
+        state.status = "idle";
+      })
+      .addCase(getArtistMusicData.rejected, (state) => {
+        state.status = "failed";
+      })
   },
 });
 
