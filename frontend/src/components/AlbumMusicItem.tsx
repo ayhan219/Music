@@ -1,23 +1,63 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { useAppDispatch } from "../app/hooks";
+import {
+  setIsPlaying,
+  setMusicId,
+  setOpenMusicBar,
+} from "../features/PlayingMusicSlice";
+import { setCurrentAlbumMusic } from "../features/MusicSlice";
 
+interface ArtistMusicProps {
+  item: {
+    id: number;
+    title: string;
+    duration: number;
+    rank: number;
+    preview: string;
+    contributers: [
+      {
+        name: string;
+      }
+    ];
+  };
+  index: number;
+}
 
-const AlbumMusicItem = () => {
+const AlbumMusicItem = ({ item, index }: ArtistMusicProps) => {
+  const dispatch = useAppDispatch();
+  const { artist, artistPopularMusic } = useSelector(
+    (state: RootState) => state.artist
+  );
   return (
-    <div className="w-[50%] h-16 p-2 flex justify-between ">
-      <div className="w-[200px] h-full flex items-center">
+    <div
+      onClick={() => {
+        dispatch(setMusicId(item.id));
+        dispatch(setCurrentAlbumMusic(artistPopularMusic || []));
+        dispatch(setOpenMusicBar(true));
+        dispatch(setIsPlaying(true));
+      }}
+      key={index}
+      className="w-[70%] h-16 p-2 flex justify-between items-center cursor-pointer hover:bg-[#222224] rounded-md "
+    >
+      <div className="w-[300px] h-full flex items-center">
         <img
           className="w-[70px] h-full rounded-lg object-cover"
-          src="https://daily.jstor.org/wp-content/uploads/2023/01/good_times_with_bad_music_1050x700.jpg"
+          src={artist?.picture_xl}
           alt=""
         />
-        <div className="text-primary font-mono px-4 font-bold">
-          <p>Axel F</p>
+        <div className="text-primary w-full font-mono px-4 font-bold ">
+          <p>{item.title}</p>
         </div>
       </div>
       <div>
-        <p>134.234</p>
+        <p>{item.rank}</p>
       </div>
       <div>
-        <p>2:53</p>
+        <p>
+          {Math.floor(item.duration / 60)}:
+          {(item.duration % 60).toString().padStart(2, "0")}
+        </p>
       </div>
     </div>
   );
