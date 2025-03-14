@@ -100,7 +100,7 @@ const ArtistDetail = () => {
               src={artist?.picture_xl}
               alt=""
             />
-            <div className="absolute p-10 bg-opacity-80 backdrop-blur-lg bg-black/30 rounded-lg shadow-xl text-white">
+            <div className="absolute p-10 bg-opacity-80 ml-10 backdrop-blur-lg bg-black/30 rounded-lg shadow-xl text-white">
               <h2 className="text-4xl font-bold">{artist?.name}</h2>
               <p className="text-lg text-gray-300 mt-1">
                 {artist?.type.toUpperCase()}

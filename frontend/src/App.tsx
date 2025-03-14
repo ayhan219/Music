@@ -20,7 +20,7 @@ function App() {
     <BrowserRouter>
     <div className="flex w-full h-screen ">
     <Sidebar />
-    <div className="w-full flex-1 h-full bg-black ">
+    <div className="w-full flex-1 h-auto bg-black ">
       <SearchbarArea />
     <Routes>
       <Route path="/" element={<Home />} />
