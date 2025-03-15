@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { FaCheckCircle, FaPlay } from "react-icons/fa";
-import { VscArrowSwap } from "react-icons/vsc";
-import { BsThreeDots } from "react-icons/bs";
-import AlbumMusicItem from "../components/AlbumMusicItem";
+import { FaCheckCircle } from "react-icons/fa";
+import Music from "../components/Music";
+import ToolsForMusic from "../components/ToolsForMusic";
 
 const ArtistDetail = () => {
   const { id } = useParams();
@@ -36,7 +35,6 @@ const ArtistDetail = () => {
 
   return (
     <div
-      onClick={() => console.log(artist)}
       className="w-full h-[90vh] bg-primary text-white"
     >
       <div className="w-full h-auto  overflow-y-auto max-h-[90vh] scrollbar-custom">
@@ -66,29 +64,14 @@ const ArtistDetail = () => {
         </div>
 
         <div className="w-full px-10 mt-6 h-auto">
-          <div className="w-full h-32 flex items-center">
-            <div className="w-full flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-green-500">
-                <FaPlay className="text-black" />
-              </div>
-              <div className="w-12 h-12 text-primary text-3xl flex items-center justify-center ">
-                <VscArrowSwap />
-              </div>
-              <div className="w-20 h-8 rounded-lg border flex items-center justify-center">
-                Follow
-              </div>
-              <div className="w-12 h-12 text-primary text-3xl flex items-center justify-center">
-                <BsThreeDots />
-              </div>
-            </div>
-          </div>
+          <ToolsForMusic />
           <div className="w-full h-auto ">
-            <div className="w-full h-12 pt-5 text-primary text-xl font-mono ">
+            <div className="w-full h-12 pt-5 px-6 text-primary text-2xl font-mono ">
               <h2>Popular</h2>
             </div>
-            <div className="w-full h-auto flex flex-col gap-3">
+            <div className="w-full h-auto flex flex-col gap-3 pt-5">
               {artistPopularMusic?.map((item, index) => (
-                <AlbumMusicItem item={item} index={index} />
+                <Music item={item} index={index} whichMusic={artistPopularMusic} />
               ))}
             </div>
           </div>
