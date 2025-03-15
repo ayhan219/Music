@@ -6,6 +6,7 @@ import Music from "../components/Music";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlbumMusic } from "../features/MusicSlice";
 import { RootState } from "../app/store";
+import ToolsForMusic from "../components/ToolsForMusic";
 
 interface AlbumMusic {
   artist: {
@@ -53,19 +54,22 @@ const MusicPage = () => {
       <div className="w-full h-[90%] bg-primary">
         {!loading ? (
           <>
-            <div className="w-full h-auto p-5 flex ">
-              <div className="w-full h-[250px] flex   items-center gap-4 px-10 rounded-lg  relative ">
+            <div className="w-full h-auto  flex ">
+              <div className="w-full h-[250px] flex items-center px-14 gap-6 rounded-lg relative overflow-hidden shadow-lg">
+                <div className="w-[300px] h-full p-1 rounded-lg ">
+                  <img className="w-full h-full object-cover" src={albumMusic?.cover_xl} alt="" />
+                </div>
                 <img
-                  className="w-[200px] h-[200px]"
+                  className="w-full h-full object-cover absolute opacity-50 blur-md"
                   src={albumMusic?.cover_xl}
-                  alt=""
+                  alt="Album cover"
                 />
-                <div className="text-primary font-bold font-mono flex flex-col gap-4">
-                  <h3>Open For Public</h3>
-                  <h1 className="text-3xl">{albumMusic?.title}</h1>
+                <div className="text-white font-bold font-mono flex flex-col gap-4 p-6 relative z-10">
+                  <h3 className="text-lg">Open For Public</h3>
+                  <h1 className="text-4xl sm:text-5xl">{albumMusic?.title}</h1>
                   <div>
-                    <p>
-                      Ayhan - {albumMusic?.tracks?.data.length} songs duration:{" "}
+                    <p className="text-lg">
+                      Ayhan - {albumMusic?.tracks?.data.length} songs, duration:{" "}
                       {albumMusic?.duration
                         ? (albumMusic.duration / 60).toFixed(0)
                         : 0}{" "}
@@ -73,12 +77,14 @@ const MusicPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-primary text-7xl">
+                <div className="text-white text-6xl sm:text-7xl absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
                   <ImMusic />
                 </div>
               </div>
             </div>
+            
             <div className="px-16 pt-4">
+            <ToolsForMusic />
               <div className="w-full border-b border-gray-600">
                 <h1 className="text-primary font-bold font-mono text-xl">
                   Musics
@@ -87,8 +93,8 @@ const MusicPage = () => {
             </div>
 
             <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
-              {albumMusic?.tracks?.data.map((item: AlbumMusic) => (
-                <Music item={item} />
+              {albumMusic?.tracks?.data.map((item: AlbumMusic,index) => (
+                <Music item={item} index={index} whichMusic={albumMusic?.tracks?.data} />
               ))}
             </div>
           </>
