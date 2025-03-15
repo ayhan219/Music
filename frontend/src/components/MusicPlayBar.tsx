@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaVolumeMute } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdPause } from "react-icons/io";
-import { IoMusicalNote, IoVolumeHighSharp } from "react-icons/io5";
+import { IoVolumeHighSharp } from "react-icons/io5";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { RxLoop } from "react-icons/rx";
 import { VscArrowSwap } from "react-icons/vsc";
@@ -149,13 +149,13 @@ const MusicPlayBar = () => {
 
 
   return (
-    <div className="w-full h-24 bg-[#212124] fixed bottom-0 shadow-lg flex justify-between">
-      <div className="w-[500px] h-full flex items-center px-10 ">
-        <div className="text-primary text-5xl">
-          <IoMusicalNote />
+    <div onClick={()=>console.log(currentMusicAlbum)} className="w-full h-24 bg-[#212124] fixed bottom-0 shadow-lg flex justify-between">
+      <div className="w-[500px] h-full flex items-center px-10 gap-4 ">
+        <div className="w-[80px] h-[80px] rounded-lg">
+         <img className="w-full h-full object-cover rounded-lg" src={currentMusic?.album.cover_medium} alt="" />
         </div>
-        <div>
-          <p className="text-primary font-bold text-xs">
+        <div className="flex flex-col gap-2">
+          <p className="text-primary font-bold text-sm">
             {currentMusic?.title}
           </p>
           <p className="text-xs text-gray-500 font-bold">
