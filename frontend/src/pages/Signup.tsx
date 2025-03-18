@@ -1,8 +1,46 @@
 import { FcGoogle } from "react-icons/fc";
 import mImage from "../assets/img.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Signup = () => {
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rePassword, setRePassword] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    if (!username || !password || !email || !rePassword) {
+      toast.error("Fill all fields");
+      return;
+    }
+
+    if (password !== rePassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/auth/signup", {
+        username,
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        toast.success("Signup successful!");
+        navigate("/login");
+      }
+    } catch (error: any) {
+      console.log(error);
+      console.log("Signup Error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || "Signup failed");
+    }
+  };
+
   return (
     <div className="w-full h-screen bg-primary flex items-center justify-center">
       <div className="w-[1000px] h-[800px] flex rounded-xl shadow-xl">
@@ -36,6 +74,9 @@ const Signup = () => {
                 Username
               </label>
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUsername(e.target.value)
+                }
                 className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
                 placeholder="Enter your username"
@@ -46,6 +87,9 @@ const Signup = () => {
                 Email
               </label>
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
                 className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="email"
                 placeholder="Enter your email"
@@ -56,6 +100,9 @@ const Signup = () => {
                 Password
               </label>
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
                 className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="password"
                 placeholder="Enter your password"
@@ -66,16 +113,21 @@ const Signup = () => {
                 Re-Password
               </label>
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setRePassword(e.target.value)
+                }
                 className="w-full h-12 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="password"
                 placeholder="Confirm your password"
               />
             </div>
           </div>
-          
 
           <div className="w-full mt-6">
-            <button className="w-full h-12 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
+            <button
+              onClick={handleSignup}
+              className="w-full h-12 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300"
+            >
               Create Account
             </button>
           </div>
