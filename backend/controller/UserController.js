@@ -47,10 +47,18 @@ const login = async (req, res) => {
       if (!isPasswordMatch) {
         return res.status(400).json({ message: "invalid email or password" });
       }
+      delete user.password;
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      return res.status(200).json({user, token});
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 3600000,
+      });
+      return res.status(200).json(user);
     });
   } catch (error) {
     return res.status(500).json({ message: "server error" });
