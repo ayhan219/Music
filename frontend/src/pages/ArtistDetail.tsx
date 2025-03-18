@@ -22,8 +22,8 @@ const ArtistDetail = () => {
 
   if (status === "loading")
     return (
-      <div className="flex justify-center items-center h-[90%] bg-primary text-white">
-        Loading...
+      <div className="flex justify-center items-center space-x-2 bg-primary h-[90%]">
+        <div className="w-12 h-12 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
       </div>
     );
   if (status === "failed")
@@ -34,9 +34,7 @@ const ArtistDetail = () => {
     );
 
   return (
-    <div
-      className="w-full h-[90vh] bg-primary text-white"
-    >
+    <div className="w-full h-[90vh] bg-primary text-white">
       <div className="w-full h-auto  overflow-y-auto max-h-[90vh] scrollbar-custom">
         <div className="relative w-full h-[50vh] flex items-center justify-center px-8">
           <img
@@ -71,7 +69,11 @@ const ArtistDetail = () => {
             </div>
             <div className="w-full h-auto flex flex-col gap-3 pt-5">
               {artistPopularMusic?.map((item, index) => (
-                <Music item={item} index={index} whichMusic={artistPopularMusic} />
+                <Music
+                  item={item}
+                  index={index}
+                  whichMusic={artistPopularMusic}
+                />
               ))}
             </div>
           </div>
