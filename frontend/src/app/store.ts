@@ -3,13 +3,15 @@ import albumMusicReducer from "../features/MusicSlice"
 import musicPlayerReducer from "../features/PlayingMusicSlice"
 import  generalSliceReducer  from "../features/generalSlice";
 import artistSliceReducer from "../features/ArtistSlice"
+import userSliceReducer from "../features/UserSlice"
 
 export const store = configureStore({
     reducer:{
         albumMusic:albumMusicReducer,
         musicPlayer: musicPlayerReducer,
         generalData:generalSliceReducer,
-        artist:artistSliceReducer
+        artist:artistSliceReducer,
+        userSlice:userSliceReducer
     }
 })
 
