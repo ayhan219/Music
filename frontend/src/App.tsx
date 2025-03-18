@@ -12,12 +12,14 @@ import MusicPage from "./pages/MusicPage";
 import ArtistDetail from "./pages/ArtistDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
 
   return (
     <BrowserRouter>
+     <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
