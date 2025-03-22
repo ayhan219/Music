@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
-import { FaMusic, FaRupeeSign } from "react-icons/fa";
+import { FaArrowUp, FaMusic, FaRupeeSign } from "react-icons/fa";
 import { MdOutlineVideoStable } from "react-icons/md";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ const Sidebar = () => {
           onClick={() => setOpenMenu(!openMenu)}
           className="text-white text-xl font-bold cursor-pointer"
         >
-          <HiDotsHorizontal />
+          {!openMenu && <HiDotsHorizontal />}
         </div>
       </div>
       <div className="w-full h-auto flex p-7">
@@ -126,30 +126,42 @@ const Sidebar = () => {
         </div>
       </div>
       {openMenu && (
-        <div className="w-full h-32 top-16  bg-primary absolute ">
-          {user?.id ? ( 
-            <div className="w-full h-full p-4">
-              <div onClick={()=>dispatch(logoutUser())} className="text-primary flex items-center gap-2 cursor-pointer">
-                <CiLogout />
-                <p>Logout</p>
+        <div className="w-full bg-[#1F1F22] h-40 top-16 bg-gradient-to-r from-primary to-primary-dark absolute rounded-xl shadow-2xl flex justify-center items-center transition-all duration-300">
+          {user?.id ? (
+            <div className="w-full h-full flex justify-center items-center px-6 py-4">
+              <div
+                onClick={() => dispatch(logoutUser())}
+                className="text-white flex items-center gap-3 cursor-pointer hover:bg-gray-800/50 px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg"
+              >
+                <CiLogout className="text-2xl" />
+                <p className="font-semibold text-lg">Logout</p>
               </div>
             </div>
           ) : (
-            <div className="w-full h-full flex items-center gap-5 pt-5 flex-col">
-              <div className="text-primary flex items-center gap-3">
-                <CiLogin className="text-3xl" />
-                <Link to="/login" className="text-primary font-bold">
+            <div className="w-full h-full flex flex-col items-center justify-center gap-6">
+              <div className="text-white flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300">
+                <CiLogin className="text-3xl hover:text-hover transition-all duration-300" />
+                <Link
+                  to="/login"
+                  className="font-bold text-xl hover:text-hover transition-all duration-300"
+                >
                   Login
                 </Link>
               </div>
-              <div className="text-primary flex items-center gap-3 group cursor-pointer">
-                <FaRupeeSign className="text-3xl group-hover:text-hover" />
+              <div className="text-white flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300 group">
+                <FaRupeeSign className="text-3xl group-hover:text-hover transition-all duration-300" />
                 <Link
                   to="/signup"
-                  className="text-primary font-bold group-hover:text-hover"
+                  className="font-bold text-xl group-hover:text-hover transition-all duration-300"
                 >
                   Signup
                 </Link>
+              </div>
+              <div className="w-full h-auto text-white text-base flex justify-end pr-7 items-center">
+                <FaArrowUp
+                  onClick={() => setOpenMenu(false)}
+                  className="cursor-pointer hover:text-hover transition-all duration-300"
+                />
               </div>
             </div>
           )}
