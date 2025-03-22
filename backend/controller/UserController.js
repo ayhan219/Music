@@ -48,9 +48,13 @@ const login = async (req, res) => {
         return res.status(400).json({ message: "invalid email or password" });
       }
       delete user.password;
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
 
       res.cookie("token", token, {
         httpOnly: true,
@@ -65,7 +69,18 @@ const login = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
+const logout = async(req,res)=>{
+  res.clearCookie("token");
+  res.status(200).json({message:"logout successfull"});
+}
+
 module.exports = {
   signup,
   login,
+  getUser,
+  logout
 };
