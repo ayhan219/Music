@@ -6,16 +6,24 @@ import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
 import { FaMusic, FaRupeeSign } from "react-icons/fa";
 import { MdOutlineVideoStable } from "react-icons/md";
-import { CiLogin } from "react-icons/ci";
+import { CiLogin, CiLogout } from "react-icons/ci";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { useAppDispatch } from "../app/hooks";
+import { logoutUser } from "../features/UserSlice";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState<string>("home");
+  const user = useSelector((state: RootState) => state.userSlice.user);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   return (
     <div className="w-[300px] h-full bg-[#212124] sticky top-0">
       <div className="w-full h-auto flex justify-between items-center p-7">
         <div className="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center">
-          <p className="text-xs text-white ">GI</p>
+          <p className="text-xs text-white ">
+            {user ? user.username?.slice(0, 2).toUpperCase() : ""}
+          </p>
         </div>
         <div
           onClick={() => setOpenMenu(!openMenu)}
@@ -117,23 +125,36 @@ const Sidebar = () => {
           <p className="text-[#9898A6] text-sm">MY PLAYLIST</p>
         </div>
       </div>
-      {openMenu && <div className="w-full h-32 top-16  bg-primary absolute ">
-        <div className="w-full h-full flex items-center gap-5 pt-5 flex-col">
-            <div className="text-primary flex items-center gap-3">
-            <CiLogin className="text-3xl" />
-                <Link to={"/login"} className="text-primary font-bold">
-                 Login
-                </Link>
+      {openMenu && (
+        <div className="w-full h-32 top-16  bg-primary absolute ">
+          {user?.id ? ( 
+            <div className="w-full h-full p-4">
+              <div onClick={()=>dispatch(logoutUser())} className="text-primary flex items-center gap-2 cursor-pointer">
+                <CiLogout />
+                <p>Logout</p>
+              </div>
             </div>
-            <div className="text-primary flex items-center gap-3 hover:text-hover">
-            <FaRupeeSign className="text-3xl"  /> 
-                <Link to={"/signup"} className="text-primary font-bold">
-                 Signup
+          ) : (
+            <div className="w-full h-full flex items-center gap-5 pt-5 flex-col">
+              <div className="text-primary flex items-center gap-3">
+                <CiLogin className="text-3xl" />
+                <Link to="/login" className="text-primary font-bold">
+                  Login
                 </Link>
+              </div>
+              <div className="text-primary flex items-center gap-3 group cursor-pointer">
+                <FaRupeeSign className="text-3xl group-hover:text-hover" />
+                <Link
+                  to="/signup"
+                  className="text-primary font-bold group-hover:text-hover"
+                >
+                  Signup
+                </Link>
+              </div>
             </div>
-
+          )}
         </div>
-        </div>}
+      )}
     </div>
   );
 };
