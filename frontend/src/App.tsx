@@ -13,9 +13,17 @@ import ArtistDetail from "./pages/ArtistDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { ToastContainer } from "react-toastify";
+import { useAppDispatch } from "./app/hooks";
+import { useEffect } from "react";
+import { getUser } from "./features/UserSlice";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
+  const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+    dispatch(getUser());
+  },[])
 
   return (
     <BrowserRouter>
