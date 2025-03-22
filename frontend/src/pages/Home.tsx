@@ -38,7 +38,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full  h-[90%] overflow-y-auto bg-primary">
+    <div className="w-full  h-[90%] overflow-y-hidden bg-primary">
       <div className="px-24 w-full flex flex-col  gap-8">
         {!loading ? (
           <>
@@ -63,7 +63,7 @@ const Home = () => {
                 </div>
               </div>
               <motion.div
-                className="flex flex-row justify-between pt-3 overflow-x-auto"
+                className="flex flex-row gap-2 pt-3 overflow-x-auto"
                 key={currentIndex}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}

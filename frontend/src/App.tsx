@@ -29,7 +29,7 @@ function App() {
           element={
             <div className="flex w-full h-screen">
               <Sidebar />
-              <div className="w-full flex-1 h-auto bg-black">
+              <div className="w-[calc(100%-300px)] flex-1 h-auto bg-black">
                 <SearchbarArea />
                 <Routes>
                   <Route path="/" element={<Home />} />
