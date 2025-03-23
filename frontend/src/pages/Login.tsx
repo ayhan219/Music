@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   useEffect(()=>{
-    if(user){
+    if(user===null){
       navigate("/")
     }
   })
