@@ -2,16 +2,18 @@ import { FcGoogle } from "react-icons/fc";
 import mImage from "../assets/img.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setUser } from "../features/UserSlice";
+import { RootState } from "../app/store";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector((state:RootState)=>state.userSlice.user);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -42,6 +44,12 @@ const Login = () => {
       toast.error(error.response?.data?.message || "login failed");
     }
   };
+
+  useEffect(()=>{
+    if(user){
+      navigate("/")
+    }
+  })
 
   return (
     <div className="w-full h-screen bg-primary flex items-center justify-center">
