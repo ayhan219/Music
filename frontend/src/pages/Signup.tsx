@@ -45,7 +45,7 @@ const Signup = () => {
   };
 
   useEffect(()=>{
-      if(user){
+      if(user===null){
         navigate("/")
       }
     })
