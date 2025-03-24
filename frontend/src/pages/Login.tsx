@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useAppSelector((state:RootState)=>state.userSlice.user);
+  const user = useAppSelector((state: RootState) => state.userSlice.user);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -31,11 +31,10 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      
+
       if (response.status === 200) {
         toast.success("login successfull");
-        dispatch(setUser(response.data))
+        dispatch(setUser(response.data));
         navigate("/");
       }
     } catch (error: any) {
@@ -45,11 +44,12 @@ const Login = () => {
     }
   };
 
-  useEffect(()=>{
-    if(user===null){
-      navigate("/")
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
     }
-  })
+
+  },[]);
 
   return (
     <div className="w-full h-screen bg-primary flex items-center justify-center">
@@ -68,7 +68,12 @@ const Login = () => {
           </div>
 
           <div className="w-full mt-6 mb-6">
-            <div className="w-full h-14 bg-white rounded-lg flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
+            <div
+              onClick={() => {
+                window.location.href = "http://localhost:5000/auth/google";
+              }}
+              className="w-full h-14 bg-white rounded-lg flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+            >
               <FcGoogle className="text-2xl mr-3" />
               <p className="text-lg font-semibold text-gray-700">
                 Login with Google
