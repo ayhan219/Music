@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import { useAppDispatch } from "./app/hooks";
 import { useEffect } from "react";
 import { getUser } from "./features/UserSlice";
+import Redirect from "./pages/Redirect";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/redirect" element={<Redirect />} />
 
         <Route
           path="*"
