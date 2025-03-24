@@ -79,7 +79,6 @@ const logout = async (req, res) => {
 };
 
 const authGoogle = async (req, res, next) => {
-
   passport.authenticate("google", { scope: ["profile", "email"] })(
     req,
     res,
@@ -94,7 +93,7 @@ const googleCallback = async (req, res) => {
     }
 
     const userData = {
-      username: user.displayName.replace(/\s+/g, "_"),
+      username: user.displayName,
       email: user.emails[0].value,
     };
 
@@ -116,14 +115,39 @@ const googleCallback = async (req, res) => {
                   .status(500)
                   .json({ message: "Error inserting user", err });
               }
-              res.redirect("http://localhost:5173/redirect");
+
+              const getSqlUser = "select * from user where id=?";
+              db.query(getSqlUser, [result.insertId], (err, results) => {
+                if (err) {
+                  return res
+                    .status(500)
+                    .json({ message: "Error fetching user", err });
+                }
+                const token = jwt.sign(
+                  {
+                    id: results[0].id,
+                    username: results[0].username,
+                  },
+                  process.env.JWT_SECRET,
+                  {
+                    expiresIn: "1h",
+                  }
+                );
+                res.cookie("token", token, {
+                  httpOnly: true,
+                  secure: true,
+                  sameSite: "strict",
+                  maxAge: 3600000,
+                });
+                res.redirect("http://localhost:5173/redirect");
+              });
             }
           );
         } else {
           const token = jwt.sign(
             {
               id: results[0].id,
-              username: results[0].username.replace(/\s+/g, "_"),
+              username: results[0].username,
             },
             process.env.JWT_SECRET,
             {
@@ -134,7 +158,7 @@ const googleCallback = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
-            secure: process.env.NODE_ENV === 'production',
+            secure: process.env.NODE_ENV === "production",
             maxAge: 3600000,
           });
           res.redirect("http://localhost:5173/redirect");
