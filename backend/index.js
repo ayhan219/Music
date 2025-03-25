@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const authRouter = require("./router/UserRouter");
+const musicRouter = require("./router/MusicRouter");
 dotenv.config();
 const app = express();
 const cookie = require("cookie-parser")
@@ -22,6 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRouter);
+app.use("/music",musicRouter)
 
 app.listen(process.env.port, async () => {
   console.log(`server listening on port ${process.env.port}`);
