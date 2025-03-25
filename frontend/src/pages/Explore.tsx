@@ -34,7 +34,7 @@ const Explore = () => {
         <div className="grid  custom-grid justify-center  space-y-8 pt-10 ">
             {
                 colors.map((color,index)=>(
-                    <ExploreItem color={color} name={names[index]} />
+                    <ExploreItem color={color} index={index} name={names[index]} />
                 ))
             }
             
