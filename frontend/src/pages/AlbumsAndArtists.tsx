@@ -30,7 +30,6 @@ const AlbumsAndArtists = () => {
     }
   };
 
-
   useEffect(() => {
     dispatch(getPopularArtist());
   }, []);
@@ -67,7 +66,7 @@ const AlbumsAndArtists = () => {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             {albums.slice(currentIndex, currentIndex + 6).map((item, index) => (
-              <AlbumPageData item={item} index={index} />
+              <AlbumPageData key={item.id || index} item={item} index={index} />
             ))}
           </motion.div>
         </div>
@@ -80,13 +79,14 @@ const AlbumsAndArtists = () => {
         <div className="w-full h-auto pt-5 flex">
           <motion.div
             className="flex flex-row justify-between pt-3 overflow-x-auto"
+            key={currentIndex}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             {artist.slice(0, 6).map((item, index) => (
-              <Artist item={item} index={index} />
+              <Artist key={item.artist.id || index} item={item} index={index} />
             ))}
           </motion.div>
         </div>
