@@ -11,14 +11,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
 import { logoutUser } from "../features/UserSlice";
+import { IoMdAdd } from "react-icons/io";
+import CreatePlaylist from "./CreatePlaylist";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState<string>("home");
   const user = useSelector((state: RootState) => state.userSlice.user);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [openCreatePlaylist,setOpenCreatePlaylist] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   return (
-    <div className="w-[300px] h-full bg-[#212124] sticky top-0">
+    <div className="w-[300px] h-full bg-[#212124] sticky top-0 z-[2000]">
       <div className="w-full h-auto flex justify-between items-center p-7">
         <div className="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center">
           <p className="text-xs text-white ">
@@ -121,8 +124,9 @@ const Sidebar = () => {
       </div>
 
       <div className="w-full h-auto pt-5">
-        <div className="p-4">
-          <p className="text-[#9898A6] text-sm">MY PLAYLIST</p>
+        <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
+          <p className=" text-sm">MY PLAYLIST</p>
+          <IoMdAdd onClick={()=>setOpenCreatePlaylist(true)}  className="text-xl cursor-pointer" />
         </div>
       </div>
       {openMenu && (
@@ -167,6 +171,7 @@ const Sidebar = () => {
           )}
         </div>
       )}
+      {openCreatePlaylist && <CreatePlaylist setOpenCreatePlaylist={setOpenCreatePlaylist} />} 
     </div>
   );
 };
