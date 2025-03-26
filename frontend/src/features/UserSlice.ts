@@ -1,10 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+interface Playlist {
+  id: number;
+  user_id: number;
+  playlist_name: string;
+  playlist_description: string;
+  created_at: string;
+}
+
 interface User {
   id?: string;
   username?: string;
   email?: string;
+  created_at?: string;
+  playlists?: Playlist[];
 }
 
 interface InitialState {
