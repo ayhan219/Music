@@ -33,7 +33,13 @@ const login = async (req, res) => {
     return res.status(400).json({ message: "provide all area" });
   }
   try {
-    const sql = "select * from user where email=?";
+    const sql = `SELECT u.id AS user_id, u.username, u.email,u.password, u.created_at,
+       p.playlist_name, p.playlist_description
+       FROM user u
+       LEFT JOIN playlists p ON u.id = p.user_id
+       WHERE u.email = ?;
+      `;
+
     db.query(sql, [email], async (err, results) => {
       if (err) {
         return res.status(500).json({ message: "server error" });
@@ -41,13 +47,33 @@ const login = async (req, res) => {
       if (results.length === 0) {
         return res.status(401).json({ message: "invalid email or password" });
       }
-      const user = results[0];
+      console.log("results", results);
 
-      const isPasswordMatch = await bcrypt.compare(password, user.password);
+      const user = {
+        id: results[0].user_id,
+        username: results[0].username,
+        email: results[0].email,
+        password: results[0].password,
+        created_at: results[0].created_at,
+        playlists: [],
+      };
+
+      results.forEach((row) => {
+        if (row.playlist_name) {
+          user.playlists.push({
+            name: row.playlist_name,
+            description: row.playlist_description,
+          });
+        }
+      });
+
+      const isPasswordMatch = await bcrypt.compare(
+        password,
+        results[0].password
+      );
       if (!isPasswordMatch) {
         return res.status(400).json({ message: "invalid email or password" });
       }
-      delete user.password;
       const token = jwt.sign(
         { id: user.id, username: user.username },
         process.env.JWT_SECRET,
@@ -62,6 +88,8 @@ const login = async (req, res) => {
         sameSite: "strict",
         maxAge: 3600000,
       });
+      console.log("checking user", user);
+
       return res.status(200).json(user);
     });
   } catch (error) {
