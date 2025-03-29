@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
@@ -19,6 +19,7 @@ const Sidebar = () => {
   const user = useSelector((state: RootState) => state.userSlice.user);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [openCreatePlaylist,setOpenCreatePlaylist] = useState<boolean>(false);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
     <div className="w-[300px] h-full bg-[#212124] sticky top-0 z-[2000]">
@@ -126,7 +127,14 @@ const Sidebar = () => {
       <div className="w-full h-auto pt-5">
         <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
           <p className=" text-sm">MY PLAYLIST</p>
-          <IoMdAdd onClick={()=>setOpenCreatePlaylist(true)}  className="text-xl cursor-pointer" />
+          <IoMdAdd onClick={()=>{
+            if(user.id){
+              setOpenCreatePlaylist(true)
+            }
+            else{
+              navigate("/login")
+            }
+          }}  className="text-xl cursor-pointer" />
         </div>
       </div>
       {openMenu && (
