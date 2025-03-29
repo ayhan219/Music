@@ -45,8 +45,8 @@ const verifyToken = (req, res, next) => {
       results.forEach(row => {
         if (row.playlist_name) {  
           user.playlists.push({
-            name: row.playlist_name,
-            description: row.playlist_description
+            playlist_name: row.playlist_name,
+            playlist_description: row.playlist_description
           });
         }
       });
