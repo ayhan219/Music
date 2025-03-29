@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
-import { FaArrowUp, FaMusic, FaRupeeSign } from "react-icons/fa";
+import { FaArrowUp, FaCompactDisc, FaMusic, FaRupeeSign } from "react-icons/fa";
 import { MdOutlineVideoStable } from "react-icons/md";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector } from "react-redux";
@@ -124,7 +124,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="w-full h-auto pt-5">
+      <div onClick={()=>console.log(user)} className="w-full h-auto pt-5">
         <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
           <p className=" text-sm">MY PLAYLIST</p>
           <IoMdAdd onClick={()=>{
@@ -135,6 +135,16 @@ const Sidebar = () => {
               navigate("/login")
             }
           }}  className="text-xl cursor-pointer" />
+        </div>
+        <div className="w-full h-auto flex flex-col gap-6 px-6">
+        {
+          user?.playlists?.map((item,index)=>(
+            <div key={index} className="text-primary font-bold cursor-pointer flex items-center gap-2">
+              <FaCompactDisc />
+              <p>{item.playlist_name}</p>
+            </div>
+          ))
+        }
         </div>
       </div>
       {openMenu && (
