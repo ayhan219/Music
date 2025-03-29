@@ -61,8 +61,10 @@ const login = async (req, res) => {
       results.forEach((row) => {
         if (row.playlist_name) {
           user.playlists.push({
+            playlist_id: row.playlist_id,
             playlist_name: row.playlist_name,
             playlist_description: row.playlist_description,
+            user_id:row.user_id
           });
         }
       });
@@ -88,8 +90,6 @@ const login = async (req, res) => {
         sameSite: "strict",
         maxAge: 3600000,
       });
-      console.log("checking user", user);
-
       return res.status(200).json(user);
     });
   } catch (error) {

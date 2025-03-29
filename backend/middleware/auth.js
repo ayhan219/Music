@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
     
     const sql = `
       SELECT u.id AS user_id, u.username, u.email, u.created_at,
-             p.playlist_name, p.playlist_description
+             p.playlist_name, p.playlist_description, p.id
       FROM user u
       LEFT JOIN playlists p ON u.id = p.user_id
       WHERE u.id = ?;
@@ -41,12 +41,15 @@ const verifyToken = (req, res, next) => {
         created_at:results[0].created_at,
         playlists: []
       };
+      
 
       results.forEach(row => {
         if (row.playlist_name) {  
           user.playlists.push({
+            playlist_id: row.id,
             playlist_name: row.playlist_name,
-            playlist_description: row.playlist_description
+            playlist_description: row.playlist_description,
+            user_id:row.user_id
           });
         }
       });
