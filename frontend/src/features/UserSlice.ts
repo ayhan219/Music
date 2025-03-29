@@ -6,6 +6,7 @@ interface Playlist {
   user_id: number;
   playlist_name: string;
   playlist_description: string;
+  playlist_id:string,
   created_at: string;
 }
 
@@ -65,8 +66,11 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    setPlaylistMusic:(state,action: PayloadAction<Playlist>)=>{
+      state.user.playlists?.push(action.payload);
+    }
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser,setPlaylistMusic } = userSlice.actions;
 export default userSlice.reducer;
