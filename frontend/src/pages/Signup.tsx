@@ -14,8 +14,10 @@ const Signup = () => {
   const [rePassword, setRePassword] = useState<string>("");
   const navigate = useNavigate();
   const user = useAppSelector((state:RootState)=>state.userSlice.user);
+  const [loading,setLoading] = useState<boolean>(false);
 
   const handleSignup = async () => {
+    setLoading(true);
     if (!username || !password || !email || !rePassword) {
       toast.error("Fill all fields");
       return;
@@ -41,6 +43,8 @@ const Signup = () => {
       console.log(error);
       console.log("Signup Error:", error.response?.data || error.message);
       toast.error(error.response?.data?.message || "Signup failed");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -133,11 +137,20 @@ const Signup = () => {
           </div>
 
           <div className="w-full mt-6">
-            <button
+          <button
+              disabled={loading}
               onClick={handleSignup}
-              className="w-full h-12 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300"
+              className={`w-full h-12 text-center flex justify-center items-center bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300 ${
+                loading
+                  ? "bg-[#1AA34A] cursor-not-allowed opacity-75"
+                  : "bg-[#1DB954] hover:bg-[#1AA34A]"
+              }`}
             >
-              Create Account
+              {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Sign Up"
+            )}
             </button>
           </div>
           <div className="w-full text-sm flex items-center pt-5 justify-center">

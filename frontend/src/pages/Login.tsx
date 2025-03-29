@@ -14,8 +14,10 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state: RootState) => state.userSlice.user);
+  const [loading,setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     if (!email || !password) {
       toast.error("fill all area");
       return;
@@ -41,6 +43,8 @@ const Login = () => {
       console.log(error);
       console.log("Signup Error:", error.response?.data || error.message);
       toast.error(error.response?.data?.message || "login failed");
+    }finally{
+      setLoading(true);
     }
   };
 
@@ -112,10 +116,19 @@ const Login = () => {
 
           <div className="w-full mt-10">
             <button
+              disabled={loading}
               onClick={handleLogin}
-              className="w-full h-12 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300"
+              className={`w-full h-12 text-center flex justify-center items-center bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300 ${
+                loading
+                  ? "bg-[#1AA34A] cursor-not-allowed opacity-75"
+                  : "bg-[#1DB954] hover:bg-[#1AA34A]"
+              }`}
             >
-              Login
+              {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Login"
+            )}
             </button>
           </div>
           <div className="w-full text-sm flex items-center pt-9 justify-center">
