@@ -34,7 +34,7 @@ const login = async (req, res) => {
   }
   try {
     const sql = `SELECT u.id AS user_id, u.username, u.email,u.password, u.created_at,
-       p.playlist_name, p.playlist_description
+       p.playlist_name, p.playlist_description,p.id
        FROM user u
        LEFT JOIN playlists p ON u.id = p.user_id
        WHERE u.email = ?;
@@ -58,13 +58,15 @@ const login = async (req, res) => {
         playlists: [],
       };
 
+      console.log("results", results);
+
       results.forEach((row) => {
         if (row.playlist_name) {
           user.playlists.push({
-            playlist_id: row.playlist_id,
+            playlist_id: row.id,
             playlist_name: row.playlist_name,
             playlist_description: row.playlist_description,
-            user_id:row.user_id
+            user_id: row.user_id,
           });
         }
       });
