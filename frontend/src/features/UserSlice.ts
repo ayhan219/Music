@@ -20,10 +20,12 @@ interface User {
 
 interface InitialState {
   user: User;
+  currentPlaylist: Partial<Playlist>;
 }
 
 const initialState: InitialState = {
   user: {},
+  currentPlaylist:{}
 };
 
 export const getUser = createAsyncThunk(
@@ -68,9 +70,12 @@ export const userSlice = createSlice({
     },
     setPlaylistMusic:(state,action: PayloadAction<Playlist>)=>{
       state.user.playlists?.push(action.payload);
+    },
+    setCurrentPlaylist:(state,action:PayloadAction<Playlist>)=>{
+      state.currentPlaylist = action.payload;
     }
   },
 });
 
-export const { setUser,setPlaylistMusic } = userSlice.actions;
+export const { setUser,setPlaylistMusic,setCurrentPlaylist } = userSlice.actions;
 export default userSlice.reducer;
