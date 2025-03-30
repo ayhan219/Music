@@ -21,6 +21,7 @@ interface AlbumData {
   title: string;
 }
 
+
 interface AlbumMusic {
   artist: {
     name: string;
@@ -51,6 +52,7 @@ interface AlbumMusicState {
   loading: boolean;
   error: string;
   artistData: ArtistData[];
+  playlistMusics:AlbumData[]
 }
 
 const initialState: AlbumMusicState = {
@@ -61,7 +63,26 @@ const initialState: AlbumMusicState = {
   error: "",
   popularAlbums: [],
   artistData: [],
+  playlistMusics:[]
 };
+
+
+
+export const getPlaylistMusics = createAsyncThunk(
+  "albumMusic/getPlaylistMusics",
+  async ({ user_id, playlist_id }: { user_id: number; playlist_id: number }, { rejectWithValue }) => {
+    
+    try {
+      const response = await axios.get(`http://localhost:5000/music/playlistmusics`, {
+        params: { user_id, playlist_id }, 
+      });
+      return response.data; 
+    } catch (error: any) {
+      console.error("Error fetching playlist musics:", error);
+      return rejectWithValue(error.response?.data || "An error occurred");
+    }
+  }
+);
 
 export const getPopularAlbums = createAsyncThunk(
   "albumMusic/getPopularAlbums",
@@ -133,6 +154,12 @@ const albumMusicSlice = createSlice({
       .addCase(getPopularArtist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch artist";
+      })
+      .addCase(getPlaylistMusics.fulfilled, (state, action) => {
+        state.playlistMusics = action.payload || [];
+      })
+      .addCase(getPlaylistMusics.rejected, (state, action) => {
+        state.error = action.payload as string;
       });
   },
 });
