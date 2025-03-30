@@ -149,10 +149,10 @@ const MusicPlayBar = () => {
 
 
   return (
-    <div onClick={()=>console.log(currentMusicAlbum)} className="w-full h-24 bg-[#212124] fixed bottom-0 shadow-lg flex justify-between">
+    <div  className="w-full h-24 bg-[#212124] fixed bottom-0 z-[2100] shadow-lg flex justify-between">
       <div className="w-[500px] h-full flex items-center px-10 gap-4 ">
         <div className="w-[80px] h-[80px] rounded-lg">
-         <img className="w-full h-full object-cover rounded-lg" src={currentMusic?.album.cover_medium} alt="" />
+         <img className="w-full h-full object-cover rounded-lg" src={`https://cdn-images.dzcdn.net/images/cover/${currentMusic?.md5_image}/500x500-000000-80-0-0.jpg`} alt="" />
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-primary font-bold text-sm">
