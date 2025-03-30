@@ -10,7 +10,7 @@ import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
-import { logoutUser } from "../features/UserSlice";
+import { logoutUser, setCurrentPlaylist } from "../features/UserSlice";
 import { IoMdAdd } from "react-icons/io";
 import CreatePlaylist from "./CreatePlaylist";
 
@@ -139,7 +139,10 @@ const Sidebar = () => {
         <div className="w-full h-auto flex flex-col gap-6 px-6">
         {
           user?.playlists?.map((item,index)=>(
-            <div key={index} className="text-primary font-bold cursor-pointer flex items-center gap-2">
+            <div onClick={()=>{
+              navigate(`/playlist/${item.playlist_id}`)
+              dispatch(setCurrentPlaylist(item))
+            }} key={index} className="text-primary font-bold cursor-pointer flex items-center gap-2">
               <FaCompactDisc />
               <p>{item.playlist_name}</p>
             </div>
