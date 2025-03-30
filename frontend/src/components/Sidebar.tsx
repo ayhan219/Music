@@ -124,7 +124,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div onClick={()=>console.log(user)} className="w-full h-auto pt-5">
+      <div className="w-full h-auto pt-5">
         <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
           <p className=" text-sm">MY PLAYLIST</p>
           <IoMdAdd onClick={()=>{
@@ -136,7 +136,7 @@ const Sidebar = () => {
             }
           }}  className="text-xl cursor-pointer" />
         </div>
-        <div className="w-full h-auto flex flex-col gap-6 px-6">
+        <div className="w-full h-[250px]  flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
         {
           user?.playlists?.map((item,index)=>(
             <div onClick={()=>{
