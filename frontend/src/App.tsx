@@ -17,6 +17,7 @@ import { useAppDispatch } from "./app/hooks";
 import { useEffect } from "react";
 import { getUser } from "./features/UserSlice";
 import Redirect from "./pages/Redirect";
+import Playlist from "./pages/Playlist";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
@@ -48,6 +49,7 @@ function App() {
                   <Route path="/search" element={<SearchedDatas />} />
                   <Route path="/albums" element={<AlbumsAndArtists />} />
                   <Route path="/artist/:id" element={<ArtistDetail />} />
+                  <Route path="/playlist/:id" element={<Playlist />} />
                 </Routes>
               </div>
               {isMusicBarOpen && <MusicPlayBar />}
