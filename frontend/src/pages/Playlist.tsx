@@ -1,10 +1,22 @@
-import { useAppSelector } from "../app/hooks";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { RootState } from "../app/store";
 import ToolsForMusic from "../components/ToolsForMusic";
+import { getPlaylistMusics } from "../features/MusicSlice";
+import Music from "../components/Music";
 
 const Playlist = () => {
   const currentPlaylist = useAppSelector((state:RootState)=>state.userSlice.currentPlaylist)
   const user = useAppSelector((state:RootState)=>state.userSlice.user);
+  const playlistMusics = useAppSelector((state:RootState)=>state.albumMusic.playlistMusics)
+  const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+    if(user.id && currentPlaylist.playlist_id){
+      dispatch(getPlaylistMusics({ user_id: user.id, playlist_id: currentPlaylist.playlist_id }));
+    }
+    
+  },[currentPlaylist])
   return (
     <div className="w-full h-[90%] bg-primary px-2">
       <div className="w-full h-[40%] rounded-lg flex relative bg-[#2b2b31] p-10 ">
@@ -50,8 +62,10 @@ const Playlist = () => {
               </div>
             </div>
 
-            <div className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
-
+            <div  className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+              {playlistMusics?.map((item,index)=>(
+                <Music item={item} index={index} whichMusic={playlistMusics} />
+              ))}
             </div>
     </div>
   );
