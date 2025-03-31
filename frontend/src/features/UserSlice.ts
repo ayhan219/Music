@@ -6,12 +6,12 @@ interface Playlist {
   user_id: number;
   playlist_name: string;
   playlist_description: string;
-  playlist_id:string,
+  playlist_id:number,
   created_at: string;
 }
 
 interface User {
-  id?: string;
+  id?: number;
   username?: string;
   email?: string;
   created_at?: string;
