@@ -64,7 +64,7 @@ const Playlist = () => {
 
             <div  className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
               {playlistMusics?.map((item,index)=>(
-                <Music item={item} index={index} whichMusic={playlistMusics} />
+                <Music key={item.id} item={item} index={index} whichMusic={playlistMusics} />
               ))}
             </div>
     </div>
