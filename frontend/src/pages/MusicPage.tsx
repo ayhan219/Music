@@ -30,6 +30,7 @@ const MusicPage = () => {
   );
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
+  const user = useSelector((state:RootState)=>state.userSlice.user)
 
   const getDataFromId = async () => {
     setLoading(true);
@@ -69,7 +70,7 @@ const MusicPage = () => {
                   <h1 className="text-4xl sm:text-5xl">{albumMusic?.title}</h1>
                   <div>
                     <p className="text-lg">
-                      Ayhan - {albumMusic?.tracks?.data.length} songs, duration:{" "}
+                      {user.username ? user.username + ' - ' : ""} {albumMusic?.tracks?.data.length} songs, duration:{" "}
                       {albumMusic?.duration
                         ? (albumMusic.duration / 60).toFixed(0)
                         : 0}{" "}
