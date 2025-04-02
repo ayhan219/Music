@@ -80,6 +80,7 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
       playlist_id: playlist_id,
       music_name: item.title,
       artist: item.artist.name,
+      music_id:item.id,
       music_url: item.preview,
       music_image: item.md5_image,
       music_duration: item.duration,
