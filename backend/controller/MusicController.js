@@ -38,6 +38,8 @@ const createPlaylist = async (req, res) => {
 
 const addMusicToPlaylist = async (req, res) => {
   const { musicData } = req.body;
+  console.log(musicData);
+  
 
   if (Object.keys(musicData).length === 0) {
     return res.status(400).json({ message: "Provide all area" });
@@ -46,8 +48,8 @@ const addMusicToPlaylist = async (req, res) => {
   try {
     const query = `
       INSERT INTO musicdatas 
-      (user_id, playlist_id, music_name, artist, music_url, music_image, music_duration, music_rank) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      (user_id, playlist_id, music_name, artist, music_id, music_url, music_image, music_duration, music_rank) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
@@ -55,6 +57,7 @@ const addMusicToPlaylist = async (req, res) => {
       musicData.playlist_id,
       musicData.music_name,
       musicData.artist,
+      musicData.music_id,
       musicData.music_url,
       musicData.music_image,
       musicData.music_duration,
@@ -95,7 +98,7 @@ const getPlaylistMusics = async (req, res) => {
           cover_medium: row.music_image,
         },
         duration: row.music_duration,
-        id: row.id,
+        id: row.music_id,
         md5_image: row.music_image,
         preview: row.music_url,
         rank: row.music_rank,
