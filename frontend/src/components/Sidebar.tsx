@@ -127,6 +127,8 @@ const Sidebar = () => {
       <div className="w-full h-auto pt-5">
         <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
           <p className=" text-sm">MY PLAYLIST</p>
+          <div className="flex gap-4 items-center">
+            <button onClick={()=>navigate("/playlists")} className="text-xs cursor-pointer">Show all</button>
           <IoMdAdd onClick={()=>{
             if(user.id){
               setOpenCreatePlaylist(true)
@@ -135,8 +137,10 @@ const Sidebar = () => {
               navigate("/login")
             }
           }}  className="text-xl cursor-pointer" />
+          </div>
+          
         </div>
-        <div className="w-full h-[250px]  flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
+        <div className="w-full h-[300px]  flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
         {
           user?.playlists?.map((item,index)=>(
             <div onClick={()=>{
@@ -153,13 +157,19 @@ const Sidebar = () => {
       {openMenu && (
         <div className="w-full bg-[#1F1F22] h-40 top-16 bg-gradient-to-r from-primary to-primary-dark absolute rounded-xl shadow-2xl flex justify-center items-center transition-all duration-300">
           {user?.id ? (
-            <div className="w-full h-full flex justify-center items-center px-6 py-4">
+            <div className="w-full h-full flex flex-col justify-center items-center px-6 py-4">
               <div
                 onClick={() => dispatch(logoutUser())}
                 className="text-white flex items-center gap-3 cursor-pointer hover:bg-gray-800/50 px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg"
               >
                 <CiLogout className="text-2xl" />
                 <p className="font-semibold text-lg">Logout</p>
+              </div>
+              <div className="w-full h-auto text-white text-base flex justify-end pr-7 items-center">
+                <FaArrowUp
+                  onClick={() => setOpenMenu(false)}
+                  className="cursor-pointer hover:text-hover transition-all duration-300"
+                />
               </div>
             </div>
           ) : (
