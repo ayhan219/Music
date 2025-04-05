@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { getUser } from "./features/UserSlice";
 import Redirect from "./pages/Redirect";
 import Playlist from "./pages/Playlist";
+import Playlists from "./pages/Playlists";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
@@ -50,6 +51,7 @@ function App() {
                   <Route path="/albums" element={<AlbumsAndArtists />} />
                   <Route path="/artist/:id" element={<ArtistDetail />} />
                   <Route path="/playlist/:id" element={<Playlist />} />
+                  <Route path="/playlists" element={<Playlists />} />
                 </Routes>
               </div>
               {isMusicBarOpen && <MusicPlayBar />}
