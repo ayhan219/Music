@@ -2,13 +2,13 @@ import { RootState } from "../app/store";
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaVolumeMute } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoMdPause } from "react-icons/io";
-import { IoVolumeHighSharp } from "react-icons/io5";
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle, IoMdPause } from "react-icons/io";
+import {IoVolumeHighSharp } from "react-icons/io5";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { RxLoop } from "react-icons/rx";
 import { VscArrowSwap } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsPlaying, setMusicId } from "../features/PlayingMusicSlice";
+import { setHideMusicBar, setIsPlaying, setMusicId } from "../features/PlayingMusicSlice";
 
 interface AlbumMusic {
   artist: {
@@ -42,6 +42,7 @@ const MusicPlayBar = () => {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [currentMusic, setCurrentMusic] = useState<AlbumMusic | null>(null);
   const [isLooping,setIsLooping] = useState<boolean>(false);
+  const isMusicBarHidden = useSelector((state:RootState)=>state.musicPlayer.hideMusicBar)
 
   const handleMusicPlay = () => {
     if (audioRef.current) {
@@ -149,12 +150,12 @@ const MusicPlayBar = () => {
 
 
   return (
-    <div  className="w-full h-24 bg-[#212124] fixed bottom-0 z-[2100] shadow-lg flex justify-between">
-      <div className="w-[500px] h-full flex items-center px-10 gap-4 ">
-        <div className="w-[80px] h-[80px] rounded-lg">
+    <div  className={`w-full ${isMusicBarHidden ? "h-12" : "h-24"}  bg-[#212124] fixed bottom-0 z-[2100] shadow-lg flex justify-between`}>
+      <div className={`${isMusicBarHidden ? "w-[400px] h-[50px]" : "w-[500px] h-full "}  flex items-center px-10 gap-4 `}>
+        <div className={` ${isMusicBarHidden ? "w-[50px] h-[40px]" :"h-[80px] w-[80px]" } rounded-lg`}>
          <img className="w-full h-full object-cover rounded-lg" src={`https://cdn-images.dzcdn.net/images/cover/${currentMusic?.md5_image}/500x500-000000-80-0-0.jpg`} alt="" />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className={`flex ${isMusicBarHidden ? "flex flex-row" : "flex-col"} gap-2`}>
           <p className="text-primary font-bold text-sm">
             {currentMusic?.title}
           </p>
@@ -163,7 +164,9 @@ const MusicPlayBar = () => {
           </p>
         </div>
       </div>
-      <div className="w-[500px] h-full flex flex-col justify-evenly ">
+      {
+       !isMusicBarHidden &&
+       <div className="w-[500px] h-full flex flex-col justify-evenly ">
         <div className="w-full flex justify-evenly text-primary text-xl ">
           <VscArrowSwap className="cursor-pointer" />
           <MdSkipPrevious onClick={handlePrevMusic} className="cursor-pointer" />
@@ -202,48 +205,52 @@ const MusicPlayBar = () => {
           </span>
         </div>
       </div>
+      }
 
+     {
+      !isMusicBarHidden &&
       <div className="w-[400px] h-full flex items-center justify-center ">
-        <div className="text-primary text-2xl flex gap-8">
-          <div className="flex gap-3 items-center">
-            {!isMuted ? (
-              <IoVolumeHighSharp
-                onClick={() => {
-                  setIsMuted(!isMuted);
-                  setVolume(0);
-                  if (audioRef.current) audioRef.current.volume = 0;
-                }}
-                className="cursor-pointer"
-              />
-            ) : (
-              <FaVolumeMute
-                className="cursor-pointer text-red-500"
-                onClick={() => {
-                  setIsMuted(!isMuted);
-                  setVolume(0.1);
-                  if (audioRef.current) audioRef.current.volume = 1;
-                }}
-              />
-            )}
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="w-24 cursor-pointer
-              appearance-none bg-gray-300 h-1 rounded-lg 
-              [&::-webkit-slider-thumb]:appearance-none 
-              [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 
-              [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:rounded-full 
-              [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 
-              [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:rounded-full"
+      <div className="text-primary text-2xl flex gap-8">
+        <div className="flex gap-3 items-center">
+          {!isMuted ? (
+            <IoVolumeHighSharp
+              onClick={() => {
+                setIsMuted(!isMuted);
+                setVolume(0);
+                if (audioRef.current) audioRef.current.volume = 0;
+              }}
+              className="cursor-pointer"
             />
-          </div>
-          <GiHamburgerMenu />
+          ) : (
+            <FaVolumeMute
+              className="cursor-pointer text-red-500"
+              onClick={() => {
+                setIsMuted(!isMuted);
+                setVolume(0.1);
+                if (audioRef.current) audioRef.current.volume = 1;
+              }}
+            />
+          )}
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="w-24 cursor-pointer
+            appearance-none bg-gray-300 h-1 rounded-lg 
+            [&::-webkit-slider-thumb]:appearance-none 
+            [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 
+            [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:rounded-full 
+            [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 
+            [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:rounded-full"
+          />
         </div>
+        <GiHamburgerMenu />
       </div>
+    </div>
+     }
 
       <audio
         ref={audioRef}
@@ -253,6 +260,19 @@ const MusicPlayBar = () => {
         loop={isLooping}
         onEnded={handleNextMusic}
       />
+      <div className="absolute right-0 p-3 text-primary text-2xl cursor-pointer">
+      {
+        !isMusicBarHidden ?
+        <IoIosArrowDropdownCircle onClick={()=>{
+          dispatch(setHideMusicBar(true))
+        }} />
+        :
+        <IoIosArrowDropupCircle onClick={()=>{
+          dispatch(setHideMusicBar(false));
+        }} />
+      }
+     
+      </div>
     </div>
   );
 };
