@@ -5,13 +5,15 @@ interface MusicPlayerState {
   musicId:number;
   isPlaying:boolean;
   openMusicBar:boolean;
+  hideMusicBar:boolean;
   
 }
 
 const initialState: MusicPlayerState = {
   musicId:0, 
   isPlaying:false,
-  openMusicBar:false
+  openMusicBar:false,
+  hideMusicBar:false,
 };
 
 const musicPlayerSlice = createSlice({
@@ -26,9 +28,12 @@ const musicPlayerSlice = createSlice({
     },
     setOpenMusicBar:(state,action:PayloadAction<boolean>)=>{
       state.openMusicBar = action.payload;
+    },
+    setHideMusicBar:(state,action:PayloadAction<boolean>)=>{
+      state.hideMusicBar = action.payload;
     }
-  },
+   },
 });
 
-export const { setMusicId,setIsPlaying,setOpenMusicBar } = musicPlayerSlice.actions;
+export const { setMusicId,setIsPlaying,setOpenMusicBar,setHideMusicBar } = musicPlayerSlice.actions;
 export default musicPlayerSlice.reducer;
