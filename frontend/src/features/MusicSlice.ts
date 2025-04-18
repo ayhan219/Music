@@ -128,6 +128,12 @@ const albumMusicSlice = createSlice({
     setSearchedMusicData: (state, action: PayloadAction<AlbumMusic[]>) => {
       state.searchedMusicData = action.payload;
     },
+    setNewMusicUrl:(state,action:PayloadAction<{id:number,preview:string}>)=>{      
+      const findSpecificMusic = state.currentMusicAlbum.find((item:AlbumMusic)=>item.id===action.payload.id)
+      if(findSpecificMusic){
+        findSpecificMusic.preview = action.payload.preview
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -164,6 +170,6 @@ const albumMusicSlice = createSlice({
   },
 });
 
-export const { setAlbumMusic, setCurrentAlbumMusic, setSearchedMusicData } =
+export const { setAlbumMusic, setCurrentAlbumMusic, setSearchedMusicData ,setNewMusicUrl} =
   albumMusicSlice.actions;
 export default albumMusicSlice.reducer;
