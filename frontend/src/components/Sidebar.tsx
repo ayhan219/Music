@@ -80,7 +80,7 @@ const Sidebar = () => {
               className={`text-primary ${
                 activeMenu === "playlists" && "text-hover"
               }`}
-              to="/"
+              to="/playlists"
             >
               Playlists
             </Link>
