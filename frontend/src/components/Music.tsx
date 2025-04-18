@@ -6,10 +6,11 @@ import {
   setOpenMusicBar,
 } from "../features/PlayingMusicSlice";
 import { RootState } from "../app/store";
-import { setCurrentAlbumMusic } from "../features/MusicSlice";
+import { setCurrentAlbumMusic, setNewMusicUrl } from "../features/MusicSlice";
 import { useRef, useState } from "react";
 import { setContextMenu } from "../features/generalSlice";
 import axios from "axios";
+import { useAppSelector } from "../app/hooks";
 
 interface AlbumMusic {
   artist: {
@@ -39,10 +40,29 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
   const contextMenu = useSelector(
     (state: RootState) => state.generalData.contextMenu
   );
+  const currentAlbumMusic = useAppSelector((state: RootState)=>state.albumMusic.currentMusicAlbum)
 
   const musicRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
+
+  const getActiveMusicUrl = async()=>{
+    try {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${musicId}`);
+      const findSpecificMusic = currentAlbumMusic.find((item:AlbumMusic)=>item.id===musicId)
+      if (findSpecificMusic?.id) {
+        const data = {
+          id: findSpecificMusic.id,
+          preview: response.data.preview,
+        };
+        dispatch(setNewMusicUrl(data));
+      }
+
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -80,7 +100,7 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
       playlist_id: playlist_id,
       music_name: item.title,
       artist: item.artist.name,
-      music_id:item.id,
+      music_id: item.id,
       music_url: item.preview,
       music_image: item.md5_image,
       music_duration: item.duration,
@@ -109,7 +129,10 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
       }
       ref={musicRef}
       className="relative"
-      onClick={handleClickOutside}
+      onClick={()=>{
+        handleClickOutside
+        getActiveMusicUrl();
+      }}
     >
       <div
         key={index}
