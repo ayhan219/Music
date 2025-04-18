@@ -6,17 +6,25 @@ import { getPlaylistMusics } from "../features/MusicSlice";
 import Music from "../components/Music";
 
 const Playlist = () => {
-  const currentPlaylist = useAppSelector((state:RootState)=>state.userSlice.currentPlaylist)
-  const user = useAppSelector((state:RootState)=>state.userSlice.user);
-  const playlistMusics = useAppSelector((state:RootState)=>state.albumMusic.playlistMusics)
+  const currentPlaylist = useAppSelector(
+    (state: RootState) => state.userSlice.currentPlaylist
+  );
+  const user = useAppSelector((state: RootState) => state.userSlice.user);
+  const playlistMusics = useAppSelector(
+    (state: RootState) => state.albumMusic.playlistMusics
+  );
   const dispatch = useAppDispatch();
 
-  useEffect(()=>{
-    if(user.id && currentPlaylist.playlist_id){
-      dispatch(getPlaylistMusics({ user_id: user.id, playlist_id: currentPlaylist.playlist_id }));
+  useEffect(() => {
+    if (user.id && currentPlaylist.playlist_id) {
+      dispatch(
+        getPlaylistMusics({
+          user_id: user.id,
+          playlist_id: currentPlaylist.playlist_id,
+        })
+      );
     }
-    
-  },[currentPlaylist])
+  }, [currentPlaylist]);
   return (
     <div className="w-full h-[90%] bg-primary px-2">
       <div className="w-full h-[40%] rounded-lg flex relative bg-[#2b2b31] p-10 ">
@@ -38,35 +46,44 @@ const Playlist = () => {
               <p>{currentPlaylist.playlist_description}</p>
             </div>
             <div className="flex items-center gap-2">
-            <div className="w-9 h-9 ">
-              <img
-              className="w-full h-full rounded-full object-cover"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
-                alt=""
-              />
-            </div>
-            <div className="font-bold flex gap-4 items-center">
-              <p>{user.username}</p>
-              <p>125 music</p>
-            </div>
+              <div className="w-9 h-9 ">
+                <img
+                  className="w-full h-full rounded-full object-cover"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
+                  alt=""
+                />
+              </div>
+              <div className="font-bold flex gap-4 items-center">
+                <p>{user.username}</p>
+                <p>{playlistMusics.length === 0 ? <p>No music. Add some musics to your playlist</p> : playlistMusics.length}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="px-10 pt-4">
-            <ToolsForMusic />
-              <div className="w-full border-b border-gray-600">
-                <h1 className="text-primary font-bold font-mono text-xl">
-                  Musics
-                </h1>
-              </div>
-            </div>
+        <ToolsForMusic />
+        {playlistMusics.length === 0 ? (
+          <div className="w-full h-full flex justify-center items-center">
+            <h1 className="text-primary font-bold text-2xl">No music found</h1>
+          </div>
+        ) : (
+          <div className="w-full border-b border-gray-600">
+            <h1 className="text-primary font-bold font-mono text-xl">Musics</h1>
+          </div>
+        )}
+      </div>
 
-            <div  className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
-              {playlistMusics?.map((item,index)=>(
-                <Music key={item.id} item={item} index={index} whichMusic={playlistMusics} />
-              ))}
-            </div>
+      <div className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+        {playlistMusics?.map((item, index) => (
+          <Music
+            key={item.id}
+            item={item}
+            index={index}
+            whichMusic={playlistMusics}
+          />
+        ))}
+      </div>
     </div>
   );
 };
