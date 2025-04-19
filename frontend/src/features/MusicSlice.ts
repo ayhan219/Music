@@ -9,6 +9,9 @@ interface ArtistData {
   };
 }
 interface AlbumData {
+  album?:{
+    cover_medium: string;
+  }
   cover: string;
   cover_xl: string;
   artist: {
@@ -19,6 +22,7 @@ interface AlbumData {
   position: number;
   type: string;
   title: string;
+  md5_image?:string
 }
 
 
