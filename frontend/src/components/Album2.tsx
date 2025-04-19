@@ -1,3 +1,7 @@
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { setCurrentPlaylist } from "../features/UserSlice";
+
 interface AlbumProps {
   item: {
     id: number;
@@ -10,9 +14,14 @@ interface AlbumProps {
   key: number;
 }
 const Album2 = ({ item, key }: AlbumProps) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <div
-    onClick={()=>console.log(item)}
+    onClick={()=>{
+      navigate(`/playlist/${item.playlist_id}`)
+      dispatch(setCurrentPlaylist(item))
+    }}
       key={key}
       className="w-[220px] h-[320px] rounded-xl overflow-hidden relative cursor-pointer shadow-lg "
     >
