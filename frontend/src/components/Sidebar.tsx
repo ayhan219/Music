@@ -146,6 +146,7 @@ const Sidebar = () => {
             <div onClick={()=>{
               navigate(`/playlist/${item.playlist_id}`)
               dispatch(setCurrentPlaylist(item))
+              setActiveMenu("")
             }} key={index} className="text-primary font-bold cursor-pointer flex items-center gap-2">
               <FaCompactDisc />
               <p>{item.playlist_name}</p>
