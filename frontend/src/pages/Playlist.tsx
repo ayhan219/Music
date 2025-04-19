@@ -26,13 +26,72 @@ const Playlist = () => {
     }
   }, [currentPlaylist]);
   return (
-    <div className="w-full h-[90%] bg-primary px-2">
+    <div
+      onClick={() => console.log(playlistMusics)}
+      className="w-full h-[90%] bg-primary px-2"
+    >
       <div className="w-full h-[40%] rounded-lg flex relative bg-[#2b2b31] p-10 ">
-        <div className="w-[30%] h-full bg-white grid grid-cols-2">
-          <div className="w-full h-full bg-red-500"></div>
+        <div className="w-[30%] h-full ">
+          {playlistMusics.length === 1 && (
+            <div className="w-full h-full">
+              <img
+                className="w-full h-full object-cover"
+                src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[0].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                alt=""
+              />
+            </div>
+          )}
+          {playlistMusics.length === 2 && (
+            <div className="w-full h-full flex">
+              {playlistMusics.slice(0, 2).map((item) => (
+                <img
+                  key={item.id}
+                  className="w-[50%] h-full object-cover"
+                  src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
+          {playlistMusics.length === 3 && (
+            <div className="w-full h-full flex flex-col">
+              <div className="flex w-full h-1/2 gap-1">
+                {playlistMusics.slice(0, 3).map((item) => (
+                  <img
+                    key={item.id}
+                    className="w-1/2 h-full object-cover"
+                    src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                    alt=""
+                  />
+                ))}
+              </div>
+
+              <div className="flex w-full h-1/2">
+                <img
+                  className="w-full h-full object-cover"
+                  src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[2].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                  alt=""
+                />
+              </div>
+            </div>
+          )}
+          {playlistMusics.length === 4 && (
+            <div className="w-full h-full grid grid-cols-2 grid-rows-2">
+              {playlistMusics.slice(0, 4).map((item) => (
+                <img
+                  key={item.id}
+                  className="w-full h-full object-cover"
+                  src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
+
+          {/* <div className="w-full h-full bg-red-500"></div>
           <div className="w-full h-full bg-black"></div>
           <div className="w-full h-full bg-blue-600"></div>
-          <div className="w-full h-full bg-amber-400"></div>
+          <div className="w-full h-full bg-amber-400"></div> */}
         </div>
         <div className="w-[70%] h-full ">
           <div className="text-primary font-mono flex flex-col justify-evenly px-5 h-full">
@@ -55,7 +114,13 @@ const Playlist = () => {
               </div>
               <div className="font-bold flex gap-4 items-center">
                 <p>{user.username}</p>
-                <p>{playlistMusics.length === 0 ? <p>No music. Add some musics to your playlist</p> : playlistMusics.length}</p>
+                <p>
+                  {playlistMusics.length === 0 ? (
+                    <p>No music. Add some musics to your playlist</p>
+                  ) : (
+                    playlistMusics.length
+                  )}
+                </p>
               </div>
             </div>
           </div>
