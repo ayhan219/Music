@@ -15,7 +15,9 @@ import { RootState } from "../app/store";
 const Home = () => {
   const albums = useSelector((state:RootState)=>state.albumMusic.popularAlbums)
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex2, setCurrentIndex2] = useState<number>(0);
   const loading = useSelector((state:RootState)=>state.albumMusic.loading)
+  const user = useSelector((state:RootState)=>state.userSlice.user)
 
   const dispatch = useAppDispatch();
 
@@ -27,13 +29,26 @@ const Home = () => {
 
   const handleNext = () => {
     if (currentIndex + 5 < albums?.length) {
-      setCurrentIndex(currentIndex + 5);
+      setCurrentIndex(currentIndex + 6);
     }
   };
 
   const handlePrev = () => {
     if (currentIndex - 5 >= 0) {
-      setCurrentIndex(currentIndex - 5);
+      setCurrentIndex(currentIndex - 6);
+    }
+  };
+
+
+  const handleNext2 = () => {
+    if (currentIndex2 + 6 < albums?.length) {
+      setCurrentIndex2(currentIndex2 + 6);
+    }
+  };
+
+  const handlePrev2 = () => {
+    if (currentIndex2 - 6 >= 0) {
+      setCurrentIndex2(currentIndex2 - 6);
     }
   };
 
@@ -70,20 +85,46 @@ const Home = () => {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                {albums.slice(currentIndex, currentIndex + 5).map((item) => (
+                {albums.slice(currentIndex, currentIndex + 6).map((item) => (
                   <Album key={item.id} item={item} />
                 ))}
               </motion.div>
             </div>
 
             <div className="pt-3">
+              <div className="w-full flex justify-between">
               <div className="text-primary text-xl">
                 <h3>My List</h3>
               </div>
-              <div className="flex gap-5 pt-3">
-                <Album2 />
-                <Album2 />
+              <div className="flex gap-2">
+                  <div
+                    className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+                  onClick={handlePrev2}
+                  >
+                    <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+                  </div>
+                  <div
+                    className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+                  onClick={handleNext2}
+                  >
+                    <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+                  </div>
+                </div>
               </div>
+              <motion.div
+                className="flex flex-row gap-3 pt-3 overflow-x-auto"
+                key={currentIndex2}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {
+                  user?.playlists?.slice(currentIndex2, currentIndex2 + 6).map((item,key)=>(
+                    <Album2 key={key} item={item} />
+                  ))
+                }
+              </motion.div>
             </div>
           </>
         ) : (
