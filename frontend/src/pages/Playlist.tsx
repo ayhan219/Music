@@ -30,7 +30,7 @@ const Playlist = () => {
       onClick={() => console.log(playlistMusics)}
       className="w-full h-[90%] bg-primary px-2"
     >
-      <div className="w-full h-[40%] rounded-lg flex relative bg-[#2b2b31] p-10 ">
+      <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
         <div className="w-[30%] h-full ">
           {playlistMusics.length === 1 && (
             <div className="w-full h-full">
@@ -93,32 +93,44 @@ const Playlist = () => {
           <div className="w-full h-full bg-blue-600"></div>
           <div className="w-full h-full bg-amber-400"></div> */}
         </div>
-        <div className="w-[70%] h-full ">
-          <div className="text-primary font-mono flex flex-col justify-evenly px-5 h-full">
-            <div className="text-xl">
-              <p>Open for public playlist</p>
+        <div className="w-[70%] h-full p-6  rounded-2xl shadow-lg">
+          <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-6">
+            {/* Access Text */}
+            <div className="text-xl font-semibold ">
+              <p>This playlist is public and open to everyone</p>
             </div>
-            <div className="text-3xl">
+
+            {/* Playlist Name */}
+            <div className="text-4xl font-bold ">
               <h1>{currentPlaylist.playlist_name}</h1>
             </div>
-            <div>
+
+            {/* Description */}
+            <div className="text-base ">
               <p>{currentPlaylist.playlist_description}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 ">
+
+            {/* User Info + Playlist Count */}
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10">
                 <img
-                  className="w-full h-full rounded-full object-cover"
+                  className="w-full h-full rounded-full object-cover border border-gray-300 shadow-sm"
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
-                  alt=""
+                  alt="User Avatar"
                 />
               </div>
-              <div className="font-bold flex gap-4 items-center">
+              <div className="font-semibold flex gap-4 items-center">
                 <p>{user.username}</p>
-                <p>
+                <p className="text-sm text-gray-500">
                   {playlistMusics.length === 0 ? (
-                    <p>No music. Add some musics to your playlist</p>
+                    <span>
+                      No tracks yet. Start adding some music to bring this
+                      playlist to life!
+                    </span>
                   ) : (
-                    playlistMusics.length
+                    `${playlistMusics.length} track${
+                      playlistMusics.length > 1 ? "s" : ""
+                    }`
                   )}
                 </p>
               </div>
