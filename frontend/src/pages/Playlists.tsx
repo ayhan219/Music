@@ -1,6 +1,6 @@
 import { useAppSelector } from "../app/hooks";
 import { RootState } from "../app/store";
-import PlaylistItem from "../components/PlaylistItem";
+import Album2 from "../components/Album2";
 
 const Playlists = () => {
   const user = useAppSelector((state: RootState) => state.userSlice.user);
@@ -11,10 +11,10 @@ const Playlists = () => {
         <h1>🎵 My Playlists</h1>
       </div>
 
-      <div className="h-[500px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6 overflow-y-auto overflow-x-hidden scrollbar-custom">
+      <div className="h-[670px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6 overflow-y-auto overflow-x-hidden scrollbar-custom">
         {user?.playlists? (
           user.playlists.map((item, index) => (
-            <PlaylistItem key={index} item={item} index={index} />
+            <Album2 key={index} item={item}  />
           ))
         ) : (
           <p className="text-gray-400 text-lg col-span-full text-center">
