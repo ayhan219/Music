@@ -4,6 +4,7 @@ import { RootState } from "../app/store";
 import ToolsForMusic from "../components/ToolsForMusic";
 import { getPlaylistMusics } from "../features/MusicSlice";
 import Music from "../components/Music";
+import { FaMusic } from "react-icons/fa";
 
 const Playlist = () => {
   const currentPlaylist = useAppSelector(
@@ -32,6 +33,15 @@ const Playlist = () => {
     >
       <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
         <div className="w-[30%] h-full ">
+          {
+            playlistMusics.length===0 && (
+              <div className="w-full h-full">
+                <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
+                <FaMusic />
+                </div>
+              </div>
+            )
+          }
           {playlistMusics.length === 1 && (
             <div className="w-full h-full">
               <img
@@ -142,7 +152,7 @@ const Playlist = () => {
         <ToolsForMusic />
         {playlistMusics.length === 0 ? (
           <div className="w-full h-full flex justify-center items-center">
-            <h1 className="text-primary font-bold text-2xl">No music found</h1>
+            <h1 className="text-primary font-bold text-2xl">This playlist is currently empty</h1>
           </div>
         ) : (
           <div className="w-full border-b border-gray-600">
