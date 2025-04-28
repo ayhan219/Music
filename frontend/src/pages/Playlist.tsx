@@ -28,119 +28,126 @@ const Playlist = () => {
   }, [currentPlaylist]);
   return (
     <div className="w-full h-[90%] bg-primary px-2">
-      <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
-        <div className="w-[30%] h-full ">
-          {playlistMusics.length === 0 && (
-            <div className="w-full h-full">
-              <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
-                <FaMusic />
-              </div>
-            </div>
-          )}
-          {playlistMusics.length === 1 && (
-            <div className="w-full h-full">
-              <img
-                className="w-full h-full object-cover"
-                src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[0].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
-                alt=""
-              />
-            </div>
-          )}
-          {playlistMusics.length === 2 && (
-            <div className="w-full h-full flex">
-              {playlistMusics.slice(0, 2).map((item) => (
-                <img
-                  key={item.id}
-                  className="w-[50%] h-full object-cover"
-                  src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
-                  alt=""
-                />
-              ))}
-            </div>
-          )}
-          {playlistMusics.length === 3 && (
-            <div className="w-full h-full flex flex-col">
-              <div className="flex w-full h-1/2 gap-1">
-                {playlistMusics.slice(0, 3).map((item) => (
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <>
+          <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
+            <div className="w-[30%] h-full ">
+              {playlistMusics.length === 0 && (
+                <div className="w-full h-full">
+                  <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
+                    <FaMusic />
+                  </div>
+                </div>
+              )}
+              {playlistMusics.length === 1 && (
+                <div className="w-full h-full">
                   <img
-                    key={item.id}
-                    className="w-1/2 h-full object-cover"
-                    src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                    className="w-full h-full object-cover"
+                    src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[0].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
                     alt=""
                   />
-                ))}
-              </div>
+                </div>
+              )}
+              {playlistMusics.length === 2 && (
+                <div className="w-full h-full flex">
+                  {playlistMusics.slice(0, 2).map((item) => (
+                    <img
+                      key={item.id}
+                      className="w-[50%] h-full object-cover"
+                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                      alt=""
+                    />
+                  ))}
+                </div>
+              )}
+              {playlistMusics.length === 3 && (
+                <div className="w-full h-full flex flex-col">
+                  <div className="flex w-full h-1/2 gap-1">
+                    {playlistMusics.slice(0, 3).map((item) => (
+                      <img
+                        key={item.id}
+                        className="w-1/2 h-full object-cover"
+                        src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                        alt=""
+                      />
+                    ))}
+                  </div>
 
-              <div className="flex w-full h-1/2">
-                <img
-                  className="w-full h-full object-cover"
-                  src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[2].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
-                  alt=""
-                />
-              </div>
-            </div>
-          )}
-          {playlistMusics.length === 4 && (
-            <div className="w-full h-full grid grid-cols-2 grid-rows-2">
-              {playlistMusics.slice(0, 4).map((item) => (
-                <img
-                  key={item.id}
-                  className="w-full h-full object-cover"
-                  src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
-                  alt=""
-                />
-              ))}
-            </div>
-          )}
+                  <div className="flex w-full h-1/2">
+                    <img
+                      className="w-full h-full object-cover"
+                      src={`https://cdn-images.dzcdn.net/images/cover/${playlistMusics[2].album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              )}
+              {playlistMusics.length === 4 && (
+                <div className="w-full h-full grid grid-cols-2 grid-rows-2">
+                  {playlistMusics.slice(0, 4).map((item) => (
+                    <img
+                      key={item.id}
+                      className="w-full h-full object-cover"
+                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                      alt=""
+                    />
+                  ))}
+                </div>
+              )}
 
-          {/* <div className="w-full h-full bg-red-500"></div>
+              {/* <div className="w-full h-full bg-red-500"></div>
           <div className="w-full h-full bg-black"></div>
           <div className="w-full h-full bg-blue-600"></div>
           <div className="w-full h-full bg-amber-400"></div> */}
-        </div>
-        <div className="w-[70%] h-full p-6  rounded-2xl shadow-lg">
-          <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-6">
-            {/* Access Text */}
-            <div className="text-xl font-semibold ">
-              <p>This playlist is public and open to everyone</p>
             </div>
-            
-            <div className="text-4xl font-bold ">
-              <h1>{currentPlaylist.playlist_name}</h1>
-            </div>
+            <div className="w-[70%] h-full p-6  rounded-2xl shadow-lg">
+              <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-6">
+                {/* Access Text */}
+                <div className="text-xl font-semibold ">
+                  <p>This playlist is public and open to everyone</p>
+                </div>
 
-      
-            <div className="text-base ">
-              <p>{currentPlaylist.playlist_description}</p>
-            </div>
+                <div className="text-4xl font-bold ">
+                  <h1>{currentPlaylist.playlist_name}</h1>
+                </div>
 
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10">
-                <img
-                  className="w-full h-full rounded-full object-cover border border-gray-300 shadow-sm"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
-                  alt="User Avatar"
-                />
-              </div>
-              <div className="font-semibold flex gap-4 items-center">
-                <p>{user.username}</p>
-                <p className="text-sm text-gray-500">
-                  {playlistMusics.length === 0 ? (
-                    <span>
-                      No tracks yet. Start adding some music to bring this
-                      playlist to life!
-                    </span>
-                  ) : (
-                    `${playlistMusics.length} track${
-                      playlistMusics.length > 1 ? "s" : ""
-                    }`
-                  )}
-                </p>
+                <div className="text-base ">
+                  <p>{currentPlaylist.playlist_description}</p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10">
+                    <img
+                      className="w-full h-full rounded-full object-cover border border-gray-300 shadow-sm"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
+                      alt="User Avatar"
+                    />
+                  </div>
+                  <div className="font-semibold flex gap-4 items-center">
+                    <p>{user.username}</p>
+                    <p className="text-sm text-gray-500">
+                      {playlistMusics.length === 0 ? (
+                        <span>
+                          No tracks yet. Start adding some music to bring this
+                          playlist to life!
+                        </span>
+                      ) : (
+                        `${playlistMusics.length} track${
+                          playlistMusics.length > 1 ? "s" : ""
+                        }`
+                      )}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
       <div className="px-10 pt-4">
         <ToolsForMusic />
         {playlistMusics.length === 0 ? (
