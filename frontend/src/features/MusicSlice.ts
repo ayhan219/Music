@@ -165,10 +165,16 @@ const albumMusicSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Failed to fetch artist";
       })
+      .addCase(getPlaylistMusics.pending, (state) => {  
+        state.loading = true;
+        state.error = "";
+      })
       .addCase(getPlaylistMusics.fulfilled, (state, action) => {
+        state.loading = false;
         state.playlistMusics = action.payload || [];
       })
       .addCase(getPlaylistMusics.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload as string;
       });
   },
