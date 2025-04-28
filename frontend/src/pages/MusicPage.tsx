@@ -95,7 +95,7 @@ const MusicPage = () => {
 
             <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
               {albumMusic?.tracks?.data.map((item: AlbumMusic,index) => (
-                <Music item={item} index={index} whichMusic={albumMusic?.tracks?.data} />
+                <Music key={index} item={item} index={index} whichMusic={albumMusic?.tracks?.data} />
               ))}
             </div>
           </>
