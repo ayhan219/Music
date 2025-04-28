@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setUser } from "../features/UserSlice";
+import { getUser } from "../features/UserSlice";
 import { RootState } from "../app/store";
 
 const Login = () => {
@@ -36,7 +36,7 @@ const Login = () => {
 
       if (response.status === 200) {
         toast.success("login successfull");
-        dispatch(setUser(response.data));
+        dispatch(getUser());
         navigate("/");
       }
     } catch (error: any) {
