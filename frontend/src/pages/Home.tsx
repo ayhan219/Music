@@ -121,7 +121,7 @@ const Home = () => {
               >
                 {
                   user?.playlists?.slice(currentIndex2, currentIndex2 + 6).map((item,key)=>(
-                    <Album2 key={key} item={item} />
+                    <Album2 key={key} item={item} index={key} />
                   ))
                 }
               </motion.div>
