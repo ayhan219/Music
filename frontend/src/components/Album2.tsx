@@ -11,9 +11,9 @@ interface AlbumProps {
     playlist_id: number;
     created_at: string;
   };
-  key: number;
+  index: number;
 }
-const Album2 = ({ item, key }: AlbumProps) => {
+const Album2 = ({ item, index }: AlbumProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
@@ -22,7 +22,7 @@ const Album2 = ({ item, key }: AlbumProps) => {
       navigate(`/playlist/${item.playlist_id}`)
       dispatch(setCurrentPlaylist(item))
     }}
-      key={key}
+      key={index}
       className="w-[220px] h-[320px] rounded-xl overflow-hidden relative cursor-pointer shadow-lg "
     >
       <img
