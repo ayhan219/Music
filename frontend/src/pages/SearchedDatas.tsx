@@ -1,4 +1,4 @@
-import { FaPlay} from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import SearchedMusicSingle from "../components/SearchedMusicSingle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
@@ -38,8 +38,10 @@ const SearchedDatas = () => {
   const [rank1Music, setRank1Music] = useState<AlbumMusic | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getSearchedData = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${input}`
@@ -47,6 +49,8 @@ const SearchedDatas = () => {
       dispatch(setSearchedMusicData(response.data.data));
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,58 +80,73 @@ const SearchedDatas = () => {
       {input !== "" ? (
         <div className="flex gap-5">
           <div className="flex flex-col gap-4 w-[400px] h-[300px] bg-[#19191b] rounded-lg p-4">
-            <div className="text-primary font-bold text-xl">
-              <h2>Most Listened Result</h2>
-            </div>
-            <div className="flex flex-col gap-4 w-full h-full justify-center">
-              <div className="w-[100px] h-[100px] rounded-lg">
-                <img
-                  className="w-full h-full object-cover rounded-lg"
-                  src={rank1Music?.album.cover_medium}
-                  alt=""
-                />
+            {loading ? (
+              <div className="flex justify-center items-center pt-20 h-full">
+                <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
               </div>
-              <div className="flex justify-between">
-                <div className="text-primary">
-                  <h2 className="w-full text-3xl font-serif">
-                    {rank1Music?.title}
-                  </h2>
-                  <p className="text-gray-600">
-                    Music:{" "}
-                    <strong className="text-primary px-2">
-                      {rank1Music?.artist.name}
-                    </strong>
-                  </p>
+            ) : (
+              <>
+                <div className="text-primary font-bold text-xl">
+                  <h2>Most Listened Result</h2>
                 </div>
-                <div className="flex items-center cursor-pointer shadow-lg">
-                  <div
-                    onClick={() => {
-                      dispatch(setMusicId(rank1Music?.id || 0));
-                      dispatch(
-                        setCurrentAlbumMusic(rank1Music ? [rank1Music] : [])
-                      );
+                <div className="flex flex-col gap-4 w-full h-full justify-center">
+                  <div className="w-[100px] h-[100px] rounded-lg">
+                    <img
+                      className="w-full h-full object-cover rounded-lg"
+                      src={rank1Music?.album.cover_medium}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="text-primary">
+                      <h2 className="w-full text-3xl font-serif">
+                        {rank1Music?.title}
+                      </h2>
+                      <p className="text-gray-600">
+                        Music:{" "}
+                        <strong className="text-primary px-2">
+                          {rank1Music?.artist.name}
+                        </strong>
+                      </p>
+                    </div>
+                    <div className="flex items-center cursor-pointer shadow-lg">
+                      <div
+                        onClick={() => {
+                          dispatch(setMusicId(rank1Music?.id || 0));
+                          dispatch(
+                            setCurrentAlbumMusic(rank1Music ? [rank1Music] : [])
+                          );
 
-                      dispatch(setOpenMusicBar(true));
-                      dispatch(setIsPlaying(true));
-                    }}
-                    className="w-12 h-12 rounded-full bg-green-600 flex text-primary items-center justify-center"
-                  >
-                    <FaPlay />
+                          dispatch(setOpenMusicBar(true));
+                          dispatch(setIsPlaying(true));
+                        }}
+                        className="w-12 h-12 rounded-full bg-green-600 flex text-primary items-center justify-center"
+                      >
+                        <FaPlay />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
 
           <div className="w-[600px] h-[300px] bg-[#19191b] rounded-lg p-4">
+           {
+            loading ? (<div className="flex justify-center items-center pt-20 h-full">
+              <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
+            </div>) :
+            <>
             <div className="text-primary font-bold text-xl">
-              <h2>Musics</h2>
-            </div>
-            <div className="pt-4">
-              {searchedMusicData.slice(0, 4).map((item, index) => (
-                <SearchedMusicSingle item={item} index={index} />
-              ))}
-            </div>
+            <h2>Musics</h2>
+          </div>
+          <div className="pt-4">
+            {searchedMusicData.slice(0, 4).map((item, index) => (
+              <SearchedMusicSingle item={item} index={index} />
+            ))}
+          </div>
+            </>
+           }
           </div>
         </div>
       ) : (
