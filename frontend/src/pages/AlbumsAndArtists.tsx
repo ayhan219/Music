@@ -18,6 +18,7 @@ const AlbumsAndArtists = () => {
   const artist = useSelector((state: RootState) => state.albumMusic.artistData);
   const dispatch = useAppDispatch();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex2,setCurrentIndex2] = useState<number>(0);
 
   const handleNext = () => {
     if (currentIndex + 5 < albums?.length) {
@@ -30,13 +31,24 @@ const AlbumsAndArtists = () => {
     }
   };
 
+  const handleNext2 = () => {
+    if (currentIndex2 + 5 < artist?.length) {
+      setCurrentIndex2(currentIndex2 + 5);
+    }
+  };
+  const handlePrev2 = () => {
+    if (currentIndex2 - 5 >= 0) {
+      setCurrentIndex2(currentIndex2 - 5);
+    }
+  };
+
   useEffect(() => {
     dispatch(getPopularArtist());
   }, []);
 
   return (
     <div className="w-full h-[90%] bg-primary p-3">
-      <div className="h-full w-full p-4 overflow-y-auto scrollbar-custom ">
+      <div className="h-full w-full p-4 overflow-y-hidden ">
         <div className="flex justify-between px-4">
           <div className="w-full text-primary text-2xl font-semibold px-4  ">
             <h2>Popular Albums</h2>
@@ -75,17 +87,31 @@ const AlbumsAndArtists = () => {
           <div className="w-full text-primary text-2xl font-semibold px-4  ">
             <h2>Popular Artists</h2>
           </div>
+          <div className="flex gap-2">
+            <div
+              onClick={handlePrev2}
+              className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+            >
+              <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+            </div>
+            <div
+              onClick={handleNext2}
+              className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
+            >
+              <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+            </div>
+          </div>
         </div>
         <div className="w-full h-auto pt-5 flex">
           <motion.div
             className="flex flex-row justify-between pt-3 overflow-x-auto"
-            key={currentIndex}
+            key={currentIndex2}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {artist.slice(0, 6).map((item, index) => (
+            {artist.slice(currentIndex2, currentIndex2+6).map((item, index) => (
               <Artist key={item.artist.id || index} item={item} index={index} />
             ))}
           </motion.div>
