@@ -21,42 +21,44 @@ interface User {
 interface InitialState {
   user: User;
   currentPlaylist: Partial<Playlist>;
+  loading: boolean;
+  error:string | null;
 }
 
 const initialState: InitialState = {
   user: {},
-  currentPlaylist:{}
+  currentPlaylist:{},
+  loading:false,
+  error:null
 };
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (_, { dispatch }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get("http://localhost:5000/auth/getuser", {
         withCredentials: true,
       });
-
-      dispatch(setUser(response.data));
-    } catch (error) {
-      console.log(error);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Error fetching user");
     }
   }
 );
 
 export const logoutUser = createAsyncThunk(
   "user/logoutUser",
-  async (_, { dispatch }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.delete("http://localhost:5000/auth/logout", {
         withCredentials: true,
       });
 
       if (response.status === 200) {
-        dispatch(setUser({}));
-        window.location.reload();
+        return true;
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Logout failed");
     }
   }
 );
@@ -65,9 +67,6 @@ export const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-    },
     setPlaylistMusic:(state,action: PayloadAction<Playlist>)=>{
       state.user.playlists?.push(action.payload);
     },
@@ -75,7 +74,35 @@ export const userSlice = createSlice({
       state.currentPlaylist = action.payload;
     }
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = {};
+        window.location.reload();
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+  },
 });
 
-export const { setUser,setPlaylistMusic,setCurrentPlaylist } = userSlice.actions;
+export const {setPlaylistMusic,setCurrentPlaylist } = userSlice.actions;
 export default userSlice.reducer;
