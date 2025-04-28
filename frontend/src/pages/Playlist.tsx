@@ -11,8 +11,8 @@ const Playlist = () => {
     (state: RootState) => state.userSlice.currentPlaylist
   );
   const user = useAppSelector((state: RootState) => state.userSlice.user);
-  const playlistMusics = useAppSelector(
-    (state: RootState) => state.albumMusic.playlistMusics
+  const { playlistMusics, loading } = useAppSelector(
+    (state: RootState) => state.albumMusic
   );
   const dispatch = useAppDispatch();
 
@@ -27,21 +27,16 @@ const Playlist = () => {
     }
   }, [currentPlaylist]);
   return (
-    <div
-      onClick={() => console.log(playlistMusics)}
-      className="w-full h-[90%] bg-primary px-2"
-    >
+    <div className="w-full h-[90%] bg-primary px-2">
       <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
         <div className="w-[30%] h-full ">
-          {
-            playlistMusics.length===0 && (
-              <div className="w-full h-full">
-                <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
+          {playlistMusics.length === 0 && (
+            <div className="w-full h-full">
+              <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
                 <FaMusic />
-                </div>
               </div>
-            )
-          }
+            </div>
+          )}
           {playlistMusics.length === 1 && (
             <div className="w-full h-full">
               <img
@@ -109,18 +104,16 @@ const Playlist = () => {
             <div className="text-xl font-semibold ">
               <p>This playlist is public and open to everyone</p>
             </div>
-
-            {/* Playlist Name */}
+            
             <div className="text-4xl font-bold ">
               <h1>{currentPlaylist.playlist_name}</h1>
             </div>
 
-            {/* Description */}
+      
             <div className="text-base ">
               <p>{currentPlaylist.playlist_description}</p>
             </div>
 
-            {/* User Info + Playlist Count */}
             <div className="flex items-center gap-4">
               <div className="w-10 h-10">
                 <img
@@ -152,7 +145,9 @@ const Playlist = () => {
         <ToolsForMusic />
         {playlistMusics.length === 0 ? (
           <div className="w-full h-full flex justify-center items-center">
-            <h1 className="text-primary font-bold text-2xl">This playlist is currently empty</h1>
+            <h1 className="text-primary font-bold text-2xl">
+              This playlist is currently empty
+            </h1>
           </div>
         ) : (
           <div className="w-full border-b border-gray-600">
@@ -161,15 +156,23 @@ const Playlist = () => {
         )}
       </div>
 
-      <div className="w-full max-h-[350px] px-14 pt-10 flex  flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
-        {playlistMusics?.map((item, index) => (
-          <Music
-            key={item.id}
-            item={item}
-            index={index}
-            whichMusic={playlistMusics}
-          />
-        ))}
+      <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            {playlistMusics?.map((item, index) => (
+              <Music
+                key={item.id}
+                item={item}
+                index={index}
+                whichMusic={playlistMusics}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
