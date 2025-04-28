@@ -187,24 +187,24 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
 
       {contextMenu.id === item.id && contextMenu.visible && (
         <ul
-          className="absolute z-50 bg-gray-800 text-white shadow-lg border border-gray-600 rounded-md w-40 text-sm"
+          className="absolute z-50 bg-[#2e2e30] text-white shadow-lg border border-gray-600 rounded-md w-40 text-sm"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
           <li
-            className="p-2 hover:bg-gray-700 cursor-pointer"
+            className="p-2 hover:bg-amber-100 hover:text-black ease-in-out duration-300 cursor-pointer"
             onMouseEnter={() => setHoveredItem(item.id)}
           >
             Add to Playlist
             {hoveredItem === item.id && (
               <ul
                 onMouseLeave={() => setHoveredItem(null)}
-                className="absolute left-40 top-0 bg-gray-700 text-white w-40 rounded-md"
+                className="absolute left-40 top-0 bg-[#2e2e30] text-white w-40 rounded-md"
               >
                 {user.playlists?.map((item, index) => (
                   <li
                     onClick={() => handleAddToPlaylist(item.playlist_id)}
                     key={index}
-                    className="p-2 cursor-pointer hover:bg-gray-600"
+                    className="p-2 cursor-pointer hover:bg-amber-100 hover:text-black ease-in-out duration-300"
                   >
                     {item.playlist_name}
                   </li>
