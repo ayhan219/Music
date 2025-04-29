@@ -3,10 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaVolumeMute } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
-  IoIosArrowDropdownCircle,
-  IoIosArrowDropupCircle,
   IoMdPause,
 } from "react-icons/io";
+import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react';
 import { IoVolumeHighSharp } from "react-icons/io5";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { RxLoop } from "react-icons/rx";
@@ -294,16 +293,14 @@ const MusicPlayBar = () => {
       />
       <div className="absolute right-0 p-3 text-primary text-2xl cursor-pointer transition-all">
         {!isMusicBarHidden ? (
-          <IoIosArrowDropdownCircle
-            onClick={() => {
-              dispatch(setHideMusicBar(true));
-            }}
+          <ArrowDownCircle
+            onClick={() => dispatch(setHideMusicBar(true))}
+            className="hover:opacity-80"
           />
         ) : (
-          <IoIosArrowDropupCircle
-            onClick={() => {
-              dispatch(setHideMusicBar(false));
-            }}
+          <ArrowUpCircle
+            onClick={() => dispatch(setHideMusicBar(false))}
+            className="hover:opacity-80"
           />
         )}
       </div>
