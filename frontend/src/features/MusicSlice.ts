@@ -53,6 +53,7 @@ interface AlbumMusicState {
   currentMusicAlbum: AlbumMusic[];
   searchedMusicData: AlbumMusic[];
   popularAlbums: AlbumData[];
+  releasedAlbums:AlbumData[];
   loading: boolean;
   error: string;
   artistData: ArtistData[];
@@ -67,7 +68,8 @@ const initialState: AlbumMusicState = {
   error: "",
   popularAlbums: [],
   artistData: [],
-  playlistMusics:[]
+  playlistMusics:[],
+  releasedAlbums:[]
 };
 
 
@@ -101,6 +103,19 @@ export const getPopularAlbums = createAsyncThunk(
     }
   }
 );
+export const getReleasedAlbums = createAsyncThunk(
+  "albumMusic/getReleasedAlbums",
+  async()=>{
+    try {
+      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/editorial/0/releases")
+      console.log(response.data.data);
+      return response.data.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+)
 
 export const getPopularArtist = createAsyncThunk(
   "albumMusic/getPopularArtists",
@@ -176,7 +191,19 @@ const albumMusicSlice = createSlice({
       .addCase(getPlaylistMusics.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      .addCase(getReleasedAlbums.pending,(state)=>{
+        state.loading = true;
+        state.error = ""
+      })
+      .addCase(getReleasedAlbums.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.releasedAlbums = action.payload || []
+      })
+      .addCase(getReleasedAlbums.rejected,(state,action)=>{
+        state.loading=false;
+        state.error = action.payload as string
+      })
   },
 });
 
