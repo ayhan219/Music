@@ -34,7 +34,7 @@ const Playlist = () => {
         </div>
       ) : (
         <>
-          <div className="w-full h-[40%] rounded-lg flex relative  p-10 ">
+          <div onClick={()=>console.log(playlistMusics)} className="w-full h-[35%] rounded-lg flex relative  p-10 ">
             <div className="w-[30%] h-full ">
               {playlistMusics.length === 0 && (
                 <div className="w-full h-full">
@@ -86,7 +86,7 @@ const Playlist = () => {
                   </div>
                 </div>
               )}
-              {playlistMusics.length === 4 && (
+              {playlistMusics.length >= 4 && (
                 <div className="w-full h-full grid grid-cols-2 grid-rows-2">
                   {playlistMusics.slice(0, 4).map((item) => (
                     <img
@@ -104,14 +104,14 @@ const Playlist = () => {
           <div className="w-full h-full bg-blue-600"></div>
           <div className="w-full h-full bg-amber-400"></div> */}
             </div>
-            <div className="w-[70%] h-full p-6  rounded-2xl shadow-lg">
-              <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-6">
+            <div className="w-[70%] h-full p-4  rounded-2xl shadow-lg">
+              <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-3">
                 {/* Access Text */}
-                <div className="text-xl font-semibold ">
+                <div className="text-md font-semibold ">
                   <p>This playlist is public and open to everyone</p>
                 </div>
 
-                <div className="text-4xl font-bold ">
+                <div className="text-2xl font-bold ">
                   <h1>{currentPlaylist.playlist_name}</h1>
                 </div>
 
@@ -148,7 +148,7 @@ const Playlist = () => {
           </div>
         </>
       )}
-      <div className="px-10 pt-4">
+      <div className="px-10">
         <ToolsForMusic />
         {playlistMusics.length === 0 ? (
           <div className="w-full h-full flex justify-center items-center">
@@ -163,7 +163,7 @@ const Playlist = () => {
         )}
       </div>
 
-      <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+      <div className="w-full max-h-[300px] px-6 pt-6 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
