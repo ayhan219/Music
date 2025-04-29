@@ -1,5 +1,4 @@
 import { FaPlay } from "react-icons/fa";
-import SearchedMusicSingle from "../components/SearchedMusicSingle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import axios from "axios";
@@ -14,6 +13,7 @@ import {
   setMusicId,
   setOpenMusicBar,
 } from "../features/PlayingMusicSlice";
+import Music from "../components/Music";
 
 interface AlbumMusic {
   artist: {
@@ -79,7 +79,7 @@ const SearchedDatas = () => {
     <div className="w-full h-[90%] bg-primary p-8 px-24">
       {input !== "" ? (
         <div className="flex gap-5">
-          <div className="flex flex-col gap-4 w-[400px] h-[300px] bg-[#19191b] rounded-lg p-4">
+          <div className="flex flex-col gap-4 w-[30%] h-[400px] bg-[#19191b] rounded-lg p-4">
             {loading ? (
               <div className="flex justify-center items-center pt-20 h-full">
                 <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
@@ -131,7 +131,7 @@ const SearchedDatas = () => {
             )}
           </div>
 
-          <div className="w-[600px] h-[300px] bg-[#19191b] rounded-lg p-4">
+          <div className="w-[70%] h-[400px] bg-[#19191b] rounded-lg p-4">
            {
             loading ? (<div className="flex justify-center items-center pt-20 h-full">
               <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
@@ -140,9 +140,11 @@ const SearchedDatas = () => {
             <div className="text-primary font-bold text-xl">
             <h2>Musics</h2>
           </div>
-          <div className="pt-4">
+          <div onClick={()=>console.log(searchedMusicData)} className="pt-4 flex flex-col gap-4">
             {searchedMusicData.slice(0, 4).map((item, index) => (
-              <SearchedMusicSingle item={item} index={index} />
+          
+              // <SearchedMusicSingle item={item} index={index} />
+              <Music item={item} index={index} whichMusic={searchedMusicData} />
             ))}
           </div>
             </>
