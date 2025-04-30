@@ -5,7 +5,6 @@ import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
 import { FaArrowUp, FaCompactDisc, FaMusic, FaRupeeSign } from "react-icons/fa";
-import { MdOutlineVideoStable } from "react-icons/md";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
@@ -107,18 +106,6 @@ const Sidebar = () => {
               to="/"
             >
               Tracks
-            </Link>
-          </div>
-          <div className="w-full flex gap-2 items-center ">
-            <MdOutlineVideoStable className="text-xl text-white" />
-            <Link
-              onClick={() => setActiveMenu("videos")}
-              className={`text-primary ${
-                activeMenu === "videos" && "text-hover"
-              }`}
-              to="/"
-            >
-              Videos
             </Link>
           </div>
         </div>
