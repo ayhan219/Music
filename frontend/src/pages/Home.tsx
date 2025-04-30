@@ -10,12 +10,16 @@ import { getPopularAlbums, getReleasedAlbums } from "../features/MusicSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const albums = useSelector(
     (state: RootState) => state.albumMusic.popularAlbums
   );
-  const releasedAlbums = useAppSelector((state:RootState)=>state.albumMusic.releasedAlbums);
+  const releasedAlbums = useAppSelector(
+    (state: RootState) => state.albumMusic.releasedAlbums
+  );
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentIndex2, setCurrentIndex2] = useState<number>(0);
   const [currentIndex3, setCurrentIndex3] = useState<number>(0);
@@ -26,7 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getPopularAlbums());
-    dispatch(getReleasedAlbums())
+    dispatch(getReleasedAlbums());
   }, [dispatch]);
 
   const handleNext = () => {
@@ -76,6 +80,11 @@ const Home = () => {
                   <h3>Popular Albums</h3>
                 </div>
                 <div className="flex gap-2">
+                  <div className="text-primary cursor-pointer text-base text-center pr-4 font-bold ">
+                    <p className="hover:text-blue-600 ease-in-out duration-200">
+                      See more
+                    </p>
+                  </div>
                   <div
                     onClick={handlePrev}
                     className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
@@ -110,15 +119,21 @@ const Home = () => {
                   <h3>Released Albums</h3>
                 </div>
                 <div className="flex gap-2">
-                  <div className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
-                    <MdOutlineKeyboardArrowLeft className="text-white text-2xl"
-                     onClick={handlePrev3}
-                    />
-                   
+                  <div className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
+                    <p className="hover:text-blue-600 ease-in-out duration-200">
+                      See more
+                    </p>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
-                    <MdOutlineKeyboardArrowRight className="text-white text-2xl"
-                     onClick={handleNext3}
+                    <MdOutlineKeyboardArrowLeft
+                      className="text-white text-2xl"
+                      onClick={handlePrev3}
+                    />
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
+                    <MdOutlineKeyboardArrowRight
+                      className="text-white text-2xl"
+                      onClick={handleNext3}
                     />
                   </div>
                 </div>
@@ -131,11 +146,12 @@ const Home = () => {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                {releasedAlbums.slice(0,6).map((item) => (
-                  <Album key={item.id} item={item} />
-                ))}
+                {releasedAlbums
+                  .slice(currentIndex3, currentIndex3 + 6)
+                  .map((item) => (
+                    <Album key={item.id} item={item} />
+                  ))}
               </motion.div>
-
             </div>
 
             {user.id && (
@@ -146,6 +162,11 @@ const Home = () => {
                       <h3>My List</h3>
                     </div>
                     <div className="flex gap-2">
+                      <div onClick={()=>navigate("/playlists")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
+                        <p className="hover:text-blue-600 ease-in-out duration-200">
+                          See more
+                        </p>
+                      </div>
                       <div
                         className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer"
                         onClick={handlePrev2}
