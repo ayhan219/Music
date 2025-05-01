@@ -18,7 +18,7 @@ interface AlbumProps {
 
 const Album = ({ item }: AlbumProps) => {
   return (
-    <div className="w-[250px] h-[350px] bg-black rounded-xl relative cursor-pointer overflow-hidden group">
+    <div className="w-[250px] h-[320px] bg-black rounded-xl relative cursor-pointer overflow-hidden group">
       <Link to={`/album/${item.id}`} className="w-full h-full">
         <img
           className="w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-110"
