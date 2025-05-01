@@ -103,6 +103,37 @@ export const getPopularAlbums = createAsyncThunk(
     }
   }
 );
+export const getMorePopularAlbums = createAsyncThunk(
+  "albumMusic/getMorePopularAlbums",
+  async (offset: number) => {
+    console.log("offset",offset);
+    
+    try {
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart/0/albums?limit=10&index=${offset}`
+      );
+      console.log("response",response.data.data);
+      
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+)
+export const getMoreReleasedAlbums = createAsyncThunk(
+  "albumMusic/getMoreReleasedAlbums",
+  async (offset: number) => {
+    try {
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/editorial/0/releases?limit=10&index=${offset}`
+      );
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
 export const getReleasedAlbums = createAsyncThunk(
   "albumMusic/getReleasedAlbums",
   async()=>{
@@ -202,6 +233,30 @@ const albumMusicSlice = createSlice({
       })
       .addCase(getReleasedAlbums.rejected,(state,action)=>{
         state.loading=false;
+        state.error = action.payload as string
+      })
+      .addCase(getMorePopularAlbums.pending,(state)=>{
+        state.loading = true;
+        state.error = ""
+      })
+      .addCase(getMorePopularAlbums.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.popularAlbums = [...state.popularAlbums,...action.payload];
+      })
+      .addCase(getMorePopularAlbums.rejected,(state,action)=>{
+        state.loading = false;
+        state.error = action.payload as string
+      })
+      .addCase(getMoreReleasedAlbums.pending,(state)=>{
+        state.loading = true;
+        state.error = ""
+      })
+      .addCase(getMoreReleasedAlbums.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.releasedAlbums = [...state.releasedAlbums,...action.payload];
+      })
+      .addCase(getMoreReleasedAlbums.rejected,(state,action)=>{
+        state.loading = false;
         state.error = action.payload as string
       })
   },
