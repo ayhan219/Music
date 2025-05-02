@@ -1,0 +1,25 @@
+import { useAppSelector } from "../app/hooks"
+import { RootState } from "../app/store"
+import RadioComp from "../components/RadioComp";
+
+
+const Genres = () => {
+    const genres = useAppSelector((state:RootState)=>state.albumMusic.genres);
+
+  return (
+    <div className="w-full h-[90%] bg-primary overflow-y-auto scrollbar-custom px-16 ">
+      <div className="text-white text-3xl font-bold mb-3 px-5">
+        <h1>Genres</h1>
+      </div>
+      <div className="w-full grid grid-cols-5 gap-10">
+        {
+            genres.map((item,index)=>(
+                <RadioComp item={item} index={index} />
+            ))
+        }
+      </div>
+    </div>
+  )
+}
+
+export default Genres
