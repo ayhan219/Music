@@ -21,6 +21,8 @@ import Playlist from "./pages/Playlist";
 import Playlists from "./pages/Playlists";
 import PopularAlbumsPage from "./pages/PopularAlbumsPage";
 import ReleasedAlbumsPage from "./pages/ReleasedAlbumsPage";
+import Radios from "./pages/Radios";
+import Genres from "./pages/Genres";
 
 function App() {
   const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
@@ -56,6 +58,8 @@ function App() {
                   <Route path="/playlists" element={<Playlists />} />
                   <Route path="/popularalbums" element={<PopularAlbumsPage />} />
                   <Route path="/releasedalbums" element={<ReleasedAlbumsPage />} />
+                  <Route path="/radios" element={<Radios />} />
+                  <Route path="/genres" element={<Genres />} />
                 </Routes>
               </div>
               {isMusicBarOpen && <MusicPlayBar />}

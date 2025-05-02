@@ -34,7 +34,7 @@ const Playlist = () => {
         </div>
       ) : (
         <>
-          <div onClick={()=>console.log(playlistMusics)} className="w-full h-[35%] rounded-lg flex relative  p-10 ">
+          <div className="w-full h-[35%] rounded-lg flex relative px-10 ">
             <div className="w-[30%] h-full ">
               {playlistMusics.length === 0 && (
                 <div className="w-full h-full">
@@ -92,7 +92,7 @@ const Playlist = () => {
                     <img
                       key={item.id}
                       className="w-full h-full object-cover"
-                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
+                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium }/500x500-000000-80-0-0.jpg`}
                       alt=""
                     />
                   ))}
