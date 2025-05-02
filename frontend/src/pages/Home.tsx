@@ -80,7 +80,7 @@ const Home = () => {
                   <h3>Popular Albums</h3>
                 </div>
                 <div className="flex gap-2">
-                  <div className="text-primary cursor-pointer text-base text-center pr-4 font-bold ">
+                  <div onClick={()=>navigate("/popularalbums")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold ">
                     <p className="hover:text-blue-600 ease-in-out duration-200">
                       See more
                     </p>
@@ -119,7 +119,7 @@ const Home = () => {
                   <h3>Released Albums</h3>
                 </div>
                 <div className="flex gap-2">
-                  <div className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
+                  <div onClick={()=>navigate("/releasedalbums")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
                     <p className="hover:text-blue-600 ease-in-out duration-200">
                       See more
                     </p>
