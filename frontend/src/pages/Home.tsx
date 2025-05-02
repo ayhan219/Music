@@ -6,11 +6,12 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { motion } from "framer-motion";
-import { getPopularAlbums, getReleasedAlbums } from "../features/MusicSlice";
+import { getGenres, getPopularAlbums, getRadios, getReleasedAlbums } from "../features/MusicSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
+import RadioComp from "../components/RadioComp";
 
 const Home = () => {
   const albums = useSelector(
@@ -19,10 +20,14 @@ const Home = () => {
   const releasedAlbums = useAppSelector(
     (state: RootState) => state.albumMusic.releasedAlbums
   );
+  const radios = useAppSelector((state:RootState)=>state.albumMusic.radio)
+  const genres = useAppSelector((state:RootState)=>state.albumMusic.genres)
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentIndex2, setCurrentIndex2] = useState<number>(0);
   const [currentIndex3, setCurrentIndex3] = useState<number>(0);
+  const [currentIndex4, setCurrentIndex4] = useState<number>(0);
+  const [currentIndex5, setCurrentIndex5] = useState<number>(0);
   const loading = useSelector((state: RootState) => state.albumMusic.loading);
   const user = useSelector((state: RootState) => state.userSlice.user);
 
@@ -31,6 +36,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPopularAlbums());
     dispatch(getReleasedAlbums());
+    dispatch(getRadios())
+    dispatch(getGenres())
   }, [dispatch]);
 
   const handleNext = () => {
@@ -68,6 +75,37 @@ const Home = () => {
       setCurrentIndex3(currentIndex3 - 6);
     }
   };
+  const handleNext4 = () => {
+    if (currentIndex4 + 6) {
+      if(currentIndex4 + 6 < radios.length) {
+        setCurrentIndex4(currentIndex4 + 6);
+      }
+    }
+  };
+
+  const handlePrev4 = () => {
+    if (currentIndex4 - 6 >= 0) {
+      if(currentIndex4 - 6 >= 0) {
+        setCurrentIndex4(currentIndex4 - 6);
+      }
+    }
+  };
+
+  const handleNext5 = () => {
+    if (currentIndex5 + 6) {
+      if(currentIndex5 + 6 < genres.length) {
+        setCurrentIndex5(currentIndex5 + 6);
+      }
+    }
+  };
+
+  const handlePrev5 = () => {
+    if (currentIndex5 - 6 >= 0) {
+      if(currentIndex5 - 6 >= 0) {
+        setCurrentIndex5(currentIndex5 - 6);
+      }
+    }
+  };
 
   return (
     <div className="w-full  h-[90%] overflow-y-auto scrollbar-custom bg-primary">
@@ -80,7 +118,10 @@ const Home = () => {
                   <h3>Popular Albums</h3>
                 </div>
                 <div className="flex gap-2">
-                  <div onClick={()=>navigate("/popularalbums")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold ">
+                  <div
+                    onClick={() => navigate("/popularalbums")}
+                    className="text-primary cursor-pointer text-base text-center pr-4 font-bold "
+                  >
                     <p className="hover:text-blue-600 ease-in-out duration-200">
                       See more
                     </p>
@@ -119,7 +160,10 @@ const Home = () => {
                   <h3>Released Albums</h3>
                 </div>
                 <div className="flex gap-2">
-                  <div onClick={()=>navigate("/releasedalbums")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
+                  <div
+                    onClick={() => navigate("/releasedalbums")}
+                    className="text-primary cursor-pointer text-base text-center pr-4 font-bold"
+                  >
                     <p className="hover:text-blue-600 ease-in-out duration-200">
                       See more
                     </p>
@@ -153,6 +197,83 @@ const Home = () => {
                   ))}
               </motion.div>
             </div>
+            <div className="pt-3">
+              <div className="w-full flex justify-between">
+                <div className="text-primary text-xl">
+                  <h3>Radios</h3>
+                </div>
+                <div className="flex gap-2">
+                  <div
+                    onClick={() => navigate("/radios")}
+                    className="text-primary cursor-pointer text-base text-center pr-4 font-bold"
+                  >
+                    <p className="hover:text-blue-600 ease-in-out duration-200">
+                      See more
+                    </p>
+                  </div>
+                  <div onClick={handlePrev4} className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
+                    <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+                  </div>
+                  <div onClick={handleNext4} className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
+                    <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+                  </div>
+                </div>
+              </div>
+              <motion.div
+                className="flex flex-row gap-2 pt-3 overflow-x-auto"
+                key={currentIndex4}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+               {
+                radios.slice(currentIndex4,currentIndex4+6).map((item,index)=>(
+                 <RadioComp item={item} index={index} />
+                ))
+               }
+              </motion.div>
+              
+            </div>
+
+            <div className="pt-3">
+              <div className="w-full flex justify-between">
+                <div className="text-primary text-xl">
+                  <h3>Genres</h3>
+                </div>
+                <div className="flex gap-2">
+                  <div
+                    onClick={() => navigate("/genres")}
+                    className="text-primary cursor-pointer text-base text-center pr-4 font-bold"
+                  >
+                    <p className="hover:text-blue-600 ease-in-out duration-200">
+                      See more
+                    </p>
+                  </div>
+                  <div onClick={handlePrev5} className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
+                    <MdOutlineKeyboardArrowLeft className="text-white text-2xl" />
+                  </div>
+                  <div onClick={handleNext5} className="w-7 h-7 rounded-full bg-[#404048] flex items-center justify-center cursor-pointer">
+                    <MdOutlineKeyboardArrowRight className="text-white text-2xl" />
+                  </div>
+                </div>
+              </div>
+              <motion.div
+                className="flex flex-row gap-2 pt-3 overflow-x-auto"
+                key={currentIndex5}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+               {
+                genres.slice(currentIndex5,currentIndex5+6).map((item,index)=>(
+                 <RadioComp item={item} index={index} />
+                ))
+               }
+              </motion.div>
+              
+            </div>
 
             {user.id && (
               <>
@@ -162,7 +283,10 @@ const Home = () => {
                       <h3>My List</h3>
                     </div>
                     <div className="flex gap-2">
-                      <div onClick={()=>navigate("/playlists")} className="text-primary cursor-pointer text-base text-center pr-4 font-bold">
+                      <div
+                        onClick={() => navigate("/playlists")}
+                        className="text-primary cursor-pointer text-base text-center pr-4 font-bold"
+                      >
                         <p className="hover:text-blue-600 ease-in-out duration-200">
                           See more
                         </p>
