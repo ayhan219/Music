@@ -40,6 +40,14 @@ interface AlbumMusic {
   rank: number;
   title: string;
 }
+interface Radio{
+  id:number,
+  title:string,
+  picture:string,
+  picture_xl:string,
+  md5_image:string,
+  name?:string
+}
 
 interface AlbumMusicState {
   albumMusic: {
@@ -57,7 +65,9 @@ interface AlbumMusicState {
   loading: boolean;
   error: string;
   artistData: ArtistData[];
-  playlistMusics:AlbumData[]
+  playlistMusics:AlbumData[];
+  radio:Radio[]
+  genres:Radio[]
 }
 
 const initialState: AlbumMusicState = {
@@ -69,11 +79,45 @@ const initialState: AlbumMusicState = {
   popularAlbums: [],
   artistData: [],
   playlistMusics:[],
-  releasedAlbums:[]
+  releasedAlbums:[],
+  radio:[],
+  genres:[]
 };
 
+export const getGenres = createAsyncThunk(
+  "albumMusic/getGenres",
+  async()=>{
+    try {
+      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre",{
+        headers: {
+          "Accept-Language": "en"
+        }
+      });
+      return response.data.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
 
-
+export const getRadios = createAsyncThunk(
+  "albumMusic/getRadios",
+  async()=>{
+    try {
+      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio",{
+        headers: {
+          "Accept-Language": "en"
+        }
+      });
+      console.log("radio data",response.data.data);
+      
+      return response.data.data
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+)
 export const getPlaylistMusics = createAsyncThunk(
   "albumMusic/getPlaylistMusics",
   async ({ user_id, playlist_id }: { user_id: number; playlist_id: number }, { rejectWithValue }) => {
@@ -259,6 +303,33 @@ const albumMusicSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string
       })
+      .addCase(getRadios.pending,(state)=>{
+        state.loading = true;
+        state.error =""
+      })
+      .addCase(getRadios.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.radio = action.payload || []
+      })
+      .addCase(getRadios.rejected,(state,action)=>{
+        state.loading = false;
+        state.error = action.payload as string
+      })
+      .addCase(getGenres.pending,(state)=>{
+        state.loading = true;
+        state.error = ""
+      })
+      .addCase(getGenres.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.genres = action.payload || []
+      })
+      .addCase(getGenres.rejected,(state,action)=>{
+        state.loading = false;
+        state.error = action.payload as string
+      })
+
+  
+
   },
 });
 
