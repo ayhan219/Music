@@ -10,14 +10,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
 import { logoutUser, setCurrentPlaylist } from "../features/UserSlice";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdRadio } from "react-icons/io";
 import CreatePlaylist from "./CreatePlaylist";
 
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState<string>("home");
   const user = useSelector((state: RootState) => state.userSlice.user);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [openCreatePlaylist,setOpenCreatePlaylist] = useState<boolean>(false);
+  const [openCreatePlaylist, setOpenCreatePlaylist] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
@@ -61,18 +61,6 @@ const Sidebar = () => {
         </div>
         <div className="flex flex-col gap-8 text-base font-semibold px-7 ">
           <div className="w-full flex gap-2 items-center ">
-            <IoRadioSharp className="text-xl text-white" />
-            <Link
-              onClick={() => setActiveMenu("mixesandradio")}
-              className={`text-primary ${
-                activeMenu === "mixesandradio" && "text-hover"
-              }`}
-              to="/"
-            >
-              Mixes
-            </Link>
-          </div>
-          <div className="w-full flex gap-2 items-center ">
             <PiPlaylist className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("playlists")}
@@ -99,13 +87,37 @@ const Sidebar = () => {
           <div className="w-full flex gap-2 items-center ">
             <FaMusic className="text-xl text-white" />
             <Link
-              onClick={() => setActiveMenu("tracks")}
+              onClick={() => setActiveMenu("genres")}
               className={`text-primary ${
-                activeMenu === "tracks" && "text-hover"
+                activeMenu === "genres" && "text-hover"
+              }`}
+              to="/genres"
+            >
+              Genres
+            </Link>
+          </div>
+          <div className="w-full flex gap-2 items-center ">
+            <IoMdRadio className="text-xl text-white" />
+            <Link
+              onClick={() => setActiveMenu("radios")}
+              className={`text-primary ${
+                activeMenu === "radios" && "text-hover"
+              }`}
+              to="/radios"
+            >
+              Radios
+            </Link>
+          </div>
+          <div className="w-full flex gap-2 items-center ">
+            <IoRadioSharp className="text-xl text-white" />
+            <Link
+              onClick={() => setActiveMenu("mixesandradio")}
+              className={`text-primary ${
+                activeMenu === "mixesandradio" && "text-hover"
               }`}
               to="/"
             >
-              Tracks
+              Mixes
             </Link>
           </div>
         </div>
@@ -115,31 +127,39 @@ const Sidebar = () => {
         <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
           <p className=" text-sm">MY PLAYLIST</p>
           <div className="flex gap-4 items-center">
-            <button onClick={()=>navigate("/playlists")} className="text-xs cursor-pointer">Show all</button>
-          <IoMdAdd onClick={()=>{
-            if(user.id){
-              setOpenCreatePlaylist(true)
-            }
-            else{
-              navigate("/login")
-            }
-          }}  className="text-xl cursor-pointer" />
+            <button
+              onClick={() => navigate("/playlists")}
+              className="text-xs cursor-pointer"
+            >
+              Show all
+            </button>
+            <IoMdAdd
+              onClick={() => {
+                if (user.id) {
+                  setOpenCreatePlaylist(true);
+                } else {
+                  navigate("/login");
+                }
+              }}
+              className="text-xl cursor-pointer"
+            />
           </div>
-          
         </div>
         <div className="w-full h-[300px]  flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
-        {
-          user?.playlists?.map((item,index)=>(
-            <div onClick={()=>{
-              navigate(`/playlist/${item.playlist_id}`)
-              dispatch(setCurrentPlaylist(item))
-              setActiveMenu("")
-            }} key={index} className="text-primary font-bold cursor-pointer flex items-center gap-2">
+          {user?.playlists?.map((item, index) => (
+            <div
+              onClick={() => {
+                navigate(`/playlist/${item.playlist_id}`);
+                dispatch(setCurrentPlaylist(item));
+                setActiveMenu("");
+              }}
+              key={index}
+              className="text-primary font-bold cursor-pointer flex items-center gap-2"
+            >
               <FaCompactDisc />
               <p>{item.playlist_name}</p>
             </div>
-          ))
-        }
+          ))}
         </div>
       </div>
       {openMenu && (
@@ -190,7 +210,9 @@ const Sidebar = () => {
           )}
         </div>
       )}
-      {openCreatePlaylist && <CreatePlaylist setOpenCreatePlaylist={setOpenCreatePlaylist} />} 
+      {openCreatePlaylist && (
+        <CreatePlaylist setOpenCreatePlaylist={setOpenCreatePlaylist} />
+      )}
     </div>
   );
 };
