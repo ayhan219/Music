@@ -1,43 +1,46 @@
-
 import { useNavigate } from "react-router-dom";
 import { getArtists } from "../features/MusicSlice";
 import { useAppDispatch } from "../app/hooks";
+import { motion } from "framer-motion"; 
 
-
-interface RadioProps {
+interface ArtistProps {
   item: {
     id: number;
-    title: string;
-    picture: string;
-    picture_xl: string;
-    md5_image: string;
+    title?: string; 
+    picture?: string;
+    picture_xl?: string;
+    md5_image?: string;
     name?: string;
-  },
-  index:number
+  };
+  index: number;
 }
 
-const ArtistComp = ({ item, index }: RadioProps) => {
-
+const ArtistComp = ({ item, index }: ArtistProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const artistName = item.title || item.name || "Unknown Artist"; 
+
   return (
-   <div onClick={()=>{
-    navigate(`/artists`)
-    dispatch(getArtists(item.id))
-   }} key={index} className="w-[220px] h-[250px] rounded-lg relative bg-black cursor-pointer overflow-hidden group">
-      <img
-        className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 group-hover:brightness-75"
+    <motion.div
+      key={index}
+      className="w-[220px] h-[250px] rounded-lg relative bg-gray-900 cursor-pointer overflow-hidden group shadow-md hover:shadow-lg transition-shadow duration-300"
+      onClick={() => {
+        navigate(`/artists`);
+        dispatch(getArtists(item.id));
+      }}
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.2 }}
+    >
+      <motion.img
+        className="w-full h-full object-cover rounded-lg brightness-90 group-hover:brightness-100 transition-brightness duration-300"
         src={item.picture_xl}
-        alt="Radio"
+        alt={artistName}
       />
-      <div className="absolute bottom-0 left-0 w-full bg-black/50 text-white text-center py-2">
-        <p className="text-lg font-semibold">{item.title ? item.title : item.name}</p>
+      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white text-center py-3 px-2">
+        <p className="text-lg font-semibold truncate">{artistName}</p>
       </div>
-      <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/80 text-black px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition">
-        ▶️ Play
-      </button>
-    </div>
+    </motion.div>
   );
 };
 
