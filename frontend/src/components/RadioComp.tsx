@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { getRadiosForSpecificId } from "../features/MusicSlice";
 
 interface RadioProps {
   item: {
@@ -13,10 +15,16 @@ interface RadioProps {
 }
 
 const RadioComp = ({ item, index }: RadioProps) => {
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   return (
-    <>
-   <Link to={`https://www.deezer.com/mixes/genre/${item.id}?utm_source=deezer&utm_content=mixes-genre-${item.id}&utm_term=0_1746215610&utm_medium=web`} className="w-full h-full flex justify-center items-center">
-   <div key={index} className="w-[220px] h-[250px] rounded-lg relative bg-black cursor-pointer overflow-hidden group">
+   
+   <div onClick={()=>{
+    dispatch(getRadiosForSpecificId(item.id))
+    navigate(`/radios/${item.id}`)
+   }}  key={index} className="w-[220px] h-[250px] rounded-lg relative bg-black cursor-pointer overflow-hidden group">
       <img
         className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 group-hover:brightness-75"
         src={item.picture_xl}
@@ -29,8 +37,6 @@ const RadioComp = ({ item, index }: RadioProps) => {
         ▶️ Play
       </button>
     </div>
-   </Link>
-    </>
   );
 };
 
