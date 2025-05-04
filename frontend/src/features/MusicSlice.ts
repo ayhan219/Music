@@ -8,6 +8,29 @@ interface ArtistData {
     picture_big: string;
   };
 }
+
+interface RadioDatas{
+  id:number,
+  title:string,
+  duration:number,
+  rank:number,
+  md5_image:string,
+  artist:{
+    id:number,
+    name:string,
+    picture:string,
+  },
+  album:{
+    id:number,
+    title:string,
+    cover:string,
+    cover_xl:string,
+    md5_image:string
+  }
+
+
+}
+
 interface AlbumData {
   album?:{
     cover_medium: string;
@@ -68,6 +91,8 @@ interface AlbumMusicState {
   playlistMusics:AlbumData[];
   radio:Radio[]
   genres:Radio[]
+  artists:ArtistData[]
+  radios:RadioDatas[]
 }
 
 const initialState: AlbumMusicState = {
@@ -81,8 +106,43 @@ const initialState: AlbumMusicState = {
   playlistMusics:[],
   releasedAlbums:[],
   radio:[],
-  genres:[]
+  genres:[],
+  artists:[],
+  radios:[]
 };
+
+export const getRadiosForSpecificId = createAsyncThunk(
+  "albumMusic/getRadiosForSpecificId",
+  async(id:number,{rejectWithValue})=>{
+    try {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio/${id}/tracks`,{
+        headers: {
+          "Accept-Language": "en"
+        }
+      })
+      return response.data.data
+    } catch (error:any) {
+      return rejectWithValue(error.response?.data || "An error occurred");
+    }
+  }
+)
+
+export const getArtists = createAsyncThunk(
+  "albumMusic/getArtists",
+  async(id:number,{rejectWithValue})=>{
+    try {
+      const response =await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre/${id}/artists`,{
+        headers: {
+          "Accept-Language": "en"
+        }
+      })
+      return response.data.data
+    } catch (error:any) {
+      return rejectWithValue(error.response?.data || "An error occurred");
+      
+    }
+  }
+)
 
 export const getGenres = createAsyncThunk(
   "albumMusic/getGenres",
@@ -109,8 +169,6 @@ export const getRadios = createAsyncThunk(
           "Accept-Language": "en"
         }
       });
-      console.log("radio data",response.data.data);
-      
       return response.data.data
     } catch (error) {
       console.log(error);
@@ -155,9 +213,7 @@ export const getMorePopularAlbums = createAsyncThunk(
     try {
       const response = await axios.get(
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart/0/albums?limit=10&index=${offset}`
-      );
-      console.log("response",response.data.data);
-      
+      ); 
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -183,7 +239,6 @@ export const getReleasedAlbums = createAsyncThunk(
   async()=>{
     try {
       const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/editorial/0/releases")
-      console.log(response.data.data);
       return response.data.data
     } catch (error) {
       console.log(error);
@@ -326,6 +381,30 @@ const albumMusicSlice = createSlice({
       .addCase(getGenres.rejected,(state,action)=>{
         state.loading = false;
         state.error = action.payload as string
+      })
+      .addCase(getArtists.pending,(state)=>{
+        state.loading = true;
+        state.error =""
+      })
+      .addCase(getArtists.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.artists = action.payload || []
+      })
+      .addCase(getArtists.rejected,(state,action)=>{
+        state.loading =false;
+        state.error = action.payload as string
+      })
+      .addCase(getRadiosForSpecificId.pending,(state)=>{
+        state.loading =true;
+        state.error =""
+      })
+      .addCase(getRadiosForSpecificId.fulfilled,(state,action)=>{
+        state.loading =false;
+        state.radios = action.payload || []
+      })
+      .addCase(getRadiosForSpecificId.rejected,(state,action)=>{
+        state.loading =false;
+        state.error =action.payload as string
       })
 
   
