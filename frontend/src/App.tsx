@@ -23,18 +23,22 @@ import PopularAlbumsPage from "./pages/PopularAlbumsPage";
 import ReleasedAlbumsPage from "./pages/ReleasedAlbumsPage";
 import Radios from "./pages/Radios";
 import Genres from "./pages/Genres";
+import Artists from "./pages/Artists";
+import RadioTracks from "./pages/RadioTracks";
 
 function App() {
-  const isMusicBarOpen = useSelector((state: RootState) => state.musicPlayer.openMusicBar);
+  const isMusicBarOpen = useSelector(
+    (state: RootState) => state.musicPlayer.openMusicBar
+  );
   const dispatch = useAppDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getUser());
-  },[])
+  }, []);
 
   return (
     <BrowserRouter>
-     <ToastContainer />
+      <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -56,10 +60,18 @@ function App() {
                   <Route path="/artist/:id" element={<ArtistDetail />} />
                   <Route path="/playlist/:id" element={<Playlist />} />
                   <Route path="/playlists" element={<Playlists />} />
-                  <Route path="/popularalbums" element={<PopularAlbumsPage />} />
-                  <Route path="/releasedalbums" element={<ReleasedAlbumsPage />} />
+                  <Route
+                    path="/popularalbums"
+                    element={<PopularAlbumsPage />}
+                  />
+                  <Route
+                    path="/releasedalbums"
+                    element={<ReleasedAlbumsPage />}
+                  />
                   <Route path="/radios" element={<Radios />} />
                   <Route path="/genres" element={<Genres />} />
+                  <Route path="/artists" element={<Artists />} />
+                  <Route path="/radios/:id" element={<RadioTracks />} />
                 </Routes>
               </div>
               {isMusicBarOpen && <MusicPlayBar />}
