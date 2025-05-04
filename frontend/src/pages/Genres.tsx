@@ -1,6 +1,6 @@
 import { useAppSelector } from "../app/hooks"
 import { RootState } from "../app/store"
-import RadioComp from "../components/RadioComp";
+import ArtistComp from "../components/ArtistComp";
 
 
 const Genres = () => {
@@ -14,7 +14,7 @@ const Genres = () => {
       <div className="w-full grid grid-cols-5 gap-10">
         {
             genres.map((item,index)=>(
-                <RadioComp item={item} index={index} />
+                <ArtistComp item={item} index={index} />
             ))
         }
       </div>
