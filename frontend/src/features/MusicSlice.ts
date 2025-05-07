@@ -78,7 +78,7 @@ interface AlbumMusicState {
     cover_xl?: string;
     duration: number;
     label: string;
-    release_date: string;
+    release_date?: string;
     tracks?: { data: AlbumMusic[] };
   } | null;
   currentMusicAlbum: AlbumMusic[];
