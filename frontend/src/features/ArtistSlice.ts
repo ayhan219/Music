@@ -11,23 +11,18 @@ interface Artist {
   type: string;
 }
 interface ArtistMusic {
-  id:number,
-  title:string,
-  duration:number,
-  rank:number,
-  preview:string,
-  contributers:[
-    {
-      name:string,
-    }
-  ],
-  md5_image:string,
-  artist:{
-    name:string
-  },
+  artist: {
+    name: string;
+  };
   album: {
     cover_medium: string;
   };
+  duration: number;
+  id: number;
+  md5_image: string;
+  preview: string;
+  rank: number;
+  title: string;
 }
 
 interface ArtistState {
