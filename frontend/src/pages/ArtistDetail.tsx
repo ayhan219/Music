@@ -7,6 +7,7 @@ import { RootState } from "../app/store";
 import { FaCheckCircle } from "react-icons/fa";
 import Music from "../components/Music";
 import ToolsForMusic from "../components/ToolsForMusic";
+import { setAlbumMusic } from "../features/MusicSlice";
 
 const ArtistDetail = () => {
   const { id } = useParams();
@@ -19,6 +20,23 @@ const ArtistDetail = () => {
     dispatch(getArtistData(Number(id)));
     dispatch(getArtistMusicData(Number(id)));
   }, [id, dispatch]);
+  
+  useEffect(() => {
+    if (artistPopularMusic && artistPopularMusic.length > 0) {
+      const fixedData = artistPopularMusic.map((item) => ({
+        title: item.title,
+        cover_xl: item.album.cover_medium,
+        duration: item.duration,
+        label: item.artist.name,
+        tracks: {
+          data: artistPopularMusic
+        }
+      }));
+      dispatch(setAlbumMusic(fixedData[0]));
+    } else {
+      dispatch(setAlbumMusic(null));
+    }
+  }, [artistPopularMusic, dispatch]);
 
   if (status === "loading")
     return (
