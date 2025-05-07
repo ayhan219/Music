@@ -220,7 +220,7 @@ const Home = () => {
                 </div>
               </div>
               <motion.div
-                className="flex flex-row gap-2 pt-3 overflow-x-auto"
+                className="flex flex-row gap-2 pt-3 overflow-x-auto overflow-y-hidden"
                 key={currentIndex4}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -259,7 +259,7 @@ const Home = () => {
                 </div>
               </div>
               <motion.div
-                className="flex flex-row gap-2 pt-3 overflow-x-auto"
+                className="flex flex-row gap-2 pt-3 overflow-x-auto overflow-y-hidden"
                 key={currentIndex5}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
