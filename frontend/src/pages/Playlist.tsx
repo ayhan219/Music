@@ -92,7 +92,7 @@ const Playlist = () => {
                     <img
                       key={item.id}
                       className="w-full h-full object-cover"
-                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium }/500x500-000000-80-0-0.jpg`}
+                      src={`https://cdn-images.dzcdn.net/images/cover/${item.album?.cover_medium}/500x500-000000-80-0-0.jpg`}
                       alt=""
                     />
                   ))}
@@ -104,37 +104,53 @@ const Playlist = () => {
           <div className="w-full h-full bg-blue-600"></div>
           <div className="w-full h-full bg-amber-400"></div> */}
             </div>
-            <div className="w-[70%] h-full p-4  rounded-2xl shadow-lg">
-              <div className="text-primary font-mono flex flex-col justify-evenly h-full space-y-3">
-                {/* Access Text */}
-                <div className="text-md font-semibold ">
-                  <p>This playlist is public and open to everyone</p>
-                </div>
-
-                <div className="text-2xl font-bold ">
-                  <h1>{currentPlaylist.playlist_name}</h1>
-                </div>
-
-                <div className="text-base ">
-                  <p>{currentPlaylist.playlist_description}</p>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10">
-                    <img
-                      className="w-full h-full rounded-full object-cover border border-gray-300 shadow-sm"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
-                      alt="User Avatar"
+            <div className="w-full md:w-[70%] h-auto md:h-full p-6 rounded-2xl shadow-xl bg-primary transition-all duration-300 flex flex-col">
+              <div className="text-gray-900 dark:text-white font-mono flex flex-col justify-between h-full space-y-6">
+                {/* Access Text with Icon */}
+                <div className="flex items-center space-x-2 text-sm font-medium text-green-600 dark:text-green-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
-                  </div>
-                  <div className="font-semibold flex gap-4 items-center">
-                    <p>{user.username}</p>
-                    <p className="text-sm text-gray-500">
+                  </svg>
+                  <p>Public Playlist</p>
+                </div>
+
+                {/* Playlist Header with More Prominent Title */}
+                <div className="space-y-3">
+                  <h1 className="text-3xl font-extrabold leading-tight text-gray-900 dark:text-white">
+                    {currentPlaylist.playlist_name}
+                  </h1>
+                  {currentPlaylist.playlist_description && (
+                    <p className="text-base text-gray-600 dark:text-gray-400">
+                      {currentPlaylist.playlist_description}
+                    </p>
+                  )}
+                </div>
+
+                {/* User Info with Subtle Separator */}
+                <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center gap-4">
+                  <img
+                    className="w-12 h-12 rounded-full object-cover border border-gray-300 dark:border-gray-600 shadow-md"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVva9csN-zOiY2wG9CXNuAI1VRsFunaiD3nQ&s"
+                    alt="User Avatar"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-semibold text-gray-800 dark:text-gray-100">
+                      {user.username}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {playlistMusics.length === 0 ? (
-                        <span>
-                          No tracks yet. Start adding some music to bring this
-                          playlist to life!
-                        </span>
+                        <span className="italic">No tracks yet</span>
                       ) : (
                         `${playlistMusics.length} track${
                           playlistMusics.length > 1 ? "s" : ""
