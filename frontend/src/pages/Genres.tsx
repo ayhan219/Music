@@ -7,7 +7,7 @@ const Genres = () => {
     const genres = useAppSelector((state:RootState)=>state.albumMusic.genres);
 
   return (
-    <div className="w-full h-[90%] bg-primary overflow-y-auto scrollbar-custom px-16 ">
+    <div className="w-full h-full bg-primary overflow-y-auto scrollbar-custom px-16 pb-20 ">
       <div className="text-white text-3xl font-bold mb-3 px-5">
         <h1>Genres</h1>
       </div>

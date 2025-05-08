@@ -108,7 +108,7 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full  h-[90%] overflow-y-auto scrollbar-custom bg-primary">
+    <div className="w-full  h-full overflow-y-auto scrollbar-custom bg-primary pb-32">
       <div className="px-24 w-full flex flex-col  gap-8">
         {!loading ? (
           <>

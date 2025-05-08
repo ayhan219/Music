@@ -47,8 +47,8 @@ const AlbumsAndArtists = () => {
   }, []);
 
   return (
-    <div className="w-full h-[90%] bg-primary p-3">
-      <div className="h-full w-full p-4 overflow-y-hidden ">
+    <div className="w-full h-full bg-primary p-3">
+      <div className="h-full w-full p-4 overflow-y-auto pb-10 scrollbar-custom ">
         <div className="flex justify-between px-4">
           <div className="w-full text-primary text-2xl font-semibold px-4  ">
             <h2>Popular Albums</h2>
@@ -70,7 +70,7 @@ const AlbumsAndArtists = () => {
         </div>
         <div className="w-full h-auto pt-5 flex">
           <motion.div
-            className="flex flex-row justify-between pt-3 overflow-x-auto"
+            className="flex flex-row justify-between pt-3 overflow-x-auto overflow-y-hidden"
             key={currentIndex}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
