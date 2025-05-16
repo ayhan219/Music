@@ -130,7 +130,7 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
       ref={musicRef}
       className="relative"
       onClick={()=>{
-        handleClickOutside
+        handleClickOutside()
         getActiveMusicUrl();
       }}
     >
