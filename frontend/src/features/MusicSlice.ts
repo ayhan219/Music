@@ -53,7 +53,7 @@ interface AlbumMusic {
   artist: {
     name: string;
   };
-  album: {
+  album?: {
     cover_medium: string;
   };
   duration: number;
@@ -92,7 +92,7 @@ interface AlbumMusicState {
   radio:Radio[]
   genres:Radio[]
   artists:ArtistData[]
-  radios:RadioDatas[]
+  radios:RadioDatas[],
 }
 
 const initialState: AlbumMusicState = {
@@ -108,7 +108,7 @@ const initialState: AlbumMusicState = {
   radio:[],
   genres:[],
   artists:[],
-  radios:[]
+  radios:[],
 };
 
 export const getRadiosForSpecificId = createAsyncThunk(
@@ -261,6 +261,17 @@ export const getPopularArtist = createAsyncThunk(
   }
 );
 
+export const getRadiosData = createAsyncThunk(
+  "albumMusic/getRadiosData",
+  async(id:number,{rejectWithValue})=>{
+    try {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}/tracks`)
+      return response.data.data
+    } catch (error:any) {
+      return rejectWithValue(error.response?.data || "An error occurred");
+    }
+  }
+)
 const albumMusicSlice = createSlice({
   name: "albumMusic",
   initialState,
@@ -405,6 +416,9 @@ const albumMusicSlice = createSlice({
       .addCase(getRadiosForSpecificId.rejected,(state,action)=>{
         state.loading =false;
         state.error =action.payload as string
+      })
+      .addCase(getRadiosData.fulfilled,(state,action)=>{
+        state.currentMusicAlbum = action.payload || []
       })
 
   
