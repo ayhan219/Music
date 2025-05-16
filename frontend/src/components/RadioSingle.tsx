@@ -1,4 +1,9 @@
 import { motion } from "framer-motion";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getRadiosData } from "../features/MusicSlice";
+import { setIsPlaying, setMusicId, setOpenMusicBar } from "../features/PlayingMusicSlice";
+import { RootState } from "../app/store";
+import { useEffect } from "react";
 
 interface RadioSingleProps {
   item: {
@@ -24,9 +29,24 @@ interface RadioSingleProps {
 }
 
 const RadioSingle = ({ item, index }: RadioSingleProps) => {
+  const dispatch = useAppDispatch();
+  const currentAlbumMusic = useAppSelector((state:RootState)=>state.albumMusic.currentMusicAlbum)
+
+
+  useEffect(() => {
+    if (currentAlbumMusic.length > 0) {
+      dispatch(setMusicId(currentAlbumMusic[0].id));
+      dispatch(setIsPlaying(true));
+      dispatch(setOpenMusicBar(true));
+    }
+  }, [currentAlbumMusic]);
+  
   return (
     <motion.div
       key={index}
+      onClick={()=>{
+        dispatch(getRadiosData(item.album.id))
+            }}
       className="relative w-[300px] h-[380px] rounded-lg shadow-md overflow-hidden cursor-pointer text-white group  hover:shadow-lg transition-shadow duration-300"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2 }}
