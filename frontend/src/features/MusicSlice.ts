@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-interface ArtistData {
+export interface ArtistData {
   artist: {
     id: number;
     name: string;
@@ -9,32 +9,30 @@ interface ArtistData {
   };
 }
 
-interface RadioDatas{
-  id:number,
-  title:string,
-  duration:number,
-  rank:number,
-  md5_image:string,
-  artist:{
-    id:number,
-    name:string,
-    picture:string,
-  },
-  album:{
-    id:number,
-    title:string,
-    cover:string,
-    cover_xl:string,
-    md5_image:string
-  }
-
-
+export interface RadioDatas {
+  id: number;
+  title: string;
+  duration: number;
+  rank: number;
+  md5_image: string;
+  artist: {
+    id: number;
+    name: string;
+    picture: string;
+  };
+  album: {
+    id: number;
+    title: string;
+    cover: string;
+    cover_xl: string;
+    md5_image: string;
+  };
 }
 
-interface AlbumData {
-  album?:{
+export interface AlbumData {
+  album?: {
     cover_medium: string;
-  }
+  };
   cover: string;
   cover_xl: string;
   artist: {
@@ -45,11 +43,10 @@ interface AlbumData {
   position: number;
   type: string;
   title: string;
-  md5_image?:string
+  md5_image?: string;
 }
 
-
-interface AlbumMusic {
+export interface AlbumMusic {
   artist: {
     name: string;
   };
@@ -63,16 +60,16 @@ interface AlbumMusic {
   rank: number;
   title: string;
 }
-interface Radio{
-  id:number,
-  title:string,
-  picture:string,
-  picture_xl:string,
-  md5_image:string,
-  name?:string
+export interface Radio {
+  id: number;
+  title: string;
+  picture: string;
+  picture_xl: string;
+  md5_image: string;
+  name?: string;
 }
 
-interface AlbumMusicState {
+export interface AlbumMusicState {
   albumMusic: {
     title?: string;
     cover_xl?: string;
@@ -84,15 +81,15 @@ interface AlbumMusicState {
   currentMusicAlbum: AlbumMusic[];
   searchedMusicData: AlbumMusic[];
   popularAlbums: AlbumData[];
-  releasedAlbums:AlbumData[];
+  releasedAlbums: AlbumData[];
   loading: boolean;
   error: string;
   artistData: ArtistData[];
-  playlistMusics:AlbumData[];
-  radio:Radio[]
-  genres:Radio[]
-  artists:ArtistData[]
-  radios:RadioDatas[],
+  playlistMusics: AlbumData[];
+  radio: Radio[];
+  genres: Radio[];
+  artists: ArtistData[];
+  radios: RadioDatas[];
 }
 
 const initialState: AlbumMusicState = {
@@ -103,88 +100,97 @@ const initialState: AlbumMusicState = {
   error: "",
   popularAlbums: [],
   artistData: [],
-  playlistMusics:[],
-  releasedAlbums:[],
-  radio:[],
-  genres:[],
-  artists:[],
-  radios:[],
+  playlistMusics: [],
+  releasedAlbums: [],
+  radio: [],
+  genres: [],
+  artists: [],
+  radios: [],
 };
 
 export const getRadiosForSpecificId = createAsyncThunk(
   "albumMusic/getRadiosForSpecificId",
-  async(id:number,{rejectWithValue})=>{
+  async (id: number, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio/${id}/tracks`,{
-        headers: {
-          "Accept-Language": "en"
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio/${id}/tracks`,
+        {
+          headers: {
+            "Accept-Language": "en",
+          },
         }
-      })
-      return response.data.data
-    } catch (error:any) {
+      );
+      return response.data.data;
+    } catch (error: any) {
       return rejectWithValue(error.response?.data || "An error occurred");
     }
   }
-)
+);
 
 export const getArtists = createAsyncThunk(
   "albumMusic/getArtists",
-  async(id:number,{rejectWithValue})=>{
+  async (id: number, { rejectWithValue }) => {
     try {
-      const response =await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre/${id}/artists`,{
-        headers: {
-          "Accept-Language": "en"
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre/${id}/artists`,
+        {
+          headers: {
+            "Accept-Language": "en",
+          },
         }
-      })
-      return response.data.data
-    } catch (error:any) {
+      );
+      return response.data.data;
+    } catch (error: any) {
       return rejectWithValue(error.response?.data || "An error occurred");
-      
     }
   }
-)
+);
 
-export const getGenres = createAsyncThunk(
-  "albumMusic/getGenres",
-  async()=>{
-    try {
-      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre",{
+export const getGenres = createAsyncThunk("albumMusic/getGenres", async () => {
+  try {
+    const response = await axios.get(
+      "https://cors-anywhere.herokuapp.com/https://api.deezer.com/genre",
+      {
         headers: {
-          "Accept-Language": "en"
-        }
-      });
-      return response.data.data
-    } catch (error) {
-      console.log(error);
-    }
+          "Accept-Language": "en",
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
   }
-)
+});
 
-export const getRadios = createAsyncThunk(
-  "albumMusic/getRadios",
-  async()=>{
-    try {
-      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio",{
+export const getRadios = createAsyncThunk("albumMusic/getRadios", async () => {
+  try {
+    const response = await axios.get(
+      "https://cors-anywhere.herokuapp.com/https://api.deezer.com/radio",
+      {
         headers: {
-          "Accept-Language": "en"
-        }
-      });
-      return response.data.data
-    } catch (error) {
-      console.log(error);
-      
-    }
+          "Accept-Language": "en",
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
   }
-)
+});
 export const getPlaylistMusics = createAsyncThunk(
   "albumMusic/getPlaylistMusics",
-  async ({ user_id, playlist_id }: { user_id: number; playlist_id: number }, { rejectWithValue }) => {
-    
+  async (
+    { user_id, playlist_id }: { user_id: number; playlist_id: number },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axios.get(`http://localhost:5000/music/playlistmusics`, {
-        params: { user_id, playlist_id }, 
-      });
-      return response.data; 
+      const response = await axios.get(
+        `http://localhost:5000/music/playlistmusics`,
+        {
+          params: { user_id, playlist_id },
+        }
+      );
+      return response.data;
     } catch (error: any) {
       console.error("Error fetching playlist musics:", error);
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -208,19 +214,18 @@ export const getPopularAlbums = createAsyncThunk(
 export const getMorePopularAlbums = createAsyncThunk(
   "albumMusic/getMorePopularAlbums",
   async (offset: number) => {
-    console.log("offset",offset);
-    
+    console.log("offset", offset);
+
     try {
       const response = await axios.get(
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/chart/0/albums?limit=10&index=${offset}`
-      ); 
+      );
       return response.data.data;
     } catch (error) {
       console.log(error);
     }
   }
-
-)
+);
 export const getMoreReleasedAlbums = createAsyncThunk(
   "albumMusic/getMoreReleasedAlbums",
   async (offset: number) => {
@@ -233,19 +238,20 @@ export const getMoreReleasedAlbums = createAsyncThunk(
       console.log(error);
     }
   }
-)
+);
 export const getReleasedAlbums = createAsyncThunk(
   "albumMusic/getReleasedAlbums",
-  async()=>{
+  async () => {
     try {
-      const response = await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/editorial/0/releases")
-      return response.data.data
+      const response = await axios.get(
+        "https://cors-anywhere.herokuapp.com/https://api.deezer.com/editorial/0/releases"
+      );
+      return response.data.data;
     } catch (error) {
       console.log(error);
     }
   }
-
-)
+);
 
 export const getPopularArtist = createAsyncThunk(
   "albumMusic/getPopularArtists",
@@ -263,15 +269,17 @@ export const getPopularArtist = createAsyncThunk(
 
 export const getRadiosData = createAsyncThunk(
   "albumMusic/getRadiosData",
-  async(id:number,{rejectWithValue})=>{
+  async (id: number, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}/tracks`)
-      return response.data.data
-    } catch (error:any) {
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}/tracks`
+      );
+      return response.data.data;
+    } catch (error: any) {
       return rejectWithValue(error.response?.data || "An error occurred");
     }
   }
-)
+);
 const albumMusicSlice = createSlice({
   name: "albumMusic",
   initialState,
@@ -288,12 +296,17 @@ const albumMusicSlice = createSlice({
     setSearchedMusicData: (state, action: PayloadAction<AlbumMusic[]>) => {
       state.searchedMusicData = action.payload;
     },
-    setNewMusicUrl:(state,action:PayloadAction<{id:number,preview:string}>)=>{      
-      const findSpecificMusic = state.currentMusicAlbum.find((item:AlbumMusic)=>item.id===action.payload.id)
-      if(findSpecificMusic){
-        findSpecificMusic.preview = action.payload.preview
+    setNewMusicUrl: (
+      state,
+      action: PayloadAction<{ id: number; preview: string }>
+    ) => {
+      const findSpecificMusic = state.currentMusicAlbum.find(
+        (item: AlbumMusic) => item.id === action.payload.id
+      );
+      if (findSpecificMusic) {
+        findSpecificMusic.preview = action.payload.preview;
       }
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -321,7 +334,7 @@ const albumMusicSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Failed to fetch artist";
       })
-      .addCase(getPlaylistMusics.pending, (state) => {  
+      .addCase(getPlaylistMusics.pending, (state) => {
         state.loading = true;
         state.error = "";
       })
@@ -333,99 +346,100 @@ const albumMusicSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      .addCase(getReleasedAlbums.pending,(state)=>{
+      .addCase(getReleasedAlbums.pending, (state) => {
         state.loading = true;
-        state.error = ""
+        state.error = "";
       })
-      .addCase(getReleasedAlbums.fulfilled,(state,action)=>{
-        state.loading=false;
-        state.releasedAlbums = action.payload || []
+      .addCase(getReleasedAlbums.fulfilled, (state, action) => {
+        state.loading = false;
+        state.releasedAlbums = action.payload || [];
       })
-      .addCase(getReleasedAlbums.rejected,(state,action)=>{
-        state.loading=false;
-        state.error = action.payload as string
+      .addCase(getReleasedAlbums.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       })
-      .addCase(getMorePopularAlbums.pending,(state)=>{
+      .addCase(getMorePopularAlbums.pending, (state) => {
         state.loading = true;
-        state.error = ""
+        state.error = "";
       })
-      .addCase(getMorePopularAlbums.fulfilled,(state,action)=>{
+      .addCase(getMorePopularAlbums.fulfilled, (state, action) => {
         state.loading = false;
-        state.popularAlbums = [...state.popularAlbums,...action.payload];
+        state.popularAlbums = [...state.popularAlbums, ...action.payload];
       })
-      .addCase(getMorePopularAlbums.rejected,(state,action)=>{
+      .addCase(getMorePopularAlbums.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string
+        state.error = action.payload as string;
       })
-      .addCase(getMoreReleasedAlbums.pending,(state)=>{
+      .addCase(getMoreReleasedAlbums.pending, (state) => {
         state.loading = true;
-        state.error = ""
+        state.error = "";
       })
-      .addCase(getMoreReleasedAlbums.fulfilled,(state,action)=>{
+      .addCase(getMoreReleasedAlbums.fulfilled, (state, action) => {
         state.loading = false;
-        state.releasedAlbums = [...state.releasedAlbums,...action.payload];
+        state.releasedAlbums = [...state.releasedAlbums, ...action.payload];
       })
-      .addCase(getMoreReleasedAlbums.rejected,(state,action)=>{
+      .addCase(getMoreReleasedAlbums.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string
+        state.error = action.payload as string;
       })
-      .addCase(getRadios.pending,(state)=>{
+      .addCase(getRadios.pending, (state) => {
         state.loading = true;
-        state.error =""
+        state.error = "";
       })
-      .addCase(getRadios.fulfilled,(state,action)=>{
+      .addCase(getRadios.fulfilled, (state, action) => {
         state.loading = false;
-        state.radio = action.payload || []
+        state.radio = action.payload || [];
       })
-      .addCase(getRadios.rejected,(state,action)=>{
+      .addCase(getRadios.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string
+        state.error = action.payload as string;
       })
-      .addCase(getGenres.pending,(state)=>{
+      .addCase(getGenres.pending, (state) => {
         state.loading = true;
-        state.error = ""
+        state.error = "";
       })
-      .addCase(getGenres.fulfilled,(state,action)=>{
+      .addCase(getGenres.fulfilled, (state, action) => {
         state.loading = false;
-        state.genres = action.payload || []
+        state.genres = action.payload || [];
       })
-      .addCase(getGenres.rejected,(state,action)=>{
+      .addCase(getGenres.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string
+        state.error = action.payload as string;
       })
-      .addCase(getArtists.pending,(state)=>{
+      .addCase(getArtists.pending, (state) => {
         state.loading = true;
-        state.error =""
+        state.error = "";
       })
-      .addCase(getArtists.fulfilled,(state,action)=>{
+      .addCase(getArtists.fulfilled, (state, action) => {
         state.loading = false;
-        state.artists = action.payload || []
+        state.artists = action.payload || [];
       })
-      .addCase(getArtists.rejected,(state,action)=>{
-        state.loading =false;
-        state.error = action.payload as string
+      .addCase(getArtists.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       })
-      .addCase(getRadiosForSpecificId.pending,(state)=>{
-        state.loading =true;
-        state.error =""
+      .addCase(getRadiosForSpecificId.pending, (state) => {
+        state.loading = true;
+        state.error = "";
       })
-      .addCase(getRadiosForSpecificId.fulfilled,(state,action)=>{
-        state.loading =false;
-        state.radios = action.payload || []
+      .addCase(getRadiosForSpecificId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.radios = action.payload || [];
       })
-      .addCase(getRadiosForSpecificId.rejected,(state,action)=>{
-        state.loading =false;
-        state.error =action.payload as string
+      .addCase(getRadiosForSpecificId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       })
-      .addCase(getRadiosData.fulfilled,(state,action)=>{
-        state.currentMusicAlbum = action.payload || []
-      })
-
-  
-
+      .addCase(getRadiosData.fulfilled, (state, action) => {
+        state.currentMusicAlbum = action.payload || [];
+      });
   },
 });
 
-export const { setAlbumMusic, setCurrentAlbumMusic, setSearchedMusicData ,setNewMusicUrl} =
-  albumMusicSlice.actions;
+export const {
+  setAlbumMusic,
+  setCurrentAlbumMusic,
+  setSearchedMusicData,
+  setNewMusicUrl,
+} = albumMusicSlice.actions;
 export default albumMusicSlice.reducer;
