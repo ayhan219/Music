@@ -10,7 +10,7 @@ const Playlists = () => {
   return (
     <div className="w-full min-h-[90%] bg-primary p-8 sm:p-10 md:p-14">
       <div className="w-full text-white font-bold font-mono text-3xl border-b border-gray-600 pb-4 mb-6">
-        <h1 onClick={()=>console.log(user)}>🎵 My Playlists</h1>
+        <h1 onClick={() => console.log(user)}>🎵 My Playlists</h1>
       </div>
 
       <div className="h-[670px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6 overflow-y-auto overflow-x-hidden scrollbar-custom">
@@ -25,9 +25,29 @@ const Playlists = () => {
                 <Album2 key={index} item={item} index={index} />
               ))
             ) : (
-              <p className="text-gray-400 text-lg col-span-full text-center">
-                No playlists found.
-              </p>
+              <div className="col-span-full flex flex-col items-center justify-center py-12">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-24 h-24 text-gray-400 mb-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 19V6h13M9 6L3 9.5M9 6l6 3.5M9 12l6 3.5"
+                  />
+                </svg>
+                <p className="text-2xl font-semibold text-gray-500 mb-2">
+                  No Playlists Found
+                </p>
+                <p className="text-sm text-gray-400 text-center max-w-xs">
+                  You haven’t created any playlists yet. Start exploring music
+                  and add your favorites!
+                </p>
+              </div>
             )}
           </>
         )}
