@@ -47,7 +47,6 @@ const login = async (req, res) => {
       if (results.length === 0) {
         return res.status(401).json({ message: "invalid email or password" });
       }
-      console.log("results", results);
 
       const user = {
         id: results[0].user_id,
@@ -58,7 +57,6 @@ const login = async (req, res) => {
         playlists: [],
       };
 
-      console.log("results", results);
 
       results.forEach((row) => {
         if (row.playlist_name) {
