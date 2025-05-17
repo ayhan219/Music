@@ -24,8 +24,14 @@ const createPlaylist = async (req, res) => {
               .status(500)
               .json({ message: "Error occurred while fetching playlist" });
           }
+          const returnData = {
+            playlist_description: playlistResult[0].playlist_description,
+            playlist_id: playlistResult[0].id,
+            playlist_name: playlistResult[0].playlist_name,
+            user_id: playlistResult[0].user_id,
+          };
 
-          res.status(200).json(playlistResult[0]);
+          res.status(200).json(returnData);
         });
       }
     );
@@ -39,7 +45,6 @@ const createPlaylist = async (req, res) => {
 const addMusicToPlaylist = async (req, res) => {
   const { musicData } = req.body;
   console.log(musicData);
-  
 
   if (Object.keys(musicData).length === 0) {
     return res.status(400).json({ message: "Provide all area" });
@@ -92,7 +97,7 @@ const getPlaylistMusics = async (req, res) => {
 
       const musicDataArray = results.map((row) => ({
         artist: {
-          name: row.artist, 
+          name: row.artist,
         },
         album: {
           cover_medium: row.music_image,
@@ -105,8 +110,7 @@ const getPlaylistMusics = async (req, res) => {
         title: row.music_name,
       }));
 
-      
-      return res.status(200).json(musicDataArray); 
+      return res.status(200).json(musicDataArray);
     });
   } catch (error) {
     return res
@@ -114,7 +118,6 @@ const getPlaylistMusics = async (req, res) => {
       .json({ message: "Error occurred while fetching playlist" });
   }
 };
-
 
 module.exports = {
   createPlaylist,
