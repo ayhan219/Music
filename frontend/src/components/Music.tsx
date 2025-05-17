@@ -11,21 +11,8 @@ import { useRef, useState } from "react";
 import { setContextMenu } from "../features/generalSlice";
 import axios from "axios";
 import { useAppSelector } from "../app/hooks";
+import { AlbumMusic } from "../features/MusicSlice"
 
-interface AlbumMusic {
-  artist: {
-    name: string;
-  };
-  album: {
-    cover_medium: string;
-  };
-  duration: number;
-  id: number;
-  md5_image: string;
-  preview: string;
-  rank: number;
-  title: string;
-}
 
 interface MusicProps {
   item: AlbumMusic;
