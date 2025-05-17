@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Sidebar from "./components/Sidebar";
 import Explore from "./pages/Explore";
@@ -31,13 +31,17 @@ function App() {
     (state: RootState) => state.musicPlayer.openMusicBar
   );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUser());
+    if(performance.navigation.type===1){
+      navigate("/")
+    }
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -79,7 +83,7 @@ function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
