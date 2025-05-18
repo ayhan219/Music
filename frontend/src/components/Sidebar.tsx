@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { HiDotsHorizontal } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
-import { FaArrowUp, FaCompactDisc, FaMusic, FaRupeeSign } from "react-icons/fa";
+import { FaCompactDisc, FaMusic, FaRupeeSign } from "react-icons/fa";
 import { CiLogin, CiLogout } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
@@ -16,23 +15,49 @@ import CreatePlaylist from "./CreatePlaylist";
 const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState<string>("home");
   const user = useSelector((state: RootState) => state.userSlice.user);
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [openCreatePlaylist, setOpenCreatePlaylist] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
     <div className="w-[80px] md:w-[300px] h-full bg-[#212124] sticky top-0 z-[2000]">
-      <div className="w-full h-auto flex justify-between items-center p-7">
-        <div className="w-3 h-3 sm:w-7 sm:h-7 rounded-full bg-gray-600 flex items-center justify-center">
-          <p className="text-xs text-white ">
-            {user ? user.username?.slice(0, 2).toUpperCase() : ""}
-          </p>
+      <div className="w-full h-auto flex md:flex-row flex-col justify-normal md:justify-between items-center p-7">
+        <div className="flex items-center gap-2 font-bold text-primary text-xs">
+          <div className="w-3 h-3 sm:w-7 sm:h-7 rounded-full bg-gray-600 flex items-center justify-center">
+            <p className="text-xs text-white ">
+              {user ? user.username?.slice(0, 2).toUpperCase() : ""}
+            </p>
+          </div>
+          {user.username && <p className="hidden md:flex">{user.username}</p>}
         </div>
-        <div
-          onClick={() => setOpenMenu(!openMenu)}
-          className="text-white text-xl font-bold cursor-pointer"
-        >
-          {!openMenu && <HiDotsHorizontal />}
+        <div className="flex md:flex-row flex-col gap-4 font-sans text-xs md:text-sm font-semibold pt-4 md:pt-0">
+          {!user.username ? (
+            <>
+              <Link
+                to="/login"
+                className="px-2 flex gap-1 items-center md:px-4 py-2 hover:text-blue-500   text-white rounded-md  transition duration-200"
+              >
+                <CiLogin className="text-xl" />
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="px-0 flex items-center gap-1 md:px-4  py-2 hover:text-blue-500   text-white rounded-md transition duration-200"
+              >
+                <FaRupeeSign className="text-xl" />
+                Sign up
+              </Link>
+            </>
+          ) : (
+            <div>
+              <button
+                onClick={() => dispatch(logoutUser())}
+                className="px-4 flex items-center gap-1 w-20 md:w-auto cursor-pointer py-2 text-white font-semibold rounded-md hover:text-blue-400 transition duration-200"
+              >
+                <CiLogout className="text-xl hidden md:flex" />
+                Sign out
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="w-full h-auto flex p-7">
@@ -59,7 +84,9 @@ const Sidebar = () => {
       </div>
       <div className="w-full h-auto">
         <div className="p-2 sm:p-4">
-          <p className="text-[#9898A6]  text-sm hidden sm:flex">MY COLLECTIONS</p>
+          <p className="text-[#9898A6]  text-sm hidden sm:flex">
+            MY COLLECTIONS
+          </p>
         </div>
         <div className="flex flex-col gap-8 text-base font-semibold px-7 ">
           <div className="w-full flex gap-2 items-center ">
@@ -164,54 +191,6 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      {openMenu && (
-        <div className="w-full bg-[#1F1F22] h-40 top-16 bg-gradient-to-r from-primary to-primary-dark absolute rounded-xl shadow-2xl flex justify-center items-center transition-all duration-300">
-          {user?.id ? (
-            <div className="w-full h-full flex flex-col justify-center items-center px-6 py-4">
-              <div
-                onClick={() => dispatch(logoutUser())}
-                className="text-white flex items-center gap-3 cursor-pointer hover:bg-gray-800/50 px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-lg"
-              >
-                <CiLogout className="text-2xl" />
-                <p className="font-semibold text-lg">Logout</p>
-              </div>
-              <div className="w-full h-auto text-white text-base flex justify-end pr-7 items-center">
-                <FaArrowUp
-                  onClick={() => setOpenMenu(false)}
-                  className="cursor-pointer hover:text-hover transition-all duration-300"
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-6">
-              <div className="text-white flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300">
-                <CiLogin className="text-3xl hover:text-hover transition-all duration-300" />
-                <Link
-                  to="/login"
-                  className="font-bold text-xl hover:text-hover transition-all duration-300"
-                >
-                  Login
-                </Link>
-              </div>
-              <div className="text-white flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300 group">
-                <FaRupeeSign className="text-3xl group-hover:text-hover transition-all duration-300" />
-                <Link
-                  to="/signup"
-                  className="font-bold text-xl group-hover:text-hover transition-all duration-300"
-                >
-                  Signup
-                </Link>
-              </div>
-              <div className="w-full h-auto text-white text-base flex justify-end pr-7 items-center">
-                <FaArrowUp
-                  onClick={() => setOpenMenu(false)}
-                  className="cursor-pointer hover:text-hover transition-all duration-300"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
       {openCreatePlaylist && (
         <CreatePlaylist setOpenCreatePlaylist={setOpenCreatePlaylist} />
       )}
