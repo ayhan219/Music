@@ -26,9 +26,9 @@ const Explore = () => {
     ])
   return (
     
-    <div className="w-full h-full bg-primary overflow-y-auto scrollbar-custom">
+    <div className="w-full h-full bg-primary overflow-y-auto scrollbar-custom sm:pb-0 pb-16">
         <div className="p-16">
-        <div className="w-full text-primary font-bold font-mono text-2xl">
+        <div className="w-full text-primary font-bold font-mono text-xl md:text-2xl">
             <h1>Explore All</h1>
         </div>
         <div className="grid  custom-grid justify-center  space-y-8 pt-10 ">
