@@ -21,9 +21,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
-    <div className="w-[300px] h-full bg-[#212124] sticky top-0 z-[2000]">
+    <div className="w-[80px] md:w-[300px] h-full bg-[#212124] sticky top-0 z-[2000]">
       <div className="w-full h-auto flex justify-between items-center p-7">
-        <div className="w-7 h-7 rounded-full bg-gray-600 flex items-center justify-center">
+        <div className="w-3 h-3 sm:w-7 sm:h-7 rounded-full bg-gray-600 flex items-center justify-center">
           <p className="text-xs text-white ">
             {user ? user.username?.slice(0, 2).toUpperCase() : ""}
           </p>
@@ -39,14 +39,16 @@ const Sidebar = () => {
         <div className="flex flex-col gap-8 text-base font-semibold ">
           <Link
             onClick={() => setActiveMenu("home")}
-            className={`text-primary ${activeMenu === "home" && "text-hover"}`}
+            className={`text-xs sm:text-base text-primary  ${
+              activeMenu === "home" && "text-hover"
+            }`}
             to="/"
           >
             Home
           </Link>
           <Link
             onClick={() => setActiveMenu("explore")}
-            className={`text-primary ${
+            className={` text-xs sm:text-base text-primary ${
               activeMenu === "explore" && "text-hover"
             }`}
             to="/explore"
@@ -56,80 +58,80 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="w-full h-auto">
-        <div className="p-4">
-          <p className="text-[#9898A6] text-sm">MY COLLECTIONS</p>
+        <div className="p-2 sm:p-4">
+          <p className="text-[#9898A6]  text-sm hidden sm:flex">MY COLLECTIONS</p>
         </div>
         <div className="flex flex-col gap-8 text-base font-semibold px-7 ">
           <div className="w-full flex gap-2 items-center ">
-            <PiPlaylist className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("playlists")}
-              className={`text-primary ${
+              className={`text-primary flex gap-2 ${
                 activeMenu === "playlists" && "text-hover"
               }`}
               to="/playlists"
             >
-              Playlists
+              <PiPlaylist className="text-3xl sm:text-xl text-white" />
+              <span className="hidden sm:flex">Playlists</span>
             </Link>
           </div>
           <div className="w-full flex gap-2 items-center ">
-            <RiDvdFill className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("albums")}
-              className={`text-primary ${
+              className={`text-primary flex gap-2 ${
                 activeMenu === "albums" && "text-hover"
               }`}
               to="/albums"
             >
-              Albums And Artists
+              <RiDvdFill className="text-3xl sm:text-xl text-white" />
+              <span className="hidden sm:flex">Albums And Artists</span>
             </Link>
           </div>
           <div className="w-full flex gap-2 items-center ">
-            <FaMusic className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("genres")}
-              className={`text-primary ${
+              className={`text-primary flex gap-2 ${
                 activeMenu === "genres" && "text-hover"
               }`}
               to="/genres"
             >
-              Genres
+              <FaMusic className="text-3xl sm:text-xl text-white" />
+              <span className="hidden sm:flex">Genres</span>
             </Link>
           </div>
           <div className="w-full flex gap-2 items-center ">
-            <IoMdRadio className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("radios")}
-              className={`text-primary ${
+              className={`text-primary flex gap-2 ${
                 activeMenu === "radios" && "text-hover"
               }`}
               to="/radios"
             >
-              Radios
+              <IoMdRadio className="text-3xl sm:text-xl text-white" />
+              <span className="hidden sm:flex">Radios</span>
             </Link>
           </div>
           <div className="w-full flex gap-2 items-center ">
-            <IoRadioSharp className="text-xl text-white" />
             <Link
               onClick={() => setActiveMenu("mixesandradio")}
-              className={`text-primary ${
+              className={`text-primary flex gap-2 ${
                 activeMenu === "mixesandradio" && "text-hover"
               }`}
               to="/"
             >
-              Mixes
+              <IoRadioSharp className="text-3xl sm:text-xl text-white" />
+              <span className="hidden sm:flex">Mixes</span>
             </Link>
           </div>
         </div>
       </div>
 
       <div className="w-full h-auto pt-5">
-        <div className="p-4 text-[#9898A6] flex justify-between items-center  ">
-          <p className=" text-sm">MY PLAYLIST</p>
+        <div className="p-4 text-[#9898A6] flex justify-center sm:justify-between  items-center  ">
+          <p className="hidden sm:flex text-sm">MY PLAYLIST</p>
           <div className="flex gap-4 items-center">
             <button
               onClick={() => navigate("/playlists")}
-              className="text-xs cursor-pointer"
+              className="hidden sm:flex text-xs cursor-pointer"
             >
               Show all
             </button>
@@ -141,11 +143,11 @@ const Sidebar = () => {
                   navigate("/login");
                 }
               }}
-              className="text-xl cursor-pointer"
+              className="text-2xl sm:text-xl cursor-pointer"
             />
           </div>
         </div>
-        <div className="w-full h-[300px]  flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
+        <div className="w-full h-[300px] hidden sm:flex flex-col gap-6 px-6 overflow-y-auto scrollbar-custom">
           {user?.playlists?.map((item, index) => (
             <div
               onClick={() => {
