@@ -16,7 +16,7 @@ const SearchbarArea = () => {
             dispatch(setInput(e.target.value));
             navigate("/search");
           }}
-          className="bg-[#5a5a5b] px-10 w-[300px] h-10 rounded-lg outline-none text-white placeholder:text-white text-xs placeholder:font-thin"
+          className="bg-[#5a5a5b] px-10 w-[200px] md:w-[300px] h-10 rounded-lg outline-none text-white placeholder:text-white text-xs placeholder:font-thin"
           type="text"
           placeholder="Search"
         />
