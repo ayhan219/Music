@@ -60,7 +60,7 @@ const ArtistDetail = () => {
             src={artist?.picture_xl}
             alt={artist?.name}
           />
-          <div className="relative w-full h-[40%] z-10 flex items-center gap-6">
+          <div className="relative w-full h-[40%] z-10 flex flex-col  justify-center md:justify-normal md:flex-row items-center gap-6">
             <img
               className="w-48 h-48 object-cover rounded-full shadow-lg"
               src={artist?.picture_xl}
@@ -103,13 +103,13 @@ const ArtistDetail = () => {
               src={artist?.picture_xl}
               alt=""
             />
-            <div className="absolute p-10 bg-opacity-80 ml-10 backdrop-blur-lg bg-black/30 rounded-lg shadow-xl text-white">
-              <h2 className="text-4xl font-bold">{artist?.name}</h2>
-              <p className="text-lg text-gray-300 mt-1">
+            <div className="absolute p-4 md:p-10 bg-opacity-80 ml-0 md:ml-10 backdrop-blur-lg bg-black/30 rounded-lg shadow-xl text-white">
+              <h2 className="text-xl md:text-4xl font-bold">{artist?.name}</h2>
+              <p className="text-base md:text-lg text-gray-300 mt-1">
                 {artist?.type.toUpperCase()}
               </p>
-              <p className="text-xl text-green-400 font-semibold mt-2">
-                {artist?.nb_fan.toLocaleString()} Monthly Listeners
+              <p className="text-base md:text-xl flex gap-2 flex-col md:block text-green-400 font-semibold mt-2">
+                {artist?.nb_fan.toLocaleString()} <span>Monthly Listeners</span>
               </p>
             </div>
           </div>
