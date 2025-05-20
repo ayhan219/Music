@@ -47,7 +47,7 @@ const RadioSingle = ({ item, index }: RadioSingleProps) => {
       onClick={()=>{
         dispatch(getRadiosData(item.album.id))
             }}
-      className="relative w-[300px] h-[380px] rounded-lg shadow-md overflow-hidden cursor-pointer text-white group  hover:shadow-lg transition-shadow duration-300"
+      className="relative w-[270px] h-[380px] rounded-lg shadow-md overflow-hidden cursor-pointer text-white group  hover:shadow-lg transition-shadow duration-300"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2 }}
     >
