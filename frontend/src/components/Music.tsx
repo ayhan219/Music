@@ -130,39 +130,39 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
           dispatch(setOpenMusicBar(true));
           dispatch(setIsPlaying(true));
         }}
-        className="w-full h-16 flex items-center py-4 px-4 group cursor-pointer hover:bg-[#262629]"
+        className="w-full h-16 flex  items-center py-4 px-0 md:px-4 group cursor-pointer hover:bg-[#262629]"
       >
-        <div className="flex items-center gap-4 w-[50%]">
-          <div className="w-20 h-20 relative flex items-center justify-center cursor-pointer">
+        <div className="flex items-center gap-2 md:gap-4 w-[70%] md:w-[50%]">
+          <div className="w-12 h-12 md:w-16 md:h-16 relative flex items-center justify-center cursor-pointer">
             <img
-              className="w-16 h-16 object-cover rounded-lg"
+              className="w-full h-full object-cover rounded-lg"
               src={`https://cdn-images.dzcdn.net/images/cover/${item.md5_image}/500x500-000000-80-0-0.jpg`}
               alt="Album Cover"
             />
-            <FaPlay className="absolute text-primary text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <FaPlay className="hidden md:flex  absolute text-primary text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-          <div className="flex flex-col gap-1 w-[500px] truncate">
+          <div className="flex flex-col gap-1 w-[180px] md:w-[500px] truncate">
             <p
               className={`${
                 item.id === musicId
                   ? "text-green-500 font-extrabold"
-                  : "text-primary font-semibold"
+                  : "text-primary font-semibold md:text-base text-sm"
               } truncate`}
             >
               {item.title}
             </p>
             <p
               className={`${
-                item.id === musicId ? "text-white font-bold" : "text-[#595956]"
-              } text-sm truncate`}
+                item.id === musicId ? "text-white md:text-sm font-bold" : "text-[#595956]"
+              } text-xs truncate`}
             >
               {item.artist.name}
             </p>
           </div>
         </div>
 
-        <div className="w-full flex justify-between px-32 text-primary">
-          <div>
+        <div className="w-[20%] md:w-full flex justify-between gap-2 px-10 text-xs md:text-base md:px-32 text-primary">
+          <div className="hidden md:flex">
             <p>{item.rank}</p>
           </div>
           <p>
