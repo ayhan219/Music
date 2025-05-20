@@ -16,21 +16,7 @@ import {
   setIsPlaying,
   setMusicId,
 } from "../features/PlayingMusicSlice";
-
-interface AlbumMusic {
-  artist: {
-    name: string;
-  };
-  album: {
-    cover_medium: string;
-  };
-  duration: number;
-  id: number;
-  md5_image: string;
-  preview: string;
-  rank: number;
-  title: string;
-}
+import { AlbumMusic } from "../features/MusicSlice"
 
 const MusicPlayBar = () => {
   const isPlaying = useSelector(
@@ -119,7 +105,7 @@ const MusicPlayBar = () => {
 
   useEffect(() => {
     setCurrentMusic(
-      currentMusicAlbum.find((item) => item.id === musicId) || null
+      currentMusicAlbum.find((item:AlbumMusic) => item.id === musicId) || null
     );
   }, [musicId, currentMusicAlbum]);
 
@@ -164,12 +150,12 @@ const MusicPlayBar = () => {
     >
       <div
         className={`${
-          isMusicBarHidden ? "w-[400px] h-[50px]" : "w-[500px] h-full "
-        }  flex items-center px-10 gap-4 `}
+          isMusicBarHidden ? "w-[400px] h-[50px]" : "w-[300px] md:w-[500px] h-full "
+        }  flex items-center px-4 md:px-10 gap-4 `}
       >
         <div
           className={` ${
-            isMusicBarHidden ? "w-[50px] h-[40px]" : "h-[80px] w-[80px]"
+            isMusicBarHidden ? "w-[50px] h-[40px]" : "h-[60px] md:h-[80px] w-[50px] md:w-[80px]"
           } rounded-lg`}
         >
           <img
@@ -183,7 +169,7 @@ const MusicPlayBar = () => {
             isMusicBarHidden ? "flex flex-row" : "flex-col"
           } gap-2`}
         >
-          <p className="text-primary font-bold text-sm">
+          <p className="text-primary font-bold text-xs md:text-sm">
             {currentMusic?.title}
           </p>
           <p className="text-xs text-gray-500 font-bold">
@@ -192,8 +178,8 @@ const MusicPlayBar = () => {
         </div>
       </div>
       {!isMusicBarHidden && (
-        <div className="w-[500px] h-full flex flex-col justify-evenly ">
-          <div className="w-full flex justify-evenly text-primary text-xl ">
+        <div className="w-[500px] h-full flex flex-col justify-around md:justify-evenly ">
+          <div className="w-full flex justify-evenly text-primary text-base md:text-xl ">
             <VscArrowSwap className="cursor-pointer" />
             <MdSkipPrevious
               onClick={handlePrevMusic}
@@ -213,7 +199,7 @@ const MusicPlayBar = () => {
 
           <div
             onClick={handleSeek}
-            className="relative w-full h-2 bg-gray-400 rounded-2xl flex items-center cursor-pointer"
+            className="relative w-full h-1 md:h-2 bg-gray-400  rounded-2xl flex items-center cursor-pointer"
           >
             <span className="text-xs text-primary absolute left-0 -top-5">
               {formatTime(currentTime)}
@@ -240,7 +226,7 @@ const MusicPlayBar = () => {
       )}
 
       {!isMusicBarHidden && (
-        <div className="w-[400px] h-full flex items-center justify-center ">
+        <div className="w-[150px] md:w-[400px] h-full flex items-center justify-center ">
           <div className="text-primary text-2xl flex gap-8">
             <div className="flex gap-3 items-center">
               {!isMuted ? (
@@ -269,7 +255,7 @@ const MusicPlayBar = () => {
                 step="0.01"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="w-24 cursor-pointer
+                className="w-24 cursor-pointer md:flex hidden
             appearance-none bg-gray-300 h-1 rounded-lg 
             [&::-webkit-slider-thumb]:appearance-none 
             [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 
@@ -278,7 +264,7 @@ const MusicPlayBar = () => {
             [&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:rounded-full"
               />
             </div>
-            <GiHamburgerMenu />
+            <GiHamburgerMenu className="hidden md:flex" />
           </div>
         </div>
       )}
@@ -291,7 +277,7 @@ const MusicPlayBar = () => {
         loop={isLooping}
         onEnded={handleNextMusic}
       />
-      <div className="absolute right-0 p-3 text-primary text-2xl cursor-pointer transition-all">
+      <div className="absolute hidden md:flex right-0 p-3 text-primary text-2xl cursor-pointer transition-all">
         {!isMusicBarHidden ? (
           <ArrowDownCircle
             onClick={() => dispatch(setHideMusicBar(true))}
