@@ -57,7 +57,7 @@ const Signup = () => {
   return (
     <div className="w-full h-screen bg-primary flex items-center justify-center">
       <div className="w-[300px] sm:w-[400px] md:w-[1000px] h-[800px] flex flex-col items-center md:flex-row rounded-xl shadow-xl">
-        <div className="w-full md:w-[400px] rounded-l-xl overflow-hidden">
+        <div className="w-full md:w-[400px] h-full rounded-l-xl overflow-hidden">
           <img
             className="w-full h-full object-cover"
             src={mImage}
