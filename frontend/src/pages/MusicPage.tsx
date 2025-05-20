@@ -7,21 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlbumMusic } from "../features/MusicSlice";
 import { RootState } from "../app/store";
 import ToolsForMusic from "../components/ToolsForMusic";
-
-interface AlbumMusic {
-  artist: {
-    name: string;
-  };
-  album: {
-    cover_medium: string;
-  };
-  duration: number;
-  id: number;
-  md5_image: string;
-  preview: string;
-  rank: number;
-  title: string;
-}
+import { AlbumMusic } from "../features/MusicSlice";
 
 const MusicPage = () => {
   const { id } = useParams();
@@ -30,7 +16,7 @@ const MusicPage = () => {
   );
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-  const user = useSelector((state:RootState)=>state.userSlice.user)
+  const user = useSelector((state: RootState) => state.userSlice.user);
 
   const getDataFromId = async () => {
     setLoading(true);
@@ -52,25 +38,30 @@ const MusicPage = () => {
 
   return (
     <>
-      <div className="w-full h-[90%] bg-primary">
+      <div className="w-full h-[90%] bg-primary overflow-y-auto  scrollbar-custom ">
         {!loading ? (
           <>
-            <div className="w-full h-auto  flex ">
-              <div className="w-full h-[250px] flex items-center px-14 gap-6 rounded-lg relative overflow-hidden shadow-lg">
-                <div className="w-[300px] h-full p-1 rounded-lg ">
-                  <img className="w-full h-full object-cover" src={albumMusic?.cover_xl} alt="" />
+            <div className="w-full h-auto flex ">
+              <div className="w-full h-[400px] md:h-[250px] flex flex-col md:flex-row items-center px-14 gap-6 rounded-lg relative overflow-hidden shadow-lg">
+                <div className="w-[300px] h-[50%] md:h-full p-1 rounded-lg ">
+                  <img
+                    className="w-full h-full object-cover"
+                    src={albumMusic?.cover_xl}
+                    alt=""
+                  />
                 </div>
                 <img
                   className="w-full h-full object-cover absolute opacity-50 blur-md"
                   src={albumMusic?.cover_xl}
                   alt="Album cover"
                 />
-                <div className="text-white font-bold font-mono flex flex-col gap-4 p-6 relative z-10">
-                  <h3 className="text-lg">Open For Public</h3>
-                  <h1 className="text-4xl sm:text-5xl">{albumMusic?.title}</h1>
+                <div className="text-white font-bold font-mono flex flex-col gap-2 md:gap-4 p-6 relative z-10">
+                  <h3 className="text-base md:text-lg">Open For Public</h3>
+                  <h1 className="text-base md:text-4xl sm:text-5xl">{albumMusic?.title}</h1>
                   <div>
-                    <p className="text-lg">
-                      {user.username ? user.username + ' - ' : ""} {albumMusic?.tracks?.data.length} songs, duration:{" "}
+                    <p className="text-base md:text-lg">
+                      {user.username ? user.username + " - " : ""}{" "}
+                      {albumMusic?.tracks?.data.length} songs, duration:{" "}
                       {albumMusic?.duration
                         ? (albumMusic.duration / 60).toFixed(0)
                         : 0}{" "}
@@ -78,14 +69,14 @@ const MusicPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="text-white text-6xl sm:text-7xl absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="text-white text-3xl hidden md:flex md:text-6xl sm:text-7xl absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
                   <ImMusic />
                 </div>
               </div>
             </div>
-            
-            <div className="px-16 pt-4">
-            <ToolsForMusic />
+
+            <div className="px-10 md:px-16 pt-4">
+              <ToolsForMusic />
               <div className="w-full border-b border-gray-600">
                 <h1 className="text-primary font-bold font-mono text-xl">
                   Musics
@@ -93,11 +84,17 @@ const MusicPage = () => {
               </div>
             </div>
 
-            <div className="w-full max-h-[350px] px-14 pt-10 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
-              {albumMusic?.tracks?.data.map((item: AlbumMusic,index) => (
-                <Music key={index} item={item} index={index} whichMusic={albumMusic?.tracks?.data} />
+            <div className="w-full h-auto px-10 md:px-14 pt-10 flex flex-col gap-3 pb-32 ">
+              {albumMusic?.tracks?.data.map((item: AlbumMusic, index) => (
+                <Music
+                  key={index}
+                  item={item}
+                  index={index}
+                  whichMusic={albumMusic?.tracks?.data}
+                />
               ))}
             </div>
+           
           </>
         ) : (
           <div className="flex justify-center items-center space-x-2">
