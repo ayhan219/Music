@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoRadioSharp } from "react-icons/io5";
 import { PiPlaylist } from "react-icons/pi";
 import { RiDvdFill } from "react-icons/ri";
-import { FaCompactDisc, FaMusic, FaRupeeSign } from "react-icons/fa";
-import { CiLogin, CiLogout } from "react-icons/ci";
+import { FaCompactDisc, FaMusic } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
@@ -36,14 +35,12 @@ const Sidebar = () => {
                 to="/login"
                 className="px-2 flex gap-1 items-center md:px-4 py-2 hover:text-blue-500   text-white rounded-md  transition duration-200"
               >
-                <CiLogin className="text-xl" />
                 Login
               </Link>
               <Link
                 to="/signup"
                 className="px-0 flex items-center gap-1 md:px-4  py-2 hover:text-blue-500   text-white rounded-md transition duration-200"
               >
-                <FaRupeeSign className="text-xl" />
                 Sign up
               </Link>
             </>
@@ -53,7 +50,6 @@ const Sidebar = () => {
                 onClick={() => dispatch(logoutUser())}
                 className="px-4 flex items-center gap-1 w-20 md:w-auto cursor-pointer py-2 text-white font-semibold rounded-md hover:text-blue-400 transition duration-200"
               >
-                <CiLogout className="text-xl hidden md:flex" />
                 Sign out
               </button>
             </div>
