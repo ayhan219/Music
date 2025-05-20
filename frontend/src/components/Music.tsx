@@ -130,7 +130,7 @@ const Music = ({ item, index, whichMusic }: MusicProps | any) => {
           dispatch(setOpenMusicBar(true));
           dispatch(setIsPlaying(true));
         }}
-        className="w-full h-16 flex  items-center py-4 px-0 md:px-4 group cursor-pointer hover:bg-[#262629]"
+        className="w-full h-16 flex  items-center py-10 px-0 md:px-4 group cursor-pointer hover:bg-[#262629]"
       >
         <div className="flex items-center gap-2 md:gap-4 w-[70%] md:w-[50%]">
           <div className="w-16 h-12 md:w-16 md:h-16 relative flex items-center justify-center cursor-pointer">
