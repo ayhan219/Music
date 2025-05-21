@@ -8,12 +8,12 @@ const Playlists = () => {
   );
 
   return (
-    <div className="w-full min-h-[90%] bg-primary p-8 sm:p-10 md:p-14">
-      <div className="w-full text-white font-bold font-mono text-3xl border-b border-gray-600 pb-4 mb-6">
+    <div className="w-full h-[90%] bg-primary p-8 sm:p-10 md:p-14 overflow-y-auto overflow-x-hidden scrollbar-custom">
+      <div className="w-full text-white font-bold font-mono text-xl md:text-3xl border-b border-gray-600 pb-4 mb-6">
         <h1>🎵 My Playlists</h1>
       </div>
 
-      <div className="h-[670px] grid place-items-center md:place-items-baseline grid-cols-1  sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6 overflow-y-auto overflow-x-hidden scrollbar-custom">
+      <div className="h-auto grid place-items-center md:place-items-baseline grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-6 ">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <div className="w-12 h-12 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
@@ -25,7 +25,7 @@ const Playlists = () => {
                 <Album2 key={index} item={item} index={index} />
               ))
             ) : (
-              <div className="col-span-full flex flex-col items-center justify-center py-12">
+              <div className="col-span-full w-full flex flex-col items-center justify-center py-12">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-24 h-24 text-gray-400 mb-6"
