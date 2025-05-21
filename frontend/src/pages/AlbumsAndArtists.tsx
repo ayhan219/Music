@@ -19,26 +19,36 @@ const AlbumsAndArtists = () => {
   const dispatch = useAppDispatch();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentIndex2,setCurrentIndex2] = useState<number>(0);
+  const [IsSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleSize = () => setIsSmallScreen(window.innerWidth < 1100);
+    handleSize();
+    window.addEventListener("resize", handleSize);
+    return () => window.removeEventListener("resize", handleSize);
+  }, []);
+
+  const visibleCount = IsSmallScreen ? 1 : 6;
 
   const handleNext = () => {
-    if (currentIndex + 5 < albums?.length) {
-      setCurrentIndex(currentIndex + 5);
+    if (currentIndex + visibleCount < albums?.length) {
+      setCurrentIndex(currentIndex + visibleCount);
     }
   };
   const handlePrev = () => {
-    if (currentIndex - 5 >= 0) {
-      setCurrentIndex(currentIndex - 5);
+    if (currentIndex - visibleCount >= 0) {
+      setCurrentIndex(currentIndex - visibleCount);
     }
   };
 
   const handleNext2 = () => {
-    if (currentIndex2 + 5 < artist?.length) {
-      setCurrentIndex2(currentIndex2 + 5);
+    if (currentIndex2 + visibleCount < artist?.length) {
+      setCurrentIndex2(currentIndex2 + visibleCount);
     }
   };
   const handlePrev2 = () => {
-    if (currentIndex2 - 5 >= 0) {
-      setCurrentIndex2(currentIndex2 - 5);
+    if (currentIndex2 - visibleCount >= 0) {
+      setCurrentIndex2(currentIndex2 - visibleCount);
     }
   };
 
@@ -49,8 +59,8 @@ const AlbumsAndArtists = () => {
   return (
     <div className="w-full h-full bg-primary p-3">
       <div className="h-full w-full p-4 overflow-y-auto pb-10 scrollbar-custom ">
-        <div className="flex justify-between px-4">
-          <div className="w-full text-primary text-2xl font-semibold px-4  ">
+        <div className="flex justify-between items-center px-4">
+          <div className="w-full text-primary text-base md:text-2xl font-semibold px-4  ">
             <h2>Popular Albums</h2>
           </div>
           <div className="flex gap-2">
@@ -68,7 +78,7 @@ const AlbumsAndArtists = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-auto pt-5 flex">
+        <div className="w-full justify-center md:justify-normal h-auto pt-5 flex">
           <motion.div
             className="flex flex-row justify-between pt-3 overflow-x-auto overflow-y-hidden"
             key={currentIndex}
@@ -77,14 +87,14 @@ const AlbumsAndArtists = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {albums.slice(currentIndex, currentIndex + 6).map((item, index) => (
+            {albums.slice(currentIndex, currentIndex + visibleCount).map((item, index) => (
               <AlbumPageData key={item.id || index} item={item} index={index} />
             ))}
           </motion.div>
         </div>
 
         <div className="flex justify-between pt-4 px-4">
-          <div className="w-full text-primary text-2xl font-semibold px-4  ">
+          <div className="w-full text-primary text-base md:text-2xl font-semibold px-4  ">
             <h2>Popular Artists</h2>
           </div>
           <div className="flex gap-2">
@@ -102,7 +112,7 @@ const AlbumsAndArtists = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-auto pt-5 flex">
+        <div className="w-full justify-center md:justify-normal h-auto pt-5 flex">
           <motion.div
             className="flex flex-row justify-between pt-3 overflow-x-auto"
             key={currentIndex2}
@@ -111,7 +121,7 @@ const AlbumsAndArtists = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {artist.slice(currentIndex2, currentIndex2+6).map((item, index) => (
+            {artist.slice(currentIndex2, currentIndex2+ visibleCount).map((item, index) => (
               <Artist key={item.artist.id || index} item={item} index={index} />
             ))}
           </motion.div>
