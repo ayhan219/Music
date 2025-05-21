@@ -27,15 +27,15 @@ const Playlist = () => {
     }
   }, [currentPlaylist]);
   return (
-    <div className="w-full h-[90%] bg-primary px-2">
+    <div className="w-full h-[90%] pb-16 bg-primary px-2 overflow-y-auto scrollbar-custom">
       {loading ? (
         <div className="flex justify-center items-center h-full">
           <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
         </div>
       ) : (
         <>
-          <div className="w-full h-[35%] rounded-lg flex relative px-10 ">
-            <div className="w-[30%] h-full ">
+          <div className="w-full h-[45%] md:h-[35%] rounded-lg flex flex-col md:flex-row relative px-10 ">
+            <div className=" w-full md:w-[30%] h-[50%] md:h-full ">
               {playlistMusics.length === 0 && (
                 <div className="w-full h-full">
                   <div className="w-full h-full flex justify-center items-center text-8xl text-primary shadow-lg">
@@ -98,11 +98,6 @@ const Playlist = () => {
                   ))}
                 </div>
               )}
-
-              {/* <div className="w-full h-full bg-red-500"></div>
-          <div className="w-full h-full bg-black"></div>
-          <div className="w-full h-full bg-blue-600"></div>
-          <div className="w-full h-full bg-amber-400"></div> */}
             </div>
             <div className="w-full md:w-[70%] h-auto md:h-full p-6 rounded-2xl shadow-xl bg-primary transition-all duration-300 flex flex-col">
               <div className="text-gray-900 dark:text-white font-mono flex flex-col justify-between h-full space-y-6">
@@ -127,11 +122,11 @@ const Playlist = () => {
 
                 {/* Playlist Header with More Prominent Title */}
                 <div className="space-y-3">
-                  <h1 className="text-3xl font-extrabold leading-tight text-gray-900 dark:text-white">
+                  <h1 className="text-xl md:text-3xl font-extrabold leading-tight text-gray-900 dark:text-white">
                     {currentPlaylist.playlist_name}
                   </h1>
                   {currentPlaylist.playlist_description && (
-                    <p className="text-base text-gray-600 dark:text-gray-400">
+                    <p className="text-xs md:text-base text-gray-600 dark:text-gray-400">
                       {currentPlaylist.playlist_description}
                     </p>
                   )}
@@ -145,10 +140,10 @@ const Playlist = () => {
                     alt="User Avatar"
                   />
                   <div className="flex flex-col">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100">
+                    <p className="font-semibold text-gray-800 text-xs md:text-base dark:text-gray-100">
                       {user.username}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                       {playlistMusics.length === 0 ? (
                         <span className="italic">No tracks yet</span>
                       ) : (
@@ -164,7 +159,7 @@ const Playlist = () => {
           </div>
         </>
       )}
-      <div className="px-10">
+      <div className="px-10 pt-16 md:pt-0">
         <ToolsForMusic />
         {playlistMusics.length === 0 ? (
           <div className="w-full h-full flex justify-center items-center">
@@ -179,7 +174,7 @@ const Playlist = () => {
         )}
       </div>
 
-      <div className="w-full max-h-[300px] px-6 pt-6 flex flex-col gap-3 overflow-y-auto scrollbar-hidden scrollbar-custom">
+      <div className="w-full h-auto px-6 pt-6 flex flex-col gap-3 ">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
