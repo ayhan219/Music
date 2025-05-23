@@ -6,6 +6,8 @@ A full-stack music streaming web application that lets users log in with Google,
 > 
 > ⚠️ **CORS Warning:** When fetching data from the Deezer API, you may encounter CORS (Cross-Origin Resource Sharing) errors in the browser.  
 > To temporarily bypass this, visit [https://cors-anywhere.herokuapp.com/corsdemo](https://cors-anywhere.herokuapp.com/corsdemo) and click "Request temporary access to the demo server".
+>
+>📝 **Note:** If you find any bugs or have suggestions, feel free to open an issue or reach out — feedback is always welcome!
 
 ---
 
