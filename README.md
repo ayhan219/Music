@@ -67,3 +67,12 @@ cd ../frontend
 npm run dev
 ```
 
+### 🔑 Authentication Flow
+User clicks Login with Google.
+
+Google OAuth 2.0 authenticates the user.
+
+Server generates a JWT and sends it to the frontend.
+
+The token is stored and used for subsequent authenticated requests.
+
