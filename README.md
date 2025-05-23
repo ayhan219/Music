@@ -42,14 +42,14 @@ git clone https://github.com/ayhan219/Music.git
 
 ### 2. Install Dependencies
 
-# For backend
+#### For backend
 
 ```bash
 cd backend
 npm install
 ```
 
-# For frontend
+#### For frontend
 ```bash
 cd ../frontend
 npm install
