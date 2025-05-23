@@ -92,8 +92,6 @@ The token is stored and used for subsequent authenticated requests.
 
 ❤️ Like/favorite functionality
 
-🌙 Dark mode toggle
-
 🔍 Advanced search filters
 
 ### Project Images
