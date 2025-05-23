@@ -1,6 +1,11 @@
 # 🎵 Music Stream App
 
-A Spotify-inspired full-stack music streaming web application that lets users log in with Google, explore music via Deezer, and enjoy a clean, modern UI.
+A full-stack music streaming web application that lets users log in with Google, explore music via Deezer, and enjoy a clean, modern UI.
+> 🎵 **Note:** Due to API limitations, Deezer only provides 30-second previews of tracks — full-length music is not available.
+>
+> 
+> ⚠️ **CORS Warning:** When fetching data from the Deezer API, you may encounter CORS (Cross-Origin Resource Sharing) errors in the browser.  
+> To temporarily bypass this, visit [https://cors-anywhere.herokuapp.com/corsdemo](https://cors-anywhere.herokuapp.com/corsdemo) and click "Request temporary access to the demo server".
 
 ---
 
@@ -56,7 +61,11 @@ GOOGLE_CLIENT_ID="your client ID"
 GOOGLE_CLIENT_SECRET="your client secret"
 ```
 
-### 4. Run the App
+### 4. Find the sql dump file and use it
+![image](https://github.com/user-attachments/assets/3f4c5ca6-313d-41b3-a827-2fa4daf7d59b)
+
+
+### 5. Run the App
 ```bash
 # Start backend
 cd backend
@@ -67,7 +76,7 @@ cd ../frontend
 npm run dev
 ```
 
-### 🔑 Authentication Flow
+##  🔑 Authentication Flow
 User clicks Login with Google.
 
 Google OAuth 2.0 authenticates the user.
@@ -75,4 +84,13 @@ Google OAuth 2.0 authenticates the user.
 Server generates a JWT and sends it to the frontend.
 
 The token is stored and used for subsequent authenticated requests.
+
+##   ✨ Future Enhancements
+📝 Profile
+
+❤️ Like/favorite functionality
+
+🌙 Dark mode toggle
+
+🔍 Advanced search filters
 
