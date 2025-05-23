@@ -24,8 +24,8 @@ A full-stack music streaming web application that lets users log in with Google,
 
 | Layer      | Technology                               |
 |------------|------------------------------------------|
-| **Frontend** | React, TypeScript, Tailwind CSS           |
-| **Backend**  | Node.js, Express.js, MySQL, JWT, Google OAuth |
+| **Frontend** | **React**, **TypeScript**, **Tailwind CSS**, **React Redux**          |
+| **Backend**  | **Node.js**, **Express.js**, **MySQL**, **JWT**, **Google OAuth** |
 | **Music API**| Deezer API                              |
 
 ---
@@ -93,4 +93,22 @@ The token is stored and used for subsequent authenticated requests.
 🌙 Dark mode toggle
 
 🔍 Advanced search filters
+
+### Project Images
+
+#### Home page
+![image](https://github.com/user-attachments/assets/99da7b39-710e-4d97-8cdd-5fc68502e7d1)
+
+#### Albums and Artists page
+![image](https://github.com/user-attachments/assets/8059cfc4-d514-4982-84ab-dad5d5023d08)
+
+#### Album page with music bar
+![image](https://github.com/user-attachments/assets/437a087f-14c6-41e9-956b-b0e03e9f50f8)
+
+#### Radios page
+![image](https://github.com/user-attachments/assets/3e5e32ca-0353-4acd-b6d1-d97e467b9485)
+
+
+
+
 
