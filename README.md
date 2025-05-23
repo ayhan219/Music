@@ -94,7 +94,9 @@ The token is stored and used for subsequent authenticated requests.
 
 🔍 Advanced search filters
 
-🎧 Some Project Images
+<br />
+
+##  🎧 Some Project Images
 
 ###  🏠 Home Page
 ![image](https://github.com/user-attachments/assets/99da7b39-710e-4d97-8cdd-5fc68502e7d1)
