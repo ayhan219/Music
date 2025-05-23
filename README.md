@@ -94,18 +94,18 @@ The token is stored and used for subsequent authenticated requests.
 
 🔍 Advanced search filters
 
-### Project Images
+🎧 Some Project Images
 
-#### Home page
+###  🏠 Home Page
 ![image](https://github.com/user-attachments/assets/99da7b39-710e-4d97-8cdd-5fc68502e7d1)
 
-#### Albums and Artists page
+#### 🎨 Albums & Artists Page
 ![image](https://github.com/user-attachments/assets/8059cfc4-d514-4982-84ab-dad5d5023d08)
 
-#### Album page with music bar
+#### 💿 Album Page with music bar
 ![image](https://github.com/user-attachments/assets/437a087f-14c6-41e9-956b-b0e03e9f50f8)
 
-#### Radios page
+#### 📻 Radios Page
 ![image](https://github.com/user-attachments/assets/3e5e32ca-0353-4acd-b6d1-d97e467b9485)
 
 
