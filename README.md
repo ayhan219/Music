@@ -37,7 +37,7 @@ A full-stack music streaming web application that lets users log in with Google,
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/music-stream-app.git
+git clone https://github.com/ayhan219/Music.git
 ```
 
 ### 2. Install Dependencies
