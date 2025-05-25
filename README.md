@@ -95,7 +95,6 @@ The token is stored and used for subsequent authenticated requests.
 🔍 Advanced search filters
 
 <br />
-
 ##  🎧 Some Project Images
 
 ###  🏠 Home Page
