@@ -1,6 +1,6 @@
 # 🎵 Music Stream App
 
-A full-stack music streaming web application that lets users log in with Google, explore music via Deezer, and enjoy a clean, modern UI.
+A full-stack music streaming web application where users can explore and stream music through Deezer, all within a clean and modern user interface.
 > 🎵 **Note:** Due to API limitations, Deezer only provides 30-second previews of tracks — full-length music is not available.
 >
 > 
